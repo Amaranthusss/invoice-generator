@@ -56,6 +56,20 @@ export const getPdfOptions = (
     }
   )
 
+  const getSellerFirmData = (): string[] => {
+    const sellerFirmData: string[] = []
+    sellerFirmData.push((ownFirmData.name.value as string) + '\n')
+    sellerFirmData.push((ownFirmData.subname.value as string) + '\n')
+    sellerFirmData.push((ownFirmData.address.value as string) + '\n')
+    sellerFirmData.push((ownFirmData.city.value as string) + '\n')
+    sellerFirmData.push(
+      (ownFirmData.nip.caption as string) + ` ${ownFirmData.nip.value}`
+    )
+
+    return sellerFirmData
+  }
+  const sellerFirmData: string[] = getSellerFirmData()
+
   const invoiceInfoDisplay: string[] = [
     `Data wystawiena: ${formatDate(dateOfIssue, shortDateFormat)}`,
     `Sposób płatności: ${methodOfPayment}`,
@@ -100,7 +114,7 @@ export const getPdfOptions = (
             text: '',
           },
           {
-						alignment: 'right',
+            alignment: 'right',
             width: '40%',
             text: _.map(invoiceInfoDisplay, (line: string) => line + '\n'),
           },
@@ -135,7 +149,7 @@ export const getPdfOptions = (
         columns: [
           {
             width: '50%',
-            text: ownFirmDataDisplay,
+            text: sellerFirmData,
           },
           {
             width: '5.5%',
@@ -180,9 +194,17 @@ export const getPdfOptions = (
       },
       {
         margin: [0, 50, 0, 0],
-        alignment: 'right',
         fontSize: 10,
-        text: _.map(summaryDisplay, (line: ContentText) => line),
+        columns: [
+          {
+            width: '60%',
+            text: ' ',
+          },
+          {
+            width: '40%',
+            text: _.map(summaryDisplay, (line: ContentText) => line),
+          },
+        ],
       },
       {
         absolutePosition: { x: 40, y: 675 },
