@@ -1,5 +1,6 @@
 export const firmData: IFirmData = {
-  name: { value: 'Usługi Elektryczno – Budowlane „TAGRA” Tadeusz Szkurłat' },
+  name: { value: 'Usługi Elektryczno – Budowlane „TAGRA”' },
+  subname: { value: 'Tadeusz Szkurłat' },
   address: { value: 'pl. Wolskiego 4/13, 41-902 Bytom' },
   phone: { value: `697 250 666`, caption: 'Tel.:' },
   nip: { value: 6261011402, caption: 'NIP:' },
@@ -7,7 +8,7 @@ export const firmData: IFirmData = {
   bankName: { value: 'Powszechna Kasa Oszczędności Bank Polski SA' },
 }
 
-type IFirmData = {
+export type IFirmData = {
   [key: string]: IFirmDataParameter
 }
 

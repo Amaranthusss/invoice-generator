@@ -6,7 +6,7 @@ import {
 } from '../common/grid/Grid.interface'
 import { IMainTableData } from './Main.interface'
 
-import { getPdfOptions } from './functions/convertToPdf'
+import { getPdfOptions } from './functions/getPdfOptions'
 
 const getColumns = (): IDataGridColumn[] => [
   {

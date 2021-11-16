@@ -8,6 +8,7 @@ import styles from './App.module.css'
 
 const App = (): JSX.Element => {
 	locale('pl')
+	
   return (
     <div className={styles.container}>
       <Main />

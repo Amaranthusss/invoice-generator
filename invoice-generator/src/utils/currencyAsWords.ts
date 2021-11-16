@@ -88,15 +88,15 @@ const currencyAsWords = (currency: number): string => {
     let d = _.floor((currency % 100) / 10)
     let j = _.floor(currency % 10)
 
-    if (d == 1 && j > 0) {
+    if (d === 1 && j > 0) {
       n = j
       d = 0
       j = 0
     }
 
     let k = 2
-    if (j == 1 && s + d + n == 0) k = 0
-    if (j == 2 || j == 3 || j == 4) k = 1
+    if (j === 1 && s + d + n === 0) k = 0
+    if (j === 2 || j === 3 || j === 4) k = 1
     if (s + d + n + j > 0) {
       results =
         hundreds[s] + tens[d] + teen[n] + unity[j] + groupes[g][k] + results
