@@ -3,7 +3,7 @@ import CSS from 'csstype'
 import DataSource from 'devextreme/data/data_source'
 
 export interface IDataGridOptions {
-  dataSource: DataSource
+  dataSource: DataSource | any[]
   columns: IDataGridColumn[]
   toolbar: {
     customElements: IDataGridToolbarItem[]
@@ -21,6 +21,7 @@ export interface IDataGridColumn {
   caption?: string
   format?: Format
   alignment?: undefined | 'center' | 'left' | 'right'
+	allowEditing?: boolean
   cellRender?: (e: any) => JSX.Element
 }
 

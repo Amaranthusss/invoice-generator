@@ -1,13 +1,14 @@
+import DataGrid, { Toolbar, Item, Editing } from 'devextreme-react/data-grid'
+import { TDocumentDefinitions } from 'pdfmake/interfaces'
+import { useResizeDetector } from 'react-resize-detector'
+import { Dispatch } from 'redux'
 import { useRef } from 'react'
 import dxDataGrid from 'devextreme/ui/data_grid'
-import DataGrid, {
-  ColumnChooser,
-  Toolbar,
-  Item,
-} from 'devextreme-react/data-grid'
-import pdfMake from 'pdfmake/build/pdfmake'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
+import pdfMake from 'pdfmake/build/pdfmake'
 import _ from 'lodash'
+
+import { useAppDispatch } from '../../../hooks/useAppDispatch'
 
 import {
   IDataGridOptions,
@@ -15,27 +16,40 @@ import {
   IDataGridToolbarItem,
 } from './Grid.interface'
 import { Options } from '../common.interface'
+import { setPdfDoc } from '../../../store/global.slice'
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 
 const Grid = (props: Options<IDataGridOptions>): JSX.Element => {
+  const dispatch: Dispatch = useAppDispatch()
   const gridComponent = useRef<dxDataGrid>()
   const dataSourceArray = useRef<any[]>()
+  const { width, height, ref } = useResizeDetector()
+
+  const documentDefinitions = useRef<TDocumentDefinitions>(
+    props.options.toolbar.buttons?.exportToPdf?.options(dataSourceArray.current)
+  )
 
   const exportGrid = () => {
     if (_.isFunction(props.options.toolbar.buttons?.exportToPdf?.options)) {
-      const options = props.options.toolbar.buttons?.exportToPdf?.options(
-        dataSourceArray.current
-      )
       const d = new Date()
       const date = `${d.getDate()}_${d.getMonth() + 1}_${d.getFullYear()}`
 
-      pdfMake.createPdf(options).download(`Employee_list_${date}.pdf`)
+      pdfMake
+        .createPdf(documentDefinitions.current)
+        .download(`Employee_list_${date}.pdf`)
     }
+  }
+
+  const updatePdfDoc = (): void => {
+    pdfMake.createPdf(documentDefinitions.current).getDataUrl((outDoc) => {
+      dispatch(setPdfDoc(outDoc))
+    })
   }
 
   const onInitialized = async (e: any): Promise<void> => {
     gridComponent.current = e.component
+    updatePdfDoc()
 
     if (_.isFunction(props.options.onInitialized)) {
       props.options.onInitialized(e)
@@ -79,18 +93,39 @@ const Grid = (props: Options<IDataGridOptions>): JSX.Element => {
   }
 
   return (
-    <DataGrid
-      dataSource={props.options.dataSource}
-      columns={props.options.columns}
-      onInitialized={onInitialized}
-      showBorders={true}
+    <div
+      style={{
+        position: 'absolute',
+        left: '5vw',
+        top: '5vh',
+        height: '90vh',
+        width: '90vw',
+      }}
+      ref={ref}
     >
-      <ColumnChooser enabled={true} />
-      <Toolbar>
-        {getCustomItems()}
-        {getItems()}
-      </Toolbar>
-    </DataGrid>
+      <DataGrid
+        dataSource={props.options.dataSource}
+        columns={props.options.columns}
+        onInitialized={onInitialized}
+        showBorders={true}
+        width={width ?? '100%'}
+        height={height ?? '100%'}
+      >
+        <Toolbar>
+          {getCustomItems()}
+          {getItems()}
+          <Item name={'addRowButton'} showText={'always'} />
+        </Toolbar>
+        <Editing
+          mode={'form'}
+          allowUpdating={true}
+          allowAdding={true}
+          allowDeleting={true}
+          confirmDelete={false}
+          newRowPosition={'last'}
+        />
+      </DataGrid>
+    </div>
   )
 }
 
