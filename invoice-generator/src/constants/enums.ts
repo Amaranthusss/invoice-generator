@@ -3,4 +3,20 @@ export namespace Enums {
     ShortDate = 'shortDate',
     ShortDateShortTime = 'shortDateShortTime',
   }
+
+  export enum ClientsListWords {
+    name = 'Nazwa',
+    address = 'Adres siedziby',
+    city = 'Kod pocztowy, miasto',
+    nip = 'NIP',
+  }
+
+  export enum ServicesListWords {
+    id = 'L.P.',
+    name = 'Nazwa usługi',
+    vatAsPercents = 'VAT',
+    netto = 'Wartość NETTO',
+    vat = 'Kwota VAT',
+    brutto = 'Wartość BRUTTO',
+  }
 }

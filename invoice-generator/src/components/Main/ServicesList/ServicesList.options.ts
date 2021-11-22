@@ -1,57 +1,59 @@
+import { Enums } from '../../../constants/enums'
 import {
   IDataGridColumn,
   IDataGridOptions,
   IDataGridToolbarItem,
-} from '../common/grid/Grid.interface'
+} from '../../common/grid/Grid.interface'
 
 import { getPdfOptions } from './functions/getPdfOptions'
+import { IServicesListServiceData } from './ServicesList.interface'
 
 const getColumns = (): IDataGridColumn[] => [
   {
-    dataField: 'lp',
+    dataField: 'id',
     dataType: 'number',
-    caption: 'LP',
+    caption: Enums.ServicesListWords.id,
     allowEditing: false,
   },
   {
-    dataField: 'nazwa',
+    dataField: 'name',
     dataType: 'string',
+    caption: Enums.ServicesListWords.name,
   },
   {
-    dataField: 'vatPercent',
+    dataField: 'vatAsPercents',
     dataType: 'number',
-    caption: 'VAT [%]',
+    caption: Enums.ServicesListWords.vatAsPercents,
     allowEditing: false,
   },
   {
     dataField: 'netto',
     dataType: 'number',
-    caption: 'Wartosc NETTO [zl]',
+    caption: Enums.ServicesListWords.netto,
   },
   {
     dataField: 'vat',
     dataType: 'number',
-    caption: 'Kwota VAT [zl]',
+    caption: Enums.ServicesListWords.vat,
     allowEditing: false,
   },
   {
     dataField: 'brutto',
     dataType: 'number',
-    caption: 'Wartosc BRUTTO [zl]',
+    caption: Enums.ServicesListWords.brutto,
     allowEditing: false,
   },
 ]
 
 const getItems = (): IDataGridToolbarItem[] => []
 
-const dataSource = [
+const dataSource: IServicesListServiceData[] = [
   {
-    lp: 1,
-    nazwa:
-      'Modernizacja oswietlenia w księgarni Bookszpan – Poznan, Galeria Avenida',
+    id: 1,
+    name: 'Modernizacja oswietlenia w księgarni Bookszpan – Poznan, Galeria Avenida',
     brutto: 3864.66,
     netto: 3142,
-    vatPercent: 23,
+    vatAsPercents: 23,
     vat: 722.66,
   },
 ]

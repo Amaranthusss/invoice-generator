@@ -3,16 +3,16 @@ import { format } from 'devextreme/ui/widget/ui.widget'
 import { ContentText, TDocumentDefinitions } from 'pdfmake/interfaces'
 import _ from 'lodash'
 
-import currencyAsWords from '../../../utils/currencyAsWords'
+import currencyAsWords from '../../../../utils/currencyAsWords'
 
-import { IMainTableData } from '../Main.interface'
+import { IMainTableData } from '../../Main.interface'
 
-import { Enums } from '../../../constants/enums'
+import { Enums } from '../../../../constants/enums'
 import {
   firmData as ownFirmData,
   IFirmData,
   IFirmDataParameter,
-} from '../../../data/firmData'
+} from '../../../../data/firmData'
 
 const invoiceNumber: string = '1/10/2021'
 const dateOfIssue: Date = new Date()

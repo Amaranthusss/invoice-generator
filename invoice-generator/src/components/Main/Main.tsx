@@ -1,7 +1,6 @@
-import Grid from '../common/grid/Grid'
-import PdfPreview from './PdfPreview/PdfPreview'
-
-import { gridOptions } from './Main.options'
+import ServicesList from './ServicesList/ServicesList'
+import ClientsList from './ClientsList/ClientsList'
+import PdfPreview from './Preview/Preview'
 
 import styles from './Main.module.css'
 
@@ -9,10 +8,15 @@ const Main = (): JSX.Element => {
   return (
     <div className={styles.container}>
       <div className={styles.column}>
-        <PdfPreview />
+        <div className={styles.row}>
+          <ServicesList />
+        </div>
+        <div className={styles.row}>
+          <ClientsList />
+        </div>
       </div>
       <div className={styles.column}>
-        <Grid options={gridOptions} />
+        <PdfPreview />
       </div>
     </div>
   )

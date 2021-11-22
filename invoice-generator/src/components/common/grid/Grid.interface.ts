@@ -1,11 +1,12 @@
 import { Format } from 'devextreme/localization'
 import CSS from 'csstype'
 import DataSource from 'devextreme/data/data_source'
+import { dxDataGridColumn } from 'devextreme/ui/data_grid'
 
 export interface IDataGridOptions {
   dataSource: DataSource | any[]
   columns: IDataGridColumn[]
-  toolbar: {
+  toolbar?: {
     customElements: IDataGridToolbarItem[]
     buttons?: {
       exportToPdf?: IDataGridToolbarButton
@@ -15,14 +16,8 @@ export interface IDataGridOptions {
   onInitialized?: (e: any) => void
 }
 
-export interface IDataGridColumn {
-  dataType: 'string' | 'number' | 'date' | 'boolean' | 'object' | 'datetime'
-  dataField: string
-  caption?: string
-  format?: Format
-  alignment?: undefined | 'center' | 'left' | 'right'
-	allowEditing?: boolean
-  cellRender?: (e: any) => JSX.Element
+export interface IDataGridColumn extends dxDataGridColumn {
+	
 }
 
 export interface IDataGridToolbarItem {
@@ -80,5 +75,5 @@ export interface IDataGridItemOptions {
 export interface IDataGridToolbarButton {
   enabled: boolean
   onClick?: (e: any) => void
-	options?: any
+  options?: any
 }

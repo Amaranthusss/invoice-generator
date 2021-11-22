@@ -3,7 +3,7 @@ import { useRef } from 'react'
 import { useAppSelector } from '../../../hooks/useAppSelector'
 import { getPdfDoc } from '../../../store/global.slice'
 
-import styles from './PdfPreview.module.css'
+import styles from './Preview.module.css'
 
 const PdfPreview = (): JSX.Element => {
   const previewRef = useRef<HTMLIFrameElement>(null)

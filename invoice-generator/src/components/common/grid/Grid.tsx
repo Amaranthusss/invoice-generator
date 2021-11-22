@@ -9,6 +9,7 @@ import pdfMake from 'pdfmake/build/pdfmake'
 import _ from 'lodash'
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch'
+import { setPdfDoc } from '../../../store/global.slice'
 
 import {
   IDataGridOptions,
@@ -16,7 +17,8 @@ import {
   IDataGridToolbarItem,
 } from './Grid.interface'
 import { Options } from '../common.interface'
-import { setPdfDoc } from '../../../store/global.slice'
+
+import styles from './Grid.module.css'
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 
@@ -27,11 +29,13 @@ const Grid = (props: Options<IDataGridOptions>): JSX.Element => {
   const { width, height, ref } = useResizeDetector()
 
   const documentDefinitions = useRef<TDocumentDefinitions>(
-    props.options.toolbar.buttons?.exportToPdf?.options(dataSourceArray.current)
+    props.options.toolbar?.buttons?.exportToPdf?.options(
+      dataSourceArray.current
+    )
   )
 
   const exportGrid = () => {
-    if (_.isFunction(props.options.toolbar.buttons?.exportToPdf?.options)) {
+    if (_.isFunction(props.options.toolbar?.buttons?.exportToPdf?.options)) {
       const d = new Date()
       const date = `${d.getDate()}_${d.getMonth() + 1}_${d.getFullYear()}`
 
@@ -60,7 +64,7 @@ const Grid = (props: Options<IDataGridOptions>): JSX.Element => {
 
   const getCustomItems = (): JSX.Element[] => {
     return _.map(
-      props.options.toolbar.customElements,
+      props.options.toolbar?.customElements,
       (itemOptions: IDataGridToolbarItem, index: number): JSX.Element => {
         return <Item key={index} {...itemOptions} />
       }
@@ -69,7 +73,7 @@ const Grid = (props: Options<IDataGridOptions>): JSX.Element => {
 
   const getItems = (): JSX.Element[] => {
     return _.map(
-      props.options.toolbar.buttons,
+      props.options.toolbar?.buttons,
       (button: any, buttonName: string): JSX.Element => {
         switch (buttonName) {
           case 'exportToPdf':
@@ -93,23 +97,14 @@ const Grid = (props: Options<IDataGridOptions>): JSX.Element => {
   }
 
   return (
-    <div
-      style={{
-        position: 'absolute',
-        left: '5vw',
-        top: '5vh',
-        height: '90vh',
-        width: '90vw',
-      }}
-      ref={ref}
-    >
+    <div className={styles.container} ref={ref}>
       <DataGrid
         dataSource={props.options.dataSource}
         columns={props.options.columns}
         onInitialized={onInitialized}
         showBorders={true}
-        width={width ?? '100%'}
-        height={height ?? '100%'}
+        width={width}
+        height={height}
       >
         <Toolbar>
           {getCustomItems()}
