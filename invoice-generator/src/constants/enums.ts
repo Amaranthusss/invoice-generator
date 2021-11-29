@@ -19,4 +19,12 @@ export namespace Enums {
     vat = 'Kwota VAT',
     brutto = 'Wartość BRUTTO',
   }
+
+  export enum DataGridEditingTexts {
+    addRow = 'Dodaj',
+    editRow = 'Edytuj',
+    deleteRow = 'Usuń',
+  }
 }
+
+export const VAT: number = 23

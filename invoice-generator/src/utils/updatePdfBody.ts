@@ -1,18 +1,15 @@
+import { ContentText, TDocumentDefinitions } from 'pdfmake/interfaces'
 import { formatDate } from 'devextreme/localization'
 import { format } from 'devextreme/ui/widget/ui.widget'
-import { ContentText, TDocumentDefinitions } from 'pdfmake/interfaces'
 import _ from 'lodash'
 
-import currencyAsWords from '../../../../utils/currencyAsWords'
+import currencyAsWords from './currencyAsWords'
 
-import { IMainTableData } from '../../Main.interface'
+import { IClientsListClientFirmData } from '../components/Main/ClientsList/ClientsList.interface'
+import { IMainTableData } from '../components/Main/Main.interface'
 
-import { Enums } from '../../../../constants/enums'
-import {
-  firmData as ownFirmData,
-  IFirmData,
-  IFirmDataParameter,
-} from '../../../../data/firmData'
+import { Enums } from '../constants/enums'
+import { firmData as ownFirmData, IFirmDataParameter } from '../data/firmData'
 
 const invoiceNumber: string = '1/10/2021'
 const dateOfIssue: Date = new Date()
@@ -21,15 +18,10 @@ const methodOfPayment: string = 'Przelew'
 const paymentTime: number = 14
 const dateOfPayment: Date = new Date()
 dateOfPayment.setDate(dateOfIssue.getDate() + paymentTime)
-const buyerFirmData: IFirmData = {
-  name: { value: 'Montex Sp. z o.o.' },
-  address: { value: 'ul. Gen. Z.W. Jankego 249' },
-  city: { value: '40-684 Katowice' },
-  nip: { value: 9542471195, caption: 'NIP:' },
-}
 
-export const getPdfOptions = (
-  mainTableData: IMainTableData[]
+export const updatePdfBody = (
+  mainTableData: IMainTableData[],
+  clientFirm: IClientsListClientFirmData
 ): TDocumentDefinitions => {
   let summaryPriceBrutto: number = 0
   const tableRecords: (string | number)[][] = _.map(
@@ -47,12 +39,13 @@ export const getPdfOptions = (
       return caption + parameter.value + '\n'
     }
   )
-
+  console.log(clientFirm)
   const buyerFirmDataDisplay: string[] = _.map(
-    buyerFirmData,
-    (parameter: IFirmDataParameter): string => {
-      const caption = parameter.caption != null ? `${parameter.caption} ` : ''
-      return caption + parameter.value + '\n'
+    clientFirm,
+    (value: string | number, parameter: string): string => {
+      const caption = parameter === 'nip' ? 'NIP: ' : ''
+
+      return caption + value + '\n'
     }
   )
 

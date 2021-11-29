@@ -1,24 +1,40 @@
-import { Format } from 'devextreme/localization'
 import CSS from 'csstype'
 import DataSource from 'devextreme/data/data_source'
 import { dxDataGridColumn } from 'devextreme/ui/data_grid'
+import { dxFormOptions } from 'devextreme/ui/form'
 
 export interface IDataGridOptions {
+  //Devextreme configuration
   dataSource: DataSource | any[]
   columns: IDataGridColumn[]
+	keyExpr?: string
+	columnAutoWidth?: boolean
+	focusedRowEnabled?: boolean
   toolbar?: {
-    customElements: IDataGridToolbarItem[]
-    buttons?: {
-      exportToPdf?: IDataGridToolbarButton
-    }
+    customElements?: IDataGridToolbarItem[]
+  }
+  selection?: {
+    allowSelectAll?: boolean
+    deferred?: boolean
+    mode?: 'multiple' | 'none' | 'single'
+    selectAllMode?: 'allPages' | 'page'
+    showCheckBoxesMode?: 'always' | 'none' | 'onClick' | 'onLongTap'
+  }
+  editing?: {
+    form?: dxFormOptions
   }
 
+  //DevExtreme events
   onInitialized?: (e: any) => void
+  onSelectionChanged?: (e: any) => void
+  onChangesChange?: (e: any) => void
+  onRowPrepared?: (e: any) => void
+
+  //Custom configuration
+  showPdfDocAtPreview?: boolean
 }
 
-export interface IDataGridColumn extends dxDataGridColumn {
-	
-}
+export interface IDataGridColumn extends dxDataGridColumn {}
 
 export interface IDataGridToolbarItem {
   location?: 'after' | 'before' | 'center'
@@ -74,6 +90,6 @@ export interface IDataGridItemOptions {
 
 export interface IDataGridToolbarButton {
   enabled: boolean
-  onClick?: (e: any) => void
+  onClick?: () => void
   options?: any
 }

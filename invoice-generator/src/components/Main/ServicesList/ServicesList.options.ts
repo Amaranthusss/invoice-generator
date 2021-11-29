@@ -1,19 +1,29 @@
-import { Enums } from '../../../constants/enums'
-import {
-  IDataGridColumn,
-  IDataGridOptions,
-  IDataGridToolbarItem,
-} from '../../common/grid/Grid.interface'
+import { nanoid } from '@reduxjs/toolkit'
 
-import { getPdfOptions } from './functions/getPdfOptions'
 import { IServicesListServiceData } from './ServicesList.interface'
+import { IDataGridColumn } from '../../common/grid/Grid.interface'
 
-const getColumns = (): IDataGridColumn[] => [
+import { Enums, VAT } from '../../../constants/enums'
+
+const getBrutto = (e: IServicesListServiceData): number => {
+  return e.netto * (VAT / 100 + 1)
+}
+
+const getVatAsPercents = (e: IServicesListServiceData): number => {
+  return VAT / 100
+}
+
+const getVat = (e: IServicesListServiceData): number => {
+  return e.netto * (VAT / 100)
+}
+
+export const getColumns = (): IDataGridColumn[] => [
   {
-    dataField: 'id',
-    dataType: 'number',
-    caption: Enums.ServicesListWords.id,
-    allowEditing: false,
+    dataField: 'key',
+    dataType: 'string',
+    visible: false,
+    showInColumnChooser: false,
+    calculateCellValue: () => nanoid(),
   },
   {
     dataField: 'name',
@@ -25,44 +35,31 @@ const getColumns = (): IDataGridColumn[] => [
     dataType: 'number',
     caption: Enums.ServicesListWords.vatAsPercents,
     allowEditing: false,
+    format: { type: 'percent' },
+    calculateCellValue: getVatAsPercents,
   },
   {
     dataField: 'netto',
     dataType: 'number',
     caption: Enums.ServicesListWords.netto,
+    format: { precision: 2, type: 'currency' },
   },
   {
     dataField: 'vat',
     dataType: 'number',
     caption: Enums.ServicesListWords.vat,
     allowEditing: false,
+    calculateCellValue: getVat,
+    format: { precision: 2, type: 'currency' },
   },
   {
     dataField: 'brutto',
     dataType: 'number',
     caption: Enums.ServicesListWords.brutto,
     allowEditing: false,
+    calculateCellValue: getBrutto,
+    format: { precision: 2, type: 'currency' },
   },
 ]
 
-const getItems = (): IDataGridToolbarItem[] => []
-
-const dataSource: IServicesListServiceData[] = [
-  {
-    id: 1,
-    name: 'Modernizacja oswietlenia w księgarni Bookszpan – Poznan, Galeria Avenida',
-    brutto: 3864.66,
-    netto: 3142,
-    vatAsPercents: 23,
-    vat: 722.66,
-  },
-]
-
-export const gridOptions: IDataGridOptions = {
-  dataSource: dataSource,
-  columns: getColumns(),
-  toolbar: {
-    customElements: getItems(),
-    buttons: { exportToPdf: { enabled: true, options: getPdfOptions } },
-  },
-}
+export const dataSource: IServicesListServiceData[] = []

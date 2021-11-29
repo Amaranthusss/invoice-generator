@@ -1,3 +1,5 @@
+import config from 'devextreme/core/config'
+
 import ServicesList from './ServicesList/ServicesList'
 import ClientsList from './ClientsList/ClientsList'
 import PdfPreview from './Preview/Preview'
@@ -5,6 +7,8 @@ import PdfPreview from './Preview/Preview'
 import styles from './Main.module.css'
 
 const Main = (): JSX.Element => {
+  config({ defaultCurrency: 'PLN' })
+
   return (
     <div className={styles.container}>
       <div className={styles.column}>

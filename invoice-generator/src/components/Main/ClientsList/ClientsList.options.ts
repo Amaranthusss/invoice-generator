@@ -1,20 +1,23 @@
-import {
-  IDataGridColumn,
-  IDataGridOptions,
-} from '../../common/grid/Grid.interface'
+import { nanoid } from '@reduxjs/toolkit'
+
 import { IClientsListClientFirmData } from './ClientsList.interface'
+import { IDataGridColumn } from '../../common/grid/Grid.interface'
 
 import { Enums } from '../../../constants/enums'
 
-const getColumns = (): IDataGridColumn[] => [
+export const getColumns = (): IDataGridColumn[] => [
   {
-    dataField: 'id',
-    dataType: 'number',
+    dataField: 'key',
+    dataType: 'string',
     visible: false,
+    showInColumnChooser: false,
+    allowEditing: false,
+    calculateCellValue: () => nanoid(),
   },
   {
     dataField: 'clientId',
     dataType: 'number',
+    allowEditing: false,
     visible: false,
   },
   {
@@ -40,9 +43,8 @@ const getColumns = (): IDataGridColumn[] => [
   },
 ]
 
-const dataSource: IClientsListClientFirmData[] = [
+export const dataSource: IClientsListClientFirmData[] = [
   {
-    id: 0,
     clientId: 10000,
     name: 'Montex Sp. z o.o.',
     address: 'ul. Gen. Z.W. Jankego 249',
@@ -50,7 +52,6 @@ const dataSource: IClientsListClientFirmData[] = [
     nip: 9542471195,
   },
   {
-    id: 1,
     clientId: 10001,
     name: 'Libero sp. z o. o. s. k.',
     address: 'ul. Lotników Alianckich 15',
@@ -58,8 +59,3 @@ const dataSource: IClientsListClientFirmData[] = [
     nip: 8992820376,
   },
 ]
-
-export const gridOptions: IDataGridOptions = {
-  dataSource: dataSource,
-  columns: getColumns(),
-}
