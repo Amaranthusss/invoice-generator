@@ -1,15 +1,19 @@
 import CSS from 'csstype'
 import DataSource from 'devextreme/data/data_source'
-import { dxDataGridColumn } from 'devextreme/ui/data_grid'
+import { EventInfo } from 'devextreme/events'
+import dxDataGrid, {
+  dxDataGridColumn,
+  RowInsertedInfo,
+} from 'devextreme/ui/data_grid'
 import { dxFormOptions } from 'devextreme/ui/form'
 
 export interface IDataGridOptions {
   //Devextreme configuration
   dataSource: DataSource | any[]
   columns: IDataGridColumn[]
-	keyExpr?: string
-	columnAutoWidth?: boolean
-	focusedRowEnabled?: boolean
+  keyExpr?: string
+  columnAutoWidth?: boolean
+  focusedRowEnabled?: boolean
   toolbar?: {
     customElements?: IDataGridToolbarItem[]
   }
@@ -29,6 +33,9 @@ export interface IDataGridOptions {
   onSelectionChanged?: (e: any) => void
   onChangesChange?: (e: any) => void
   onRowPrepared?: (e: any) => void
+  onRowInserted?: (e: any) => void
+  onSaved?: (e: any) => void
+  onRowRemoved?: (e: any) => void
 
   //Custom configuration
   showPdfDocAtPreview?: boolean

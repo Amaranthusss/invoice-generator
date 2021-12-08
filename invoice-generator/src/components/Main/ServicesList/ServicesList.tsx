@@ -1,7 +1,6 @@
 import { DataChange } from 'devextreme/ui/data_grid'
 import { Dispatch } from 'redux'
 import { useRef } from 'react'
-import _ from 'lodash'
 
 import Grid from '../../common/grid/Grid'
 
@@ -14,10 +13,24 @@ import { IDataGridOptions } from '../../common/grid/Grid.interface'
 const Services = (): JSX.Element => {
   const dispatch: Dispatch = useAppDispatch()
 
-  const onChangesChange = (e: DataChange[]) => {
-    if (_.size(e) > 0) {
-      dispatch(updateService(e[_.size(e) - 1] as any))
+  const onSaved = (e: any) => {
+    const customSavedEvent: DataChange = {
+      type: 'update',
+      data: e.changes[0]?.data,
+      key: e.changes[0]?.key,
     }
+
+    dispatch(updateService(customSavedEvent))
+  }
+
+  const onRowRemoved = (e: any) => {
+    const customRowRemovedEvent: DataChange = {
+      type: 'remove',
+      data: e.data,
+      key: e.key,
+    }
+
+		dispatch(updateService(customRowRemovedEvent))
   }
 
   const gridOptions = useRef<IDataGridOptions>({
@@ -27,12 +40,13 @@ const Services = (): JSX.Element => {
     selection: {
       mode: 'none',
     },
-    onChangesChange: onChangesChange,
+    onSaved: onSaved,
+    onRowRemoved: onRowRemoved,
     editing: {
       form: {
         items: [
-          { dataField: 'name', isRequired: true },
-          { dataField: 'netto', isRequired: true },
+          { dataField: 'name', isRequired: true, editorType: 'dxTextBox' },
+          { dataField: 'netto', isRequired: true, editorType: 'dxTextBox' },
         ],
       },
     },

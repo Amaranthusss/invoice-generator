@@ -1,5 +1,3 @@
-import { nanoid } from '@reduxjs/toolkit'
-
 import { IServicesListServiceData } from './ServicesList.interface'
 import { IDataGridColumn } from '../../common/grid/Grid.interface'
 
@@ -21,9 +19,10 @@ export const getColumns = (): IDataGridColumn[] => [
   {
     dataField: 'key',
     dataType: 'string',
-    visible: false,
+    visible: true,
     showInColumnChooser: false,
-    calculateCellValue: () => nanoid(),
+    allowEditing: false,
+    calculateCellValue: (rowData: IServicesListServiceData) => rowData.key,
   },
   {
     dataField: 'name',

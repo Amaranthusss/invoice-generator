@@ -37,28 +37,24 @@ const globalSlice = createSlice({
     },
     updateService: (
       state: IStates,
-      action: PayloadAction<DataChange>
+      action: PayloadAction<DataChange<IServicesListServiceData, string>>
     ): void => {
       switch (action.payload.type) {
-        case 'insert':
-          const key = action.payload.data?.__KEY__ as any //string
-          state.services[key] = action.payload.data as any //IServicesListServiceData
-          break
-
         case 'update':
           const modifiedServices: IServices = { ...state.services }
 
-          modifiedServices[action.payload.key.__KEY__ as string] = {
-            ...action.payload.key,
+          modifiedServices[action.payload.key as string] = {
             ...action.payload.data,
           } as IServicesListServiceData
           state.services = modifiedServices
+
           break
 
         case 'remove':
           const clearedServices: IServices = { ...state.services }
 
-          state.services = _.omit(clearedServices, [action.payload.key.__KEY__])
+          state.services = _.omit(clearedServices, [action.payload.key])
+
           break
 
         default:

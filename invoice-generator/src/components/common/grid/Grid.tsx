@@ -1,7 +1,7 @@
 import DataGrid, { Toolbar, Item, Editing } from 'devextreme-react/data-grid'
 import { useResizeDetector } from 'react-resize-detector'
 import { useRef } from 'react'
-import dxDataGrid, { DataChange } from 'devextreme/ui/data_grid'
+import dxDataGrid from 'devextreme/ui/data_grid'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 import pdfMake from 'pdfmake/build/pdfmake'
 import _ from 'lodash'
@@ -9,8 +9,9 @@ import _ from 'lodash'
 import { IDataGridOptions, IDataGridToolbarItem } from './Grid.interface'
 import { Options } from '../common.interface'
 
-import styles from './Grid.module.css'
 import { Enums } from '../../../constants/enums'
+
+import styles from './Grid.module.css'
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 
@@ -44,12 +45,6 @@ const Grid = (props: Options<IDataGridOptions>): JSX.Element => {
     }
   }
 
-  const onChangesChange = (e: DataChange[]) => {
-    if (_.isFunction(props.options.onChangesChange)) {
-      props.options.onChangesChange(e)
-    }
-  }
-
   const getCustomItems = (): JSX.Element[] => {
     return _.map(
       props.options.toolbar?.customElements,
@@ -57,6 +52,24 @@ const Grid = (props: Options<IDataGridOptions>): JSX.Element => {
         return <Item key={index} {...itemOptions} />
       }
     )
+  }
+
+  const onRowInserted = (e: any) => {
+    if (_.isFunction(props.options.onRowInserted)) {
+      props.options.onRowInserted(e)
+    }
+  }
+
+  const onSaved = (e: any) => {
+    if (_.isFunction(props.options.onSaved)) {
+      props.options.onSaved(e)
+    }
+  }
+
+  const onRowRemoved = (e: any) => {
+    if (_.isFunction(props.options.onRowRemoved)) {
+      props.options.onRowRemoved(e)
+    }
   }
 
   return (
@@ -73,6 +86,9 @@ const Grid = (props: Options<IDataGridOptions>): JSX.Element => {
         keyExpr={props.options.keyExpr ?? defaultKeyExpr}
         onInitialized={onInitialized}
         onSelectionChanged={onSelectionChanged}
+        onRowInserted={onRowInserted}
+        onSaved={onSaved}
+        onRowRemoved={onRowRemoved}
       >
         <Toolbar>
           {getCustomItems()}
@@ -80,12 +96,12 @@ const Grid = (props: Options<IDataGridOptions>): JSX.Element => {
         </Toolbar>
         <Editing
           mode={'form'}
+          useIcons={true}
           allowUpdating={true}
           allowAdding={true}
           allowDeleting={true}
           confirmDelete={false}
           newRowPosition={'last'}
-          onChangesChange={onChangesChange}
           form={props.options.editing?.form}
           texts={{
             addRow: Enums.DataGridEditingTexts.addRow,
