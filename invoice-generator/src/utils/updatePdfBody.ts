@@ -6,10 +6,11 @@ import _ from 'lodash'
 import currencyAsWords from './currencyAsWords'
 
 import { IClientsListClientFirmData } from '../components/Main/ClientsList/ClientsList.interface'
-import { IMainTableData } from '../components/Main/Main.interface'
+import { IServices } from '../store/global.slice'
 
 import { Enums } from '../constants/enums'
 import { firmData as ownFirmData, IFirmDataParameter } from '../data/firmData'
+import { IServicesListServiceData } from '../components/Main/ServicesList/ServicesList.interface'
 
 const invoiceNumber: string = '1/10/2021'
 const dateOfIssue: Date = new Date()
@@ -17,20 +18,31 @@ const shortDateFormat: format = Enums.DateFormats.ShortDate
 const methodOfPayment: string = 'Przelew'
 const paymentTime: number = 14
 const dateOfPayment: Date = new Date()
+
 dateOfPayment.setDate(dateOfIssue.getDate() + paymentTime)
 
 export const updatePdfBody = (
-  mainTableData: IMainTableData[],
-  clientFirm: IClientsListClientFirmData
+  services: IServices | null,
+  clientFirm: IClientsListClientFirmData | null
 ): TDocumentDefinitions => {
   let summaryPriceBrutto: number = 0
-  const tableRecords: (string | number)[][] = _.map(
-    mainTableData,
-    (row: IMainTableData) => {
-      summaryPriceBrutto += row.brutto
-      return _.map(row, (value: string | number) => value)
-    }
-  )
+  let lastServiceNumber: number = 0
+
+  const tableRecords = _.map(services, (service: IServicesListServiceData) => {
+    summaryPriceBrutto += service.brutto
+    lastServiceNumber += 1
+
+    const records: (string | number)[] = [
+      lastServiceNumber,
+      service.name,
+      service.vatAsPercents,
+      service.netto,
+      service.vat,
+      service.brutto,
+    ]
+
+    return records
+  })
 
   const ownFirmDataDisplay: string[] = _.map(
     ownFirmData,
@@ -39,7 +51,7 @@ export const updatePdfBody = (
       return caption + parameter.value + '\n'
     }
   )
-  console.log(clientFirm)
+
   const buyerFirmDataDisplay: string[] = _.map(
     clientFirm,
     (value: string | number, parameter: string): string => {

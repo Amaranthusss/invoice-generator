@@ -5,19 +5,22 @@ import _ from 'lodash'
 
 import { IClientsListClientFirmData } from '../components/Main/ClientsList/ClientsList.interface'
 import { IServicesListServiceData } from '../components/Main/ServicesList/ServicesList.interface'
+import {
+  getBruttoFromNetto,
+  getVatFromNetto,
+} from '../utils/currencyCalculations'
+import { Enums } from '../constants/enums'
 
-interface IServices {
+export interface IServices {
   [__KEY__: string]: IServicesListServiceData
 }
 
 interface IStates {
-  pdfDoc: string
   clientFirm: IClientsListClientFirmData | null
   services: IServices
 }
 
 const states = {
-  pdfDoc: '',
   clientFirm: null,
   services: {},
 }
@@ -26,9 +29,6 @@ const globalSlice = createSlice({
   name: 'global',
   initialState: states,
   reducers: {
-    setPdfDoc: (state: IStates, action: PayloadAction<string>): void => {
-      state.pdfDoc = action.payload
-    },
     setClientFirm: (
       state: IStates,
       action: PayloadAction<IClientsListClientFirmData>
@@ -42,10 +42,26 @@ const globalSlice = createSlice({
       switch (action.payload.type) {
         case 'update':
           const modifiedServices: IServices = { ...state.services }
+          const brutto: number = getBruttoFromNetto(
+            action.payload.data?.netto as number
+          )
 
-          modifiedServices[action.payload.key as string] = {
-            ...action.payload.data,
-          } as IServicesListServiceData
+          const vat: number = getVatFromNetto(
+            action.payload.data?.netto as number
+          )
+
+          const netto: number = _.toNumber(action.payload.data?.netto as number)
+
+          const newData: IServicesListServiceData = {
+            name: action.payload.data?.name as string,
+            netto: netto,
+            brutto: brutto,
+            key: action.payload.key,
+            vat: vat,
+            vatAsPercents: Enums.VatAsPercents,
+          }
+          console.log(newData)
+          modifiedServices[action.payload.key as string] = newData
           state.services = modifiedServices
 
           break
@@ -64,10 +80,6 @@ const globalSlice = createSlice({
   },
 })
 
-export const getPdfDoc = (state: RootState): string => {
-  return state.globalSlice.pdfDoc
-}
-
 export const getClientFirm = (
   state: RootState
 ): IClientsListClientFirmData | null => {
@@ -78,6 +90,6 @@ export const getServices = (state: RootState): IServices => {
   return state.globalSlice.services
 }
 
-export const { setPdfDoc, setClientFirm, updateService } = globalSlice.actions
+export const { setClientFirm, updateService } = globalSlice.actions
 
 export default globalSlice.reducer

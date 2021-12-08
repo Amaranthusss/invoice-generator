@@ -36,7 +36,6 @@ const Services = (): JSX.Element => {
   const gridOptions = useRef<IDataGridOptions>({
     dataSource: dataSource,
     columns: getColumns(),
-    showPdfDocAtPreview: true,
     selection: {
       mode: 'none',
     },

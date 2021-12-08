@@ -1,11 +1,7 @@
-import CSS from 'csstype'
-import DataSource from 'devextreme/data/data_source'
-import { EventInfo } from 'devextreme/events'
-import dxDataGrid, {
-  dxDataGridColumn,
-  RowInsertedInfo,
-} from 'devextreme/ui/data_grid'
+import { dxDataGridColumn } from 'devextreme/ui/data_grid'
 import { dxFormOptions } from 'devextreme/ui/form'
+import DataSource from 'devextreme/data/data_source'
+import CSS from 'csstype'
 
 export interface IDataGridOptions {
   //Devextreme configuration
@@ -31,14 +27,8 @@ export interface IDataGridOptions {
   //DevExtreme events
   onInitialized?: (e: any) => void
   onSelectionChanged?: (e: any) => void
-  onChangesChange?: (e: any) => void
-  onRowPrepared?: (e: any) => void
-  onRowInserted?: (e: any) => void
   onSaved?: (e: any) => void
   onRowRemoved?: (e: any) => void
-
-  //Custom configuration
-  showPdfDocAtPreview?: boolean
 }
 
 export interface IDataGridColumn extends dxDataGridColumn {}

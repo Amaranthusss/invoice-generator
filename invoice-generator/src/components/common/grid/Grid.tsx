@@ -2,8 +2,6 @@ import DataGrid, { Toolbar, Item, Editing } from 'devextreme-react/data-grid'
 import { useResizeDetector } from 'react-resize-detector'
 import { useRef } from 'react'
 import dxDataGrid from 'devextreme/ui/data_grid'
-import pdfFonts from 'pdfmake/build/vfs_fonts'
-import pdfMake from 'pdfmake/build/pdfmake'
 import _ from 'lodash'
 
 import { IDataGridOptions, IDataGridToolbarItem } from './Grid.interface'
@@ -12,8 +10,6 @@ import { Options } from '../common.interface'
 import { Enums } from '../../../constants/enums'
 
 import styles from './Grid.module.css'
-
-pdfMake.vfs = pdfFonts.pdfMake.vfs
 
 const defaultKeyExpr: string = 'key'
 
@@ -54,12 +50,6 @@ const Grid = (props: Options<IDataGridOptions>): JSX.Element => {
     )
   }
 
-  const onRowInserted = (e: any) => {
-    if (_.isFunction(props.options.onRowInserted)) {
-      props.options.onRowInserted(e)
-    }
-  }
-
   const onSaved = (e: any) => {
     if (_.isFunction(props.options.onSaved)) {
       props.options.onSaved(e)
@@ -86,7 +76,6 @@ const Grid = (props: Options<IDataGridOptions>): JSX.Element => {
         keyExpr={props.options.keyExpr ?? defaultKeyExpr}
         onInitialized={onInitialized}
         onSelectionChanged={onSelectionChanged}
-        onRowInserted={onRowInserted}
         onSaved={onSaved}
         onRowRemoved={onRowRemoved}
       >

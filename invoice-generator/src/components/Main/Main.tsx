@@ -5,9 +5,10 @@ import ClientsList from './ClientsList/ClientsList'
 import PdfPreview from './Preview/Preview'
 
 import styles from './Main.module.css'
+import { Enums } from '../../constants/enums'
 
 const Main = (): JSX.Element => {
-  config({ defaultCurrency: 'PLN' })
+  config({ defaultCurrency: Enums.DefaultCurrency })
 
   return (
     <div className={styles.container}>

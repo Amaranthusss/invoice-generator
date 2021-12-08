@@ -25,6 +25,9 @@ export namespace Enums {
     editRow = 'Edytuj',
     deleteRow = 'Usuń',
   }
+
+  export const DefaultCurrency: string = 'PLN'
+  export const VatAsPercents: number = 23
 }
 
 export const VAT: number = 23
