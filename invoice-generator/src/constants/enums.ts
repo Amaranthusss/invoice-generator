@@ -28,6 +28,7 @@ export namespace Enums {
     deleteRowButton = 'Usuń',
     sendEmailButton = 'Wyślij e-mail',
     invoiceDateOfIssue = 'Data wystawienia',
+		methodOfPaymentTransfer = 'Przelew'
   }
 
   export const DefaultCurrency: string = 'PLN'

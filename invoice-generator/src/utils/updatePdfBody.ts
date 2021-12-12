@@ -13,7 +13,7 @@ import { IServicesListServiceData } from '../components/Main/ServicesList/Servic
 
 const invoiceNumber: string = '1/10/2021'
 const dateOfIssue: Date = new Date()
-const methodOfPayment: string = 'Przelew'
+const methodOfPayment: string = Enums.InterfaceTexts.methodOfPaymentTransfer
 const paymentTime: number = 14
 const dateOfPayment: Date = new Date()
 
@@ -82,7 +82,10 @@ export const updatePdfBody = (
 
   const summaryDisplay: ContentText[] = [
     {
-      text: `Razem do zapłaty: ${summaryPriceBrutto} zł\n`,
+      text: `Razem do zapłaty: ${formatNumber(
+        summaryPriceBrutto,
+        Enums.CurrencyFormat
+      )} zł\n`,
       bold: true,
       fontSize: 12,
     },
@@ -91,7 +94,10 @@ export const updatePdfBody = (
       italics: true,
     },
     {
-      text: `Pozostało do zapłaty: ${summaryPriceBrutto} zł\n`,
+      text: `Pozostało do zapłaty: ${formatNumber(
+        summaryPriceBrutto,
+        Enums.CurrencyFormat
+      )} zł\n`,
       italics: true,
     },
   ]
