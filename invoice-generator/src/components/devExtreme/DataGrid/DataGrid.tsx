@@ -48,11 +48,9 @@ const DataGridWrapper = (props: IOptions<IDataGridOptions>): JSX.Element => {
   return (
     <div className={resizeDetector.box} ref={ref}>
       <DataGrid
-        dataSource={props.options.dataSource}
-        columns={props.options.columns}
+        {...props.options}
         width={width}
         height={height}
-        selection={props.options.selection}
         showBorders={true}
         focusedRowEnabled={props.options.focusedRowEnabled ?? false}
         columnAutoWidth={props.options.columnAutoWidth ?? false}
@@ -85,9 +83,9 @@ const DataGridWrapper = (props: IOptions<IDataGridOptions>): JSX.Element => {
           newRowPosition={'last'}
           form={props.options.editing?.form}
           texts={{
-            addRow: Enums.InterfaceButtonsTexts.addRow,
-            editRow: Enums.InterfaceButtonsTexts.editRow,
-            deleteRow: Enums.InterfaceButtonsTexts.deleteRow,
+            addRow: Enums.InterfaceTexts.addRowButton,
+            editRow: Enums.InterfaceTexts.editRowButton,
+            deleteRow: Enums.InterfaceTexts.deleteRowButton,
           }}
         />
       </DataGrid>

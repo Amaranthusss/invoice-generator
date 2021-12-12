@@ -17,10 +17,10 @@ const DateBoxWrapper = (props: IOptions<IDateBoxOptions>): JSX.Element => {
   return (
     <div className={resizeDetector.box} ref={ref}>
       <DateBox
+        {...props.options}
         value={new Date()}
         width={width}
         height={height}
-        hint={props.options.hint}
         onValueChanged={(e: IDateBoxEventOnValueChanged) =>
           dxService.callFromProps(props, 'onValueChanged', e)
         }

@@ -9,10 +9,15 @@ import { IDateBoxOptions } from '../../devExtreme/DateBox/DateBox.interface'
 import styles from './InvoiceConfigurator.module.css'
 
 const InvoiceConfigurator = (): JSX.Element => {
-  const dateBoxOptions: IDateBoxOptions = {}
+  const dateBoxOptions: IDateBoxOptions = {
+    type: 'date',
+    hint: Enums.InterfaceTexts.invoiceDateOfIssue,
+  }
   const sendEmailButtonOptions: IButtonOptions = {
     icon: 'email',
-    hint: Enums.InterfaceButtonsTexts.sendEmail,
+    hint: Enums.InterfaceTexts.sendEmailButton,
+    stylingMode: 'contained',
+    type: 'default',
     onClick: (e: ClickEvent) => console.log(e),
   }
 

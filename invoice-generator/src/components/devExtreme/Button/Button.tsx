@@ -15,10 +15,9 @@ const ButtonWrapper = (props: IOptions<IButtonOptions>): JSX.Element => {
   return (
     <div className={resizeDetector.box} ref={ref}>
       <Button
+        {...props.options}
         width={width}
         height={height}
-        icon={props.options.icon}
-        hint={props.options.hint}
         onClick={(e: ClickEvent) =>
           dxService.callFromProps(props, 'onClick', e)
         }

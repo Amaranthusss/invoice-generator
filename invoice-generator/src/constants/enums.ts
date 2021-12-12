@@ -20,11 +20,12 @@ export namespace Enums {
     brutto = 'Wartość BRUTTO',
   }
 
-  export enum InterfaceButtonsTexts {
-    addRow = 'Dodaj',
-    editRow = 'Edytuj',
-    deleteRow = 'Usuń',
-    sendEmail = 'Wyślij e-mail',
+  export enum InterfaceTexts {
+    addRowButton = 'Dodaj',
+    editRowButton = 'Edytuj',
+    deleteRowButton = 'Usuń',
+    sendEmailButton = 'Wyślij e-mail',
+		invoiceDateOfIssue = 'Data wystawienia'
   }
 
   export const DefaultCurrency: string = 'PLN'
