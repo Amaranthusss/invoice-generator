@@ -28,7 +28,7 @@ const ClientsList = (): JSX.Element => {
   }
 
   const onSelectionChanged = (e: IDataGridEventOnSelectionChanged): void => {
-    if (_.size(e?.selectedRowKeys) > 0) {
+    if (!_.isEmpty(e?.selectedRowKeys)) {
       dispatch(
         setClientFirm(_.last(e.selectedRowsData) as IClientsListClientFirmData)
       )

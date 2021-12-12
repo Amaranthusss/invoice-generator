@@ -1,7 +1,7 @@
 import DataGrid, { Toolbar, Item, Editing } from 'devextreme-react/data-grid'
 import { useResizeDetector } from 'react-resize-detector'
 import { useRef } from 'react'
-import dxDataGrid from 'devextreme/ui/data_grid'
+import dxDataGrid, { dxDataGridOptions } from 'devextreme/ui/data_grid'
 import _ from 'lodash'
 
 import dxService from '../../../utils/dxService'
@@ -45,10 +45,16 @@ const DataGridWrapper = (props: IOptions<IDataGridOptions>): JSX.Element => {
     )
   }
 
+  const getOptionsExceptParams = (): dxDataGridOptions => {
+    const options = _.omit(props.options, ['editing', 'toolbar'])
+
+    return options
+  }
+
   return (
     <div className={resizeDetector.box} ref={ref}>
       <DataGrid
-        {...props.options}
+        {...getOptionsExceptParams()}
         width={width}
         height={height}
         showBorders={true}

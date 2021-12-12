@@ -40,6 +40,7 @@ const Services = (): JSX.Element => {
   const gridOptions = useRef<IDataGridOptions>({
     dataSource: dataSource,
     columns: getColumns(),
+    columnAutoWidth: true,
     selection: {
       mode: 'none',
     },
