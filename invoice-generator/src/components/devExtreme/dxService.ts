@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-import { IOptions } from '../components/components.interface'
+import { IOptions } from '../components.interface'
 
 const callFromProps = (
   props: IOptions<any>,

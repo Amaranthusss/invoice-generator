@@ -2,7 +2,7 @@ import { useResizeDetector } from 'react-resize-detector'
 import { Button } from 'devextreme-react'
 import { ClickEvent } from 'devextreme/ui/button'
 
-import dxService from '../../../utils/dxService'
+import dxService from '../dxService'
 
 import { IButtonOptions } from './Button.interface'
 import { IOptions } from '../../components.interface'
