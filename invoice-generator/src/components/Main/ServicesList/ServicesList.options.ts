@@ -19,7 +19,7 @@ export const getColumns = (): IDataGridColumn[] => [
   {
     dataField: 'key',
     dataType: 'string',
-    visible: true,
+    visible: false,
     showInColumnChooser: false,
     allowEditing: false,
     calculateCellValue: (rowData: IServicesListServiceData) => rowData.key,
@@ -34,14 +34,14 @@ export const getColumns = (): IDataGridColumn[] => [
     dataType: 'number',
     caption: Enums.ServicesListWords.vatAsPercents,
     allowEditing: false,
-    format: { type: 'percent' },
+    format: 'percent',
     calculateCellValue: getVatAsPercents,
   },
   {
     dataField: 'netto',
     dataType: 'number',
     caption: Enums.ServicesListWords.netto,
-    format: { precision: 2, type: 'currency' },
+    format: Enums.CurrencyFormat,
   },
   {
     dataField: 'vat',
@@ -49,7 +49,7 @@ export const getColumns = (): IDataGridColumn[] => [
     caption: Enums.ServicesListWords.vat,
     allowEditing: false,
     calculateCellValue: getVat,
-    format: { precision: 2, type: 'currency' },
+    format: Enums.CurrencyFormat,
   },
   {
     dataField: 'brutto',
@@ -57,7 +57,7 @@ export const getColumns = (): IDataGridColumn[] => [
     caption: Enums.ServicesListWords.brutto,
     allowEditing: false,
     calculateCellValue: getBrutto,
-    format: { precision: 2, type: 'currency' },
+    format: Enums.CurrencyFormat,
   },
 ]
 

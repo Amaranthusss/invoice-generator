@@ -38,6 +38,7 @@ const Services = (): JSX.Element => {
   }
 
   const gridOptions = useRef<IDataGridOptions>({
+		name: 'data-grid-services',
     dataSource: dataSource,
     columns: getColumns(),
     columnAutoWidth: true,

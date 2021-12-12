@@ -36,6 +36,7 @@ const ClientsList = (): JSX.Element => {
   }
 
   const gridOptions: IDataGridOptions = {
+		name: 'data-grid-clients',
     dataSource: dataSource,
     columns: getColumns(),
     keyExpr: 'clientId',

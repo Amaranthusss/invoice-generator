@@ -1,4 +1,9 @@
-import DataGrid, { Toolbar, Item, Editing } from 'devextreme-react/data-grid'
+import DataGrid, {
+  Toolbar,
+  Item,
+  Editing,
+  StateStoring,
+} from 'devextreme-react/data-grid'
 import { useResizeDetector } from 'react-resize-detector'
 import { useRef } from 'react'
 import dxDataGrid, { dxDataGridOptions } from 'devextreme/ui/data_grid'
@@ -26,13 +31,11 @@ const defaultKeyExpr: string = 'key'
 const DataGridWrapper = (props: IOptions<IDataGridOptions>): JSX.Element => {
   const { width, height, ref } = useResizeDetector<HTMLDivElement>()
   const gridComponent = useRef<dxDataGrid>()
-  const dataSourceArray = useRef<any[]>()
 
   const onInitialized = async (
     e: IDataGridEventOnInitialized
   ): Promise<void> => {
     gridComponent.current = e.component
-    dataSourceArray.current = await e.component?.getDataSource().store().load()
     dxService.callFromProps(props, 'onInitialized', e)
   }
 
@@ -46,7 +49,11 @@ const DataGridWrapper = (props: IOptions<IDataGridOptions>): JSX.Element => {
   }
 
   const getOptionsExceptParams = (): dxDataGridOptions => {
-    const options = _.omit(props.options, ['editing', 'toolbar'])
+    const options = _.omit(props.options, [
+      'editing',
+      'toolbar',
+      'stateStoring',
+    ])
 
     return options
   }
@@ -58,9 +65,9 @@ const DataGridWrapper = (props: IOptions<IDataGridOptions>): JSX.Element => {
         width={width}
         height={height}
         showBorders={true}
-        focusedRowEnabled={props.options.focusedRowEnabled ?? false}
-        columnAutoWidth={props.options.columnAutoWidth ?? false}
         keyExpr={props.options.keyExpr ?? defaultKeyExpr}
+        allowColumnResizing={true}
+        allowColumnReordering={true}
         onInitialized={onInitialized}
         onSelectionChanged={(e: IDataGridEventOnSelectionChanged) =>
           dxService.callFromProps(props, 'onSelectionChanged', e)
@@ -94,6 +101,7 @@ const DataGridWrapper = (props: IOptions<IDataGridOptions>): JSX.Element => {
             deleteRow: Enums.InterfaceTexts.deleteRowButton,
           }}
         />
+        <StateStoring enabled={true} storageKey={props.options.name} />
       </DataGrid>
     </div>
   )

@@ -10,6 +10,7 @@ import CSS from 'csstype'
 import { EventInfo } from 'devextreme/events'
 
 export interface IDataGridOptions extends dxDataGridOptions {
+	name: string
   toolbar?: Toolbar & customToolbarItems
 }
 
