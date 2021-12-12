@@ -1,6 +1,5 @@
 import { ContentText, TDocumentDefinitions } from 'pdfmake/interfaces'
 import { formatDate, formatNumber } from 'devextreme/localization'
-import { format } from 'devextreme/ui/widget/ui.widget'
 import _ from 'lodash'
 
 import currencyAsWords from './currencyAsWords'
@@ -14,7 +13,6 @@ import { IServicesListServiceData } from '../components/Main/ServicesList/Servic
 
 const invoiceNumber: string = '1/10/2021'
 const dateOfIssue: Date = new Date()
-const shortDateFormat: format = Enums.DateFormats.ShortDate
 const methodOfPayment: string = 'Przelew'
 const paymentTime: number = 14
 const dateOfPayment: Date = new Date()
@@ -74,11 +72,11 @@ export const updatePdfBody = (
   const sellerFirmData: string[] = getSellerFirmData()
 
   const invoiceInfoDisplay: string[] = [
-    `Data wystawiena: ${formatDate(dateOfIssue, shortDateFormat)}`,
+    `Data wystawiena: ${formatDate(dateOfIssue, Enums.DateFormats.ShortDate)}`,
     `Sposób płatności: ${methodOfPayment}`,
     `Termin płatności: ${formatDate(
       dateOfPayment,
-      shortDateFormat
+      Enums.DateFormats.ShortDate
     )} (${paymentTime} dni)`,
   ]
 

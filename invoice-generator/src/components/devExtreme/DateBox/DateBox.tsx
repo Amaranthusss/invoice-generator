@@ -12,7 +12,7 @@ import { IOptions } from '../../components.interface'
 import resizeDetector from '../resizeDetector.module.css'
 
 const DateBoxWrapper = (props: IOptions<IDateBoxOptions>): JSX.Element => {
-  const { width, height, ref } = useResizeDetector()
+  const { width, height, ref } = useResizeDetector<HTMLDivElement>()
 
   return (
     <div className={resizeDetector.box} ref={ref}>

@@ -10,7 +10,7 @@ import { IOptions } from '../../components.interface'
 import resizeDetector from '../resizeDetector.module.css'
 
 const ButtonWrapper = (props: IOptions<IButtonOptions>): JSX.Element => {
-  const { width, height, ref } = useResizeDetector()
+  const { width, height, ref } = useResizeDetector<HTMLDivElement>()
 
   return (
     <div className={resizeDetector.box} ref={ref}>

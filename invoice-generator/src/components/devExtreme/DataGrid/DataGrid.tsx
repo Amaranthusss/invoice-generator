@@ -24,9 +24,9 @@ import resizeDetector from '../resizeDetector.module.css'
 const defaultKeyExpr: string = 'key'
 
 const DataGridWrapper = (props: IOptions<IDataGridOptions>): JSX.Element => {
+  const { width, height, ref } = useResizeDetector<HTMLDivElement>()
   const gridComponent = useRef<dxDataGrid>()
   const dataSourceArray = useRef<any[]>()
-  const { width, height, ref } = useResizeDetector()
 
   const onInitialized = async (
     e: IDataGridEventOnInitialized
