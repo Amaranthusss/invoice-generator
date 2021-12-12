@@ -17,13 +17,15 @@
 }
 
 .tables {
-  height: calc(100% - 50px);
+  height: calc(100% - 70px);
   width: 100%;
   min-width: 0px;
   min-height: 30px;
 }
 
 .table {
+	padding-inline: 5px;
+	padding-block: 5px;
   height: 50%;
   min-width: 0px;
   min-height: 0px;
