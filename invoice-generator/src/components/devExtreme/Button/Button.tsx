@@ -1,32 +1,30 @@
 import { useResizeDetector } from 'react-resize-detector'
-import { DateBox } from 'devextreme-react'
+import { Button } from 'devextreme-react'
+import { ClickEvent } from 'devextreme/ui/button'
 
 import dxService from '../../../utils/dxService'
 
-import {
-  IDateBoxEventOnValueChanged,
-  IDateBoxOptions,
-} from './DateBox.interface'
+import { IButtonOptions } from './Button.interface'
 import { IOptions } from '../../components.interface'
 
 import resizeDetector from '../resizeDetector.module.css'
 
-const DateBoxWrapper = (props: IOptions<IDateBoxOptions>): JSX.Element => {
+const ButtonWrapper = (props: IOptions<IButtonOptions>): JSX.Element => {
   const { width, height, ref } = useResizeDetector()
 
   return (
     <div className={resizeDetector.box} ref={ref}>
-      <DateBox
-        value={new Date()}
+      <Button
         width={width}
         height={height}
+        icon={props.options.icon}
         hint={props.options.hint}
-        onValueChanged={(e: IDateBoxEventOnValueChanged) =>
-          dxService.callFromProps(props, 'onValueChanged', e)
+        onClick={(e: ClickEvent) =>
+          dxService.callFromProps(props, 'onClick', e)
         }
       />
     </div>
   )
 }
 
-export default DateBoxWrapper
+export default ButtonWrapper

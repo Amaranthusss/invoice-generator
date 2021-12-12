@@ -1,18 +1,18 @@
 import { IServicesListServiceData } from './ServicesList.interface'
 import { IDataGridColumn } from '../../devExtreme/DataGrid/DataGrid.interface'
 
-import { Enums, VAT } from '../../../constants/enums'
+import { Enums } from '../../../constants/enums'
 
 const getBrutto = (e: IServicesListServiceData): number => {
-  return e.netto * (VAT / 100 + 1)
+  return e.netto * (Enums.VAT / 100 + 1)
 }
 
 const getVatAsPercents = (e: IServicesListServiceData): number => {
-  return VAT / 100
+  return Enums.VAT / 100
 }
 
 const getVat = (e: IServicesListServiceData): number => {
-  return e.netto * (VAT / 100)
+  return e.netto * (Enums.VAT / 100)
 }
 
 export const getColumns = (): IDataGridColumn[] => [

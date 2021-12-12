@@ -19,7 +19,7 @@ import { IOptions } from '../../components.interface'
 
 import { Enums } from '../../../constants/enums'
 
-import styles from './DataGrid.module.css'
+import resizeDetector from '../resizeDetector.module.css'
 
 const defaultKeyExpr: string = 'key'
 
@@ -46,7 +46,7 @@ const DataGridWrapper = (props: IOptions<IDataGridOptions>): JSX.Element => {
   }
 
   return (
-    <div className={styles.container} ref={ref}>
+    <div className={resizeDetector.box} ref={ref}>
       <DataGrid
         dataSource={props.options.dataSource}
         columns={props.options.columns}
@@ -85,9 +85,9 @@ const DataGridWrapper = (props: IOptions<IDataGridOptions>): JSX.Element => {
           newRowPosition={'last'}
           form={props.options.editing?.form}
           texts={{
-            addRow: Enums.DataGridEditingTexts.addRow,
-            editRow: Enums.DataGridEditingTexts.editRow,
-            deleteRow: Enums.DataGridEditingTexts.deleteRow,
+            addRow: Enums.InterfaceButtonsTexts.addRow,
+            editRow: Enums.InterfaceButtonsTexts.editRow,
+            deleteRow: Enums.InterfaceButtonsTexts.deleteRow,
           }}
         />
       </DataGrid>

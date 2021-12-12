@@ -14,16 +14,20 @@ const Main = (): JSX.Element => {
   return (
     <div className={styles.container}>
       <div className={styles.column}>
-        <div className={styles.row}>
+        <div className={styles.toolbar}>
           <InvoiceConfigurator />
         </div>
-        <div className={styles.row}>
-          <ServicesList />
-        </div>
-        <div className={styles.row}>
-          <ClientsList />
+
+        <div className={styles.tables}>
+          <div className={styles.table}>
+            <ServicesList />
+          </div>
+          <div className={styles.table}>
+            <ClientsList />
+          </div>
         </div>
       </div>
+
       <div className={styles.column}>
         <PdfPreview />
       </div>

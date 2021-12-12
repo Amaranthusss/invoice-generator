@@ -20,14 +20,14 @@ export namespace Enums {
     brutto = 'Wartość BRUTTO',
   }
 
-  export enum DataGridEditingTexts {
+  export enum InterfaceButtonsTexts {
     addRow = 'Dodaj',
     editRow = 'Edytuj',
     deleteRow = 'Usuń',
+    sendEmail = 'Wyślij e-mail',
   }
 
   export const DefaultCurrency: string = 'PLN'
   export const VatAsPercents: number = 23
+  export const VAT: number = 23
 }
-
-export const VAT: number = 23

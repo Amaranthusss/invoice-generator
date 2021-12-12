@@ -3,39 +3,18 @@ import dxDataGrid, {
   dxDataGridColumn,
   DataChangeInfo,
   RowRemovedInfo,
+  dxDataGridOptions,
+  Toolbar,
 } from 'devextreme/ui/data_grid'
-import { dxFormOptions } from 'devextreme/ui/form'
-import DataSource from 'devextreme/data/data_source'
 import CSS from 'csstype'
 import { EventInfo } from 'devextreme/events'
 
-export interface IDataGridOptions {
-  //Devextreme configuration
-  dataSource: DataSource | any[]
-  columns: IDataGridColumn[]
-  keyExpr?: string
-  columnAutoWidth?: boolean
-  focusedRowEnabled?: boolean
-  toolbar?: {
-    customElements?: IDataGridToolbarItem[]
-  }
-  selection?: {
-    allowSelectAll?: boolean
-    deferred?: boolean
-    mode?: 'multiple' | 'none' | 'single'
-    selectAllMode?: 'allPages' | 'page'
-    showCheckBoxesMode?: 'always' | 'none' | 'onClick' | 'onLongTap'
-  }
-  editing?: {
-    form?: dxFormOptions
-  }
+export interface IDataGridOptions extends dxDataGridOptions {
+  toolbar?: Toolbar & customToolbarItems
+}
 
-  //DevExtreme events
-  onInitialized?: (e: IDataGridEventOnInitialized) => void
-  onSelectionChanged?: (e: IDataGridEventOnSelectionChanged) => void
-  onSaved?: (e: IDataGridEventOnSaved) => void
-  onRowRemoved?: (e: IDataGridEventOnRowRemoved) => void
-  onOptionChanged?: (e: IDataGridEventOnOptionChanged) => void
+type customToolbarItems = {
+  customElements?: IDataGridToolbarItem[]
 }
 
 export interface IDataGridColumn extends dxDataGridColumn {}

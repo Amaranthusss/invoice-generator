@@ -1,0 +1,31 @@
+.container {
+  min-height: 20px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  padding-block: 5px;
+  padding-inline: 5px;
+  gap: 5px;
+}
+
+.buttonsPanel {
+  flex: 4;
+  display: inline-flex;
+  justify-content: right;
+}
+
+.buttonsPanel .button {
+  max-width: 50px;
+  max-height: 50px;
+  min-width: 15px;
+  min-height: 15px;
+  flex: 1;
+}
+
+.dateBox {
+  flex: 1;
+  min-width: 115px;
+  max-width: 180px;
+  min-height: 35px;
+  max-height: 40px;
+}
