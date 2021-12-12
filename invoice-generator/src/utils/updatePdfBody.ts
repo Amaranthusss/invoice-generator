@@ -52,14 +52,12 @@ export const updatePdfBody = (
     }
   )
 
-  const buyerFirmDataDisplay: string[] = _.map(
-    clientFirm,
-    (value: string | number, parameter: string): string => {
-      const caption = parameter === 'nip' ? 'NIP: ' : ''
-
-      return caption + value + '\n'
-    }
-  )
+  const buyerFirmDataDisplay: string[] = [
+    (clientFirm?.name ?? '') + '\n',
+    (clientFirm?.address ?? '') + '\n',
+    (clientFirm?.city ?? '') + '\n',
+    `NIP: ${clientFirm?.nip ?? ''}`,
+  ]
 
   const getSellerFirmData = (): string[] => {
     const sellerFirmData: string[] = []
