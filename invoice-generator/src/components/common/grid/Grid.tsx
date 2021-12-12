@@ -4,41 +4,34 @@ import { useRef } from 'react'
 import dxDataGrid from 'devextreme/ui/data_grid'
 import _ from 'lodash'
 
-import { IDataGridOptions, IDataGridToolbarItem } from './Grid.interface'
-import { Options } from '../common.interface'
+import {
+  IDataGridEventOnInitialized,
+  IDataGridEventOnRowRemoved,
+  IDataGridEventOnSaved,
+  IDataGridEventOnSelectionChanged,
+  IDataGridOptions,
+  IDataGridToolbarItem,
+} from './Grid.interface'
+import { IOptions } from '../common.interface'
 
 import { Enums } from '../../../constants/enums'
 
 import styles from './Grid.module.css'
+import dxService from '../../../utils/dxService'
 
 const defaultKeyExpr: string = 'key'
 
-const Grid = (props: Options<IDataGridOptions>): JSX.Element => {
+const Grid = (props: IOptions<IDataGridOptions>): JSX.Element => {
   const gridComponent = useRef<dxDataGrid>()
   const dataSourceArray = useRef<any[]>()
   const { width, height, ref } = useResizeDetector()
 
-  const onInitialized = async (e: any): Promise<void> => {
-    gridComponent.current = e.component
-
-    if (_.isFunction(props.options.onInitialized)) {
-      props.options.onInitialized(e)
-    }
-
-    dataSourceArray.current = await e.component.getDataSource().store().load()
-
-    setTimeout(() => {
-      gridComponent.current?.selectRowsByIndexes([0])
-      gridComponent.current?.option({
-        focusedRowKey: gridComponent.current.getSelectedRowKeys()[0],
-      })
-    }, 100)
-  }
-
-  const onSelectionChanged = (e: any) => {
-    if (_.isFunction(props.options.onSelectionChanged)) {
-      props.options.onSelectionChanged(e)
-    }
+  const onInitialized = async (
+    e: IDataGridEventOnInitialized
+  ): Promise<void> => {
+		gridComponent.current = e.component
+    dataSourceArray.current = await e.component?.getDataSource().store().load()
+    dxService.callFromProps(props, 'onInitialized', e)
   }
 
   const getCustomItems = (): JSX.Element[] => {
@@ -48,18 +41,6 @@ const Grid = (props: Options<IDataGridOptions>): JSX.Element => {
         return <Item key={index} {...itemOptions} />
       }
     )
-  }
-
-  const onSaved = (e: any) => {
-    if (_.isFunction(props.options.onSaved)) {
-      props.options.onSaved(e)
-    }
-  }
-
-  const onRowRemoved = (e: any) => {
-    if (_.isFunction(props.options.onRowRemoved)) {
-      props.options.onRowRemoved(e)
-    }
   }
 
   return (
@@ -75,9 +56,15 @@ const Grid = (props: Options<IDataGridOptions>): JSX.Element => {
         columnAutoWidth={props.options.columnAutoWidth ?? false}
         keyExpr={props.options.keyExpr ?? defaultKeyExpr}
         onInitialized={onInitialized}
-        onSelectionChanged={onSelectionChanged}
-        onSaved={onSaved}
-        onRowRemoved={onRowRemoved}
+        onSelectionChanged={(e: IDataGridEventOnSelectionChanged) =>
+          dxService.callFromProps(props, 'onSelectionChanged', e)
+        }
+        onSaved={(e: IDataGridEventOnSaved) =>
+          dxService.callFromProps(props, 'onSaved', e)
+        }
+        onRowRemoved={(e: IDataGridEventOnRowRemoved) =>
+          dxService.callFromProps(props, 'onRowRemoved', e)
+        }
       >
         <Toolbar>
           {getCustomItems()}

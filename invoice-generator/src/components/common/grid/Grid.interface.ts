@@ -1,9 +1,18 @@
-import { dxDataGridColumn } from 'devextreme/ui/data_grid'
+import dxDataGrid, {
+  SelectionChangedInfo,
+  dxDataGridColumn,
+  DataChangeInfo,
+  RowRemovedInfo,
+} from 'devextreme/ui/data_grid'
 import { dxFormOptions } from 'devextreme/ui/form'
 import DataSource from 'devextreme/data/data_source'
 import CSS from 'csstype'
+import { EventInfo } from 'devextreme/events'
 
 export interface IDataGridOptions {
+  //Custom configuration
+  name?: string
+
   //Devextreme configuration
   dataSource: DataSource | any[]
   columns: IDataGridColumn[]
@@ -25,10 +34,10 @@ export interface IDataGridOptions {
   }
 
   //DevExtreme events
-  onInitialized?: (e: any) => void
-  onSelectionChanged?: (e: any) => void
-  onSaved?: (e: any) => void
-  onRowRemoved?: (e: any) => void
+  onInitialized?: (e: IDataGridEventOnInitialized) => void
+  onSelectionChanged?: (e: IDataGridEventOnSelectionChanged) => void
+  onSaved?: (e: IDataGridEventOnSaved) => void
+  onRowRemoved?: (e: IDataGridEventOnRowRemoved) => void
 }
 
 export interface IDataGridColumn extends dxDataGridColumn {}
@@ -90,3 +99,17 @@ export interface IDataGridToolbarButton {
   onClick?: () => void
   options?: any
 }
+
+export type IDataGridEventOnInitialized = {
+  component?: dxDataGrid<any, any> | undefined
+  element?: HTMLElement | undefined
+}
+
+export type IDataGridEventOnSaved = EventInfo<dxDataGrid<any, any>> &
+  DataChangeInfo<any, any>
+
+export type IDataGridEventOnRowRemoved = EventInfo<dxDataGrid<any, any>> &
+  RowRemovedInfo<any, any>
+
+export type IDataGridEventOnSelectionChanged = EventInfo<dxDataGrid<any, any>> &
+  SelectionChangedInfo<any, any>

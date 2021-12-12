@@ -8,12 +8,16 @@ import { dataSource, getColumns } from './ServicesList.options'
 import { useAppDispatch } from '../../../hooks/useAppDispatch'
 import { updateService } from '../../../store/global.slice'
 
-import { IDataGridOptions } from '../../common/grid/Grid.interface'
+import {
+  IDataGridEventOnRowRemoved,
+  IDataGridEventOnSaved,
+  IDataGridOptions,
+} from '../../common/grid/Grid.interface'
 
 const Services = (): JSX.Element => {
   const dispatch: Dispatch = useAppDispatch()
 
-  const onSaved = (e: any) => {
+  const onSaved = (e: IDataGridEventOnSaved) => {
     const customSavedEvent: DataChange = {
       type: 'update',
       data: e.changes[0]?.data,
@@ -23,14 +27,14 @@ const Services = (): JSX.Element => {
     dispatch(updateService(customSavedEvent))
   }
 
-  const onRowRemoved = (e: any) => {
+  const onRowRemoved = (e: IDataGridEventOnRowRemoved) => {
     const customRowRemovedEvent: DataChange = {
       type: 'remove',
       data: e.data,
       key: e.key,
     }
 
-		dispatch(updateService(customRowRemovedEvent))
+    dispatch(updateService(customRowRemovedEvent))
   }
 
   const gridOptions = useRef<IDataGridOptions>({
@@ -39,8 +43,6 @@ const Services = (): JSX.Element => {
     selection: {
       mode: 'none',
     },
-    onSaved: onSaved,
-    onRowRemoved: onRowRemoved,
     editing: {
       form: {
         items: [
@@ -49,6 +51,8 @@ const Services = (): JSX.Element => {
         ],
       },
     },
+    onSaved: onSaved,
+    onRowRemoved: onRowRemoved,
   })
 
   return <Grid options={gridOptions.current} />

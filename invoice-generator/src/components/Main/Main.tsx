@@ -1,5 +1,6 @@
 import config from 'devextreme/core/config'
 
+import InvoiceConfigurator from './InvoiceConfigurator/InvoiceConfigurator'
 import ServicesList from './ServicesList/ServicesList'
 import ClientsList from './ClientsList/ClientsList'
 import PdfPreview from './Preview/Preview'
@@ -13,6 +14,9 @@ const Main = (): JSX.Element => {
   return (
     <div className={styles.container}>
       <div className={styles.column}>
+        <div className={styles.row}>
+          <InvoiceConfigurator />
+        </div>
         <div className={styles.row}>
           <ServicesList />
         </div>
