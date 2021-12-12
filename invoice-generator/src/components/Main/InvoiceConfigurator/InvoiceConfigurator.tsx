@@ -1,22 +1,13 @@
-import CalendarPanel from './CalendarPanel/CalendarPanel'
+import DateBoxWrapper from '../../devExtreme/DateBox/DateBox'
 
-import {
-  ICalendarEventOnValueChanged,
-  ICalendarPanelOptions,
-} from './CalendarPanel/CalendarPanel.interface'
+import { IDateBoxOptions } from '../../devExtreme/DateBox/DateBox.interface'
 
 const InvoiceConfigurator = (): JSX.Element => {
-  const onValueChanged = (e: ICalendarEventOnValueChanged) => {
-    console.log(e)
-  }
-
-  const calendarPanelOptions: ICalendarPanelOptions = {
-    onValueChanged,
-  }
+  const dateBoxOptions: IDateBoxOptions = {}
 
   return (
     <>
-      <CalendarPanel options={calendarPanelOptions} />
+      <DateBoxWrapper options={dateBoxOptions} />
     </>
   )
 }

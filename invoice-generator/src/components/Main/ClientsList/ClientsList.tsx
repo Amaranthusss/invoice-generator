@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
 import _ from 'lodash'
 
-import Grid from '../../common/grid/Grid'
+import DataGrid from '../../devExtreme/DataGrid/DataGrid'
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch'
 import { setClientFirm } from '../../../store/global.slice'
@@ -10,7 +10,7 @@ import {
   IDataGridEventOnSelectionChanged,
   IDataGridEventOnInitialized,
   IDataGridOptions,
-} from '../../common/grid/Grid.interface'
+} from '../../devExtreme/DataGrid/DataGrid.interface'
 import { IClientsListClientFirmData } from './ClientsList.interface'
 
 import { dataSource, getColumns } from './ClientsList.options'
@@ -18,13 +18,13 @@ import { dataSource, getColumns } from './ClientsList.options'
 const ClientsList = (): JSX.Element => {
   const dispatch: Dispatch = useAppDispatch()
 
-  const onInitialized = (e: IDataGridEventOnInitialized) => {
+  const onInitialized = (e: IDataGridEventOnInitialized): void => {
     setTimeout(() => {
       e.component?.selectRowsByIndexes([0])
       e.component?.option({
         focusedRowKey: e.component.getSelectedRowKeys()[0],
       })
-    }, 10)
+    }, 100)
   }
 
   const onSelectionChanged = (e: IDataGridEventOnSelectionChanged): void => {
@@ -44,11 +44,11 @@ const ClientsList = (): JSX.Element => {
     },
     columnAutoWidth: true,
     focusedRowEnabled: true,
-    onInitialized: onInitialized,
-    onSelectionChanged: onSelectionChanged,
+    onInitialized,
+    onSelectionChanged,
   }
 
-  return <Grid options={gridOptions} />
+  return <DataGrid options={gridOptions} />
 }
 
 export default ClientsList

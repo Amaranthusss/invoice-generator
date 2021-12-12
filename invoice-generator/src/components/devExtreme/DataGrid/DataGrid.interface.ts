@@ -10,9 +10,6 @@ import CSS from 'csstype'
 import { EventInfo } from 'devextreme/events'
 
 export interface IDataGridOptions {
-  //Custom configuration
-  name?: string
-
   //Devextreme configuration
   dataSource: DataSource | any[]
   columns: IDataGridColumn[]
@@ -38,6 +35,7 @@ export interface IDataGridOptions {
   onSelectionChanged?: (e: IDataGridEventOnSelectionChanged) => void
   onSaved?: (e: IDataGridEventOnSaved) => void
   onRowRemoved?: (e: IDataGridEventOnRowRemoved) => void
+  onOptionChanged?: (e: IDataGridEventOnOptionChanged) => void
 }
 
 export interface IDataGridColumn extends dxDataGridColumn {}
@@ -113,3 +111,12 @@ export type IDataGridEventOnRowRemoved = EventInfo<dxDataGrid<any, any>> &
 
 export type IDataGridEventOnSelectionChanged = EventInfo<dxDataGrid<any, any>> &
   SelectionChangedInfo<any, any>
+
+export type IDataGridEventOnOptionChanged = {
+  component?: dxDataGrid<any, any> | undefined
+  element?: HTMLElement | undefined
+  model?: any
+  name?: string | undefined
+  fullName?: string | undefined
+  value?: any
+}

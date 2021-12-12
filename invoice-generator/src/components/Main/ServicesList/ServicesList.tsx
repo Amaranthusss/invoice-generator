@@ -2,7 +2,7 @@ import { DataChange } from 'devextreme/ui/data_grid'
 import { Dispatch } from 'redux'
 import { useRef } from 'react'
 
-import Grid from '../../common/grid/Grid'
+import DataGrid from '../../devExtreme/DataGrid/DataGrid'
 
 import { dataSource, getColumns } from './ServicesList.options'
 import { useAppDispatch } from '../../../hooks/useAppDispatch'
@@ -12,7 +12,7 @@ import {
   IDataGridEventOnRowRemoved,
   IDataGridEventOnSaved,
   IDataGridOptions,
-} from '../../common/grid/Grid.interface'
+} from '../../devExtreme/DataGrid/DataGrid.interface'
 
 const Services = (): JSX.Element => {
   const dispatch: Dispatch = useAppDispatch()
@@ -51,11 +51,11 @@ const Services = (): JSX.Element => {
         ],
       },
     },
-    onSaved: onSaved,
-    onRowRemoved: onRowRemoved,
+    onRowRemoved,
+    onSaved,
   })
 
-  return <Grid options={gridOptions.current} />
+  return <DataGrid options={gridOptions.current} />
 }
 
 export default Services

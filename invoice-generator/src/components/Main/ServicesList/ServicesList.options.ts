@@ -1,5 +1,5 @@
 import { IServicesListServiceData } from './ServicesList.interface'
-import { IDataGridColumn } from '../../common/grid/Grid.interface'
+import { IDataGridColumn } from '../../devExtreme/DataGrid/DataGrid.interface'
 
 import { Enums, VAT } from '../../../constants/enums'
 

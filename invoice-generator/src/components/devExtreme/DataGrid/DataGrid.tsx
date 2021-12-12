@@ -4,24 +4,26 @@ import { useRef } from 'react'
 import dxDataGrid from 'devextreme/ui/data_grid'
 import _ from 'lodash'
 
+import dxService from '../../../utils/dxService'
+
 import {
   IDataGridEventOnInitialized,
+  IDataGridEventOnOptionChanged,
   IDataGridEventOnRowRemoved,
   IDataGridEventOnSaved,
   IDataGridEventOnSelectionChanged,
   IDataGridOptions,
   IDataGridToolbarItem,
-} from './Grid.interface'
-import { IOptions } from '../common.interface'
+} from './DataGrid.interface'
+import { IOptions } from '../../components.interface'
 
 import { Enums } from '../../../constants/enums'
 
-import styles from './Grid.module.css'
-import dxService from '../../../utils/dxService'
+import styles from './DataGrid.module.css'
 
 const defaultKeyExpr: string = 'key'
 
-const Grid = (props: IOptions<IDataGridOptions>): JSX.Element => {
+const DataGridWrapper = (props: IOptions<IDataGridOptions>): JSX.Element => {
   const gridComponent = useRef<dxDataGrid>()
   const dataSourceArray = useRef<any[]>()
   const { width, height, ref } = useResizeDetector()
@@ -29,7 +31,7 @@ const Grid = (props: IOptions<IDataGridOptions>): JSX.Element => {
   const onInitialized = async (
     e: IDataGridEventOnInitialized
   ): Promise<void> => {
-		gridComponent.current = e.component
+    gridComponent.current = e.component
     dataSourceArray.current = await e.component?.getDataSource().store().load()
     dxService.callFromProps(props, 'onInitialized', e)
   }
@@ -65,6 +67,9 @@ const Grid = (props: IOptions<IDataGridOptions>): JSX.Element => {
         onRowRemoved={(e: IDataGridEventOnRowRemoved) =>
           dxService.callFromProps(props, 'onRowRemoved', e)
         }
+        onOptionChanged={(e: IDataGridEventOnOptionChanged) =>
+          dxService.callFromProps(props, 'onOptionChanged', e)
+        }
       >
         <Toolbar>
           {getCustomItems()}
@@ -90,4 +95,4 @@ const Grid = (props: IOptions<IDataGridOptions>): JSX.Element => {
   )
 }
 
-export default Grid
+export default DataGridWrapper

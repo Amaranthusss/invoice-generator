@@ -1,7 +1,7 @@
 import { nanoid } from '@reduxjs/toolkit'
 
 import { IClientsListClientFirmData } from './ClientsList.interface'
-import { IDataGridColumn } from '../../common/grid/Grid.interface'
+import { IDataGridColumn } from '../../devExtreme/DataGrid/DataGrid.interface'
 
 import { Enums } from '../../../constants/enums'
 
