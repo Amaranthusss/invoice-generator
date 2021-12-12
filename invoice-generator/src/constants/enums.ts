@@ -1,3 +1,5 @@
+import { FormatObject } from 'devextreme/localization'
+
 export namespace Enums {
   export enum DateFormats {
     ShortDate = 'shortDate',
@@ -25,10 +27,11 @@ export namespace Enums {
     editRowButton = 'Edytuj',
     deleteRowButton = 'Usuń',
     sendEmailButton = 'Wyślij e-mail',
-		invoiceDateOfIssue = 'Data wystawienia'
+    invoiceDateOfIssue = 'Data wystawienia',
   }
 
   export const DefaultCurrency: string = 'PLN'
   export const VatAsPercents: number = 23
   export const VAT: number = 23
+  export const CurrencyFormat: FormatObject = { type: 'currency', precision: 2 }
 }

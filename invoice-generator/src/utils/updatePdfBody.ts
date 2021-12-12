@@ -1,5 +1,5 @@
 import { ContentText, TDocumentDefinitions } from 'pdfmake/interfaces'
-import { formatDate } from 'devextreme/localization'
+import { formatDate, formatNumber } from 'devextreme/localization'
 import { format } from 'devextreme/ui/widget/ui.widget'
 import _ from 'lodash'
 
@@ -35,10 +35,10 @@ export const updatePdfBody = (
     const records: (string | number)[] = [
       lastServiceNumber,
       service.name,
-      service.vatAsPercents,
-      service.netto,
-      service.vat,
-      service.brutto,
+      formatNumber(service.vatAsPercents / 100, 'percent'),
+      formatNumber(service.netto, Enums.CurrencyFormat),
+      formatNumber(service.vat, Enums.CurrencyFormat),
+      formatNumber(service.brutto, Enums.CurrencyFormat),
     ]
 
     return records
