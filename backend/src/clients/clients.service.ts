@@ -10,9 +10,9 @@ import { Client } from './clients.entity'
 export class ClientsService {
   constructor(@InjectRepository(Client) private repo: Repository<Client>) {}
 
-  create(newClient: ClientDto): Promise<Client> {
+  async create(newClient: ClientDto): Promise<Client> {
     const modifiedClient: Client = newClient as Client
-    modifiedClient.id = _.size(this.repo.count())
+    modifiedClient.id = await this.repo.count()
     const savingClient: Client = this.repo.create(modifiedClient)
 
     return this.repo.save(savingClient)
