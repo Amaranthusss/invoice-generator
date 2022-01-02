@@ -5,6 +5,8 @@ import DataGrid from '../../devExtreme/DataGrid/DataGrid'
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch'
 import { setClientFirm } from '../../../Redux-store/global.reducer'
+import createClient from '../../../api/createClient'
+import getClients from '../../../api/getClients'
 
 import {
   IDataGridEventOnSelectionChanged,
@@ -24,6 +26,18 @@ const ClientsList = (): JSX.Element => {
       e.component?.option({
         focusedRowKey: e.component.getSelectedRowKeys()[0],
       })
+      createClient({
+        name: 'Super Firma',
+        address: '',
+        city: '',
+        clientId: 0,
+        nip: 660,
+      }).then((res) => {
+        console.log('create res', res)
+        getClients().then((clients) => {
+          console.log('API DZIALA <3', clients)
+        })
+      })
     }, 100)
   }
 
@@ -36,7 +50,7 @@ const ClientsList = (): JSX.Element => {
   }
 
   const gridOptions: IDataGridOptions = {
-		name: 'data-grid-clients',
+    name: 'data-grid-clients',
     dataSource: dataSource,
     columns: getColumns(),
     keyExpr: 'clientId',
