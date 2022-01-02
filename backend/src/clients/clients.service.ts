@@ -21,32 +21,51 @@ export class ClientsService {
   }
 
   update(id: number, updatedClient: IClient): void {
-    if (!_.some(this.clients, (client: IClient) => client.id === id)) {
-      console.error('clients.service / update(): client not found by id', id)
+    const formattedId: number = _.toNumber(id)
+
+    if (!_.some(this.clients, (client: IClient) => client.id === formattedId)) {
+      console.error(
+        'clients.service / update(): client not found by id',
+        id,
+        typeof id,
+      )
       return
     }
 
     const clientIndex: number = _.findIndex(
       this.clients,
-      (client: IClient) => client.id === id,
+      (client: IClient) => client.id === formattedId,
     )
     this.clients[clientIndex] = { ...updatedClient }
   }
 
   delete(id: number): void {
-    if (!_.some(this.clients, (client: IClient) => client.id === id)) {
-      console.error('clients.service / delete(): client not found by id', id)
-      return
-    }
-
-    this.clients = _.filter(this.clients, (client: IClient) => client.id !== id)
-  }
-
-  find(id: number | string): IClient {
     const formattedId: number = _.toNumber(id)
 
     if (!_.some(this.clients, (client: IClient) => client.id === formattedId)) {
-      console.error('clients.service / find(): client not found by id', id)
+      console.error(
+        'clients.service / delete(): client not found by id',
+        id,
+        typeof id,
+      )
+      return
+    }
+
+    this.clients = _.filter(
+      this.clients,
+      (client: IClient) => client.id !== formattedId,
+    )
+  }
+
+  find(id: number): IClient {
+    const formattedId: number = _.toNumber(id)
+
+    if (!_.some(this.clients, (client: IClient) => client.id === formattedId)) {
+      console.error(
+        'clients.service / find(): client not found by id',
+        id,
+        typeof id,
+      )
       return {} as IClient
     }
 
