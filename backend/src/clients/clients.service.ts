@@ -18,8 +18,11 @@ export class ClientsService {
     return this.repo.save(savingClient)
   }
 
-  async update(updatedClient: Client): Promise<Client> {
-    return this.repo.save(updatedClient)
+  async update(id: number, updatedClient: ClientDto): Promise<Client> {
+    const clientToUpdate: Client = await this.repo.findOne(id)
+    clientToUpdate.name = updatedClient.name
+
+    return this.repo.save(clientToUpdate)
   }
 
   async delete(id: number): Promise<Client> {
@@ -28,11 +31,23 @@ export class ClientsService {
     return this.repo.remove(clientToRemove)
   }
 
-  find(id: number): Promise<ClientDto> {
-    return this.repo.findOne(id)
+  async find(id: number): Promise<Client> {
+    const client: Client = await this.repo.findOne(id)
+
+    if (_.isEmpty(Client)) {
+      return {} as Client
+    }
+
+    return client
   }
 
-  findAll(): Promise<ClientDto[]> {
-    return this.repo.find()
+  async findAll(): Promise<Client[]> {
+    const clients: Client[] = await this.repo.find()
+
+    if (_.isEmpty(clients)) {
+      return [] as Client[]
+    }
+
+    return clients
   }
 }

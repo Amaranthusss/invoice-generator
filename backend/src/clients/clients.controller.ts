@@ -20,7 +20,7 @@ export class ClientsController {
 
   @Get()
   async findAll(): Promise<ClientDto[]> {
-    return this.clientsService.findAll()	
+    return this.clientsService.findAll()
   }
 
   @Get(':id')
@@ -35,9 +35,14 @@ export class ClientsController {
     return this.clientsService.create(newClient)
   }
 
-  @Patch()
-  async update(@Body() updatedClient: ClientDto): Promise<Client> {
-    return this.clientsService.update(updatedClient as Client)
+  @Patch(':id')
+  async update(
+    @Param('id') idAsUrl: string,
+    @Body() updatedClient: ClientDto,
+  ): Promise<Client> {
+    const id: number = _.toNumber(idAsUrl)
+
+    return this.clientsService.update(id, updatedClient)
   }
 
   @Delete(':id')
