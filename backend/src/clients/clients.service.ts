@@ -20,7 +20,7 @@ export class ClientsService {
     }
   }
 
-  update(id: number, updatedClient: IClient): void {
+  update(id: string, updatedClient: IClient): void {
     const formattedId: number = _.toNumber(id)
 
     if (!_.some(this.clients, (client: IClient) => client.id === formattedId)) {
@@ -39,7 +39,7 @@ export class ClientsService {
     this.clients[clientIndex] = { ...updatedClient }
   }
 
-  delete(id: number): void {
+  delete(id: string): void {
     const formattedId: number = _.toNumber(id)
 
     if (!_.some(this.clients, (client: IClient) => client.id === formattedId)) {
@@ -57,7 +57,7 @@ export class ClientsService {
     )
   }
 
-  find(id: number): IClient {
+  find(id: string): IClient {
     const formattedId: number = _.toNumber(id)
 
     if (!_.some(this.clients, (client: IClient) => client.id === formattedId)) {

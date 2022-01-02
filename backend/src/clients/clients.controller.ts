@@ -12,7 +12,7 @@ export class ClientsController {
   }
 
   @Get(':id')
-  async find(@Param('id') id: number): Promise<IClient> {
+  async find(@Param('id') id: string): Promise<IClient> {
     return this.clientsService.find(id)
   }
 
@@ -23,14 +23,14 @@ export class ClientsController {
 
   @Put(':id')
   async update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() updatedClient: IClient,
   ): Promise<void> {
     return this.clientsService.update(id, updatedClient)
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: number): Promise<void> {
+  async delete(@Param('id') id: string): Promise<void> {
     return this.clientsService.delete(id)
   }
 }
