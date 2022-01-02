@@ -4,7 +4,7 @@ import _ from 'lodash'
 import DataGrid from '../../devExtreme/DataGrid/DataGrid'
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch'
-import { setClientFirm } from '../../../Redux-store/global.slice'
+import { setClientFirm } from '../../../Redux-store/global.reducer'
 
 import {
   IDataGridEventOnSelectionChanged,
