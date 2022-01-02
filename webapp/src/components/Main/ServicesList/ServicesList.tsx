@@ -6,7 +6,7 @@ import DataGrid from '../../devExtreme/DataGrid/DataGrid'
 
 import { dataSource, getColumns } from './ServicesList.options'
 import { useAppDispatch } from '../../../hooks/useAppDispatch'
-import { updateService } from '../../../store/global.slice'
+import { updateService } from '../../../Redux-store/global.slice'
 
 import {
   IDataGridEventOnRowRemoved,

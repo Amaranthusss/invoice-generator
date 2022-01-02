@@ -8,7 +8,7 @@ import {
   getClientFirm,
   getServices,
   IServices,
-} from '../../../store/global.slice'
+} from '../../../Redux-store/global.slice'
 import { useAppSelector } from '../../../hooks/useAppSelector'
 import { updatePdfBody } from '../../../utils/updatePdfBody'
 import { equalityFn } from '../../../utils/equalityFn'
