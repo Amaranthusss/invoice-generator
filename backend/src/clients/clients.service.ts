@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import _ from 'lodash'
+import * as _ from 'lodash'
 
 import { IClient } from './clients.interface'
 
@@ -42,14 +42,15 @@ export class ClientsService {
     this.clients = _.filter(this.clients, (client: IClient) => client.id !== id)
   }
 
-  find(id: number): IClient {
-		console.log(id, _.isNumber(id))
-    if (!_.some(this.clients, (client: IClient) => client.id === id)) {
+  find(id: number | string): IClient {
+    const formattedId: number = _.toNumber(id)
+
+    if (!_.some(this.clients, (client: IClient) => client.id === formattedId)) {
       console.error('clients.service / find(): client not found by id', id)
-      return
+      return {} as IClient
     }
 
-    return _.find(this.clients, (client: IClient) => client.id === id)
+    return _.find(this.clients, (client: IClient) => client.id === formattedId)
   }
 
   findAll(): IClient[] {
