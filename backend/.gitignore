@@ -35,4 +35,4 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 # DataBase
-./src/db.sqlite
+/db.sqlite
