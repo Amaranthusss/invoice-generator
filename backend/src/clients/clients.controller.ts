@@ -7,10 +7,12 @@ import {
   Patch,
   Post,
 } from '@nestjs/common'
+import * as _ from 'lodash'
 
 import { ClientsService } from './clients.service'
 
 import { ClientDto } from './clients.dtos'
+import { Client } from './clients.entity'
 
 @Controller('clients')
 export class ClientsController {
@@ -18,29 +20,30 @@ export class ClientsController {
 
   @Get()
   async findAll(): Promise<ClientDto[]> {
-    return this.clientsService.findAll()
+    return this.clientsService.findAll()	
   }
 
   @Get(':id')
-  async find(@Param('id') id: string): Promise<ClientDto> {
+  async find(@Param('id') idAsUrl: string): Promise<ClientDto> {
+    const id: number = _.toNumber(idAsUrl)
+
     return this.clientsService.find(id)
   }
 
   @Post()
-  async create(@Body() newClient: ClientDto): Promise<void> {
+  async create(@Body() newClient: ClientDto): Promise<Client> {
     return this.clientsService.create(newClient)
   }
 
-  @Patch(':id')
-  async update(
-    @Param('id') id: string,
-    @Body() updatedClient: ClientDto,
-  ): Promise<void> {
-    return this.clientsService.update(id, updatedClient)
+  @Patch()
+  async update(@Body() updatedClient: ClientDto): Promise<Client> {
+    return this.clientsService.update(updatedClient as Client)
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string): Promise<void> {
+  async delete(@Param('id') idAsUrl: string): Promise<Client> {
+    const id: number = _.toNumber(idAsUrl)
+
     return this.clientsService.delete(id)
   }
 }

@@ -1,87 +1,38 @@
 import { Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
 import * as _ from 'lodash'
+import { Repository } from 'typeorm'
 
 import { ClientDto } from './clients.dtos'
+import { Client } from './clients.entity'
 
 @Injectable()
 export class ClientsService {
-  private clients: ClientDto[] = [
-    { id: 0, name: 'Klient A' },
-    { id: 1, name: 'Klient B' },
-    { id: 2, name: 'Klient C' },
-  ]
+  constructor(@InjectRepository(Client) private repo: Repository<Client>) {}
 
-  create(newClient: ClientDto): void {
-    if (newClient) {
-      const client: ClientDto = newClient
+  create(newClient: ClientDto): Promise<Client> {
+    const modifiedClient: ClientDto = newClient
+    modifiedClient.id = _.size(this.repo.count())
+    const savingClient: Client = this.repo.create(modifiedClient)
 
-      client.id = _.size(this.clients)
-      this.clients.push(client)
-    }
+    return this.repo.save(savingClient)
   }
 
-  update(id: string, updatedClient: ClientDto): void {
-    const formattedId: number = _.toNumber(id)
-
-    if (
-      !_.some(this.clients, (client: ClientDto) => client.id === formattedId)
-    ) {
-      console.error(
-        'clients.service / update(): client not found by id',
-        id,
-        typeof id,
-      )
-      return
-    }
-
-    const clientIndex: number = _.findIndex(
-      this.clients,
-      (client: ClientDto) => client.id === formattedId,
-    )
-    this.clients[clientIndex] = { ...updatedClient }
+  async update(updatedClient: Client): Promise<Client> {
+    return this.repo.save(updatedClient)
   }
 
-  delete(id: string): void {
-    const formattedId: number = _.toNumber(id)
+  async delete(id: number): Promise<Client> {
+    const clientToRemove: Client = await this.repo.findOne(id)
 
-    if (
-      !_.some(this.clients, (client: ClientDto) => client.id === formattedId)
-    ) {
-      console.error(
-        'clients.service / delete(): client not found by id',
-        id,
-        typeof id,
-      )
-      return
-    }
-
-    this.clients = _.filter(
-      this.clients,
-      (client: ClientDto) => client.id !== formattedId,
-    )
+    return this.repo.remove(clientToRemove)
   }
 
-  find(id: string): ClientDto {
-    const formattedId: number = _.toNumber(id)
-
-    if (
-      !_.some(this.clients, (client: ClientDto) => client.id === formattedId)
-    ) {
-      console.error(
-        'clients.service / find(): client not found by id',
-        id,
-        typeof id,
-      )
-      return {} as ClientDto
-    }
-
-    return _.find(
-      this.clients,
-      (client: ClientDto) => client.id === formattedId,
-    )
+  find(id: number): Promise<ClientDto> {
+    return this.repo.findOne(id)
   }
 
-  findAll(): ClientDto[] {
-    return this.clients
+  findAll(): Promise<ClientDto[]> {
+    return this.repo.find()
   }
 }
