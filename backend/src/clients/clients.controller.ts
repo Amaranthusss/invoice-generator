@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common'
 import { IClient } from './clients.interface'
 import { ClientsService } from './clients.service'
 
@@ -21,7 +29,7 @@ export class ClientsController {
     return this.clientsService.create(newClient)
   }
 
-  @Put(':id')
+  @Patch(':id')
   async update(
     @Param('id') id: string,
     @Body() updatedClient: IClient,
