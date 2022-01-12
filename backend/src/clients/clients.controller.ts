@@ -11,7 +11,9 @@ import * as _ from 'lodash'
 
 import { ClientsService } from './clients.service'
 
-import { ClientDto } from './clients.dtos'
+import { UpdateClientDto } from './dtos/update.dtos'
+import { CreateClientDto } from './dtos/create.dtos'
+
 import { Client } from './clients.entity'
 
 @Controller('clients')
@@ -19,36 +21,27 @@ export class ClientsController {
   constructor(private readonly clientsService: ClientsService) {}
 
   @Get()
-  async findAll(): Promise<ClientDto[]> {
+  async findAll(): Promise<Client[]> {
     return this.clientsService.findAll()
   }
 
-  @Get(':id')
-  async find(@Param('id') idAsUrl: string): Promise<ClientDto> {
-    const id: number = _.toNumber(idAsUrl)
-
-    return this.clientsService.find(id)
+  @Get(':key')
+  async find(@Param('key') key: string): Promise<Client> {
+    return this.clientsService.find(_.toString(key))
   }
 
   @Post()
-  async create(@Body() newClient: ClientDto): Promise<Client> {
+  async create(@Body() newClient: CreateClientDto): Promise<Client> {
     return this.clientsService.create(newClient)
   }
 
-  @Patch(':id')
-  async update(
-    @Param('id') idAsUrl: string,
-    @Body() updatedClient: ClientDto,
-  ): Promise<Client> {
-    const id: number = _.toNumber(idAsUrl)
-
-    return this.clientsService.update(id, updatedClient)
+  @Patch(':key')
+  async update(@Body() updateClient: any): Promise<Client> {
+    return this.clientsService.update(updateClient)
   }
 
-  @Delete(':id')
-  async delete(@Param('id') idAsUrl: string): Promise<Client> {
-    const id: number = _.toNumber(idAsUrl)
-
-    return this.clientsService.delete(id)
+  @Delete(':key')
+  async delete(@Param('key') key: string): Promise<Client> {
+    return this.clientsService.delete(_.toString(key))
   }
 }

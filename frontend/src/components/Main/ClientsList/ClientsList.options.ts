@@ -1,6 +1,3 @@
-import { nanoid } from '@reduxjs/toolkit'
-
-import { IClientsListClientFirmData } from './ClientsList.interface'
 import { IDataGridColumn } from '../../devExtreme/DataGrid/DataGrid.interface'
 
 import { Enums } from '../../../constants/enums'
@@ -12,10 +9,9 @@ export const getColumns = (): IDataGridColumn[] => [
     visible: false,
     showInColumnChooser: false,
     allowEditing: false,
-    calculateCellValue: () => nanoid(),
   },
   {
-    dataField: 'clientId',
+    dataField: 'id',
     dataType: 'number',
     allowEditing: false,
     visible: false,
@@ -40,22 +36,5 @@ export const getColumns = (): IDataGridColumn[] => [
     dataType: 'number',
     caption: Enums.ClientsListWords.nip,
     alignment: 'left',
-  },
-]
-
-export const dataSource: IClientsListClientFirmData[] = [
-  {
-    clientId: 10000,
-    name: 'Montex Sp. z o.o.',
-    address: 'ul. Gen. Z.W. Jankego 249',
-    city: '40-684 Katowice',
-    nip: 9542471195,
-  },
-  {
-    clientId: 10001,
-    name: 'Libero sp. z o. o. s. k.',
-    address: 'ul. Lotników Alianckich 15',
-    city: '68-100 Żagań',
-    nip: 8992820376,
   },
 ]

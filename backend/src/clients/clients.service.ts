@@ -1,40 +1,41 @@
-import { Injectable } from '@nestjs/common'
+import { Repository, UpdateResult } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
+import { Injectable } from '@nestjs/common'
 import * as _ from 'lodash'
-import { Repository } from 'typeorm'
 
-import { ClientDto } from './clients.dtos'
+import { CreateClientDto } from './dtos/create.dtos'
+
 import { Client } from './clients.entity'
 
 @Injectable()
 export class ClientsService {
   constructor(@InjectRepository(Client) private repo: Repository<Client>) {}
 
-  async create(newClient: ClientDto): Promise<Client> {
-    const modifiedClient: Client = newClient as Client
-    modifiedClient.id = await this.repo.count()
-    const savingClient: Client = this.repo.create(modifiedClient)
+  async create(newClient: CreateClientDto): Promise<Client> {
+    const client: Client = newClient as Client
+    client.id = new Date().getUTCMilliseconds()
+    const savingClient: Client = this.repo.create(client)
 
     return this.repo.save(savingClient)
   }
 
-  async update(id: number, updatedClient: ClientDto): Promise<Client> {
-    const clientToUpdate: Client = await this.repo.findOne(id)
-    clientToUpdate.name = updatedClient.name
+  async update(updateClient: any): Promise<Client> {
+    let client: Client = await this.repo.findOne({ key: updateClient.key })
+    const mergedClient = _.merge(client, updateClient)
 
-    return this.repo.save(clientToUpdate)
+    return this.repo.save(mergedClient)
   }
 
-  async delete(id: number): Promise<Client> {
-    const clientToRemove: Client = await this.repo.findOne(id)
+  async delete(key: string): Promise<Client> {
+    const client: Client = await this.repo.findOne({ key })
 
-    return this.repo.remove(clientToRemove)
+    return this.repo.remove(client)
   }
 
-  async find(id: number): Promise<Client> {
-    const client: Client = await this.repo.findOne(id)
+  async find(key: string): Promise<Client> {
+    const client: Client = await this.repo.findOne({ key })
 
-    if (_.isEmpty(Client)) {
+    if (_.isEmpty(client)) {
       return {} as Client
     }
 

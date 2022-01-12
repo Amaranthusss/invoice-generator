@@ -1,5 +1,4 @@
-export interface IClientsListClientFirmData {
-  id: number
+export interface ICreateClientDto {
   key: string
   name: string
   address: string

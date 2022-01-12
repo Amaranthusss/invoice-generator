@@ -4,9 +4,9 @@ import DataGrid, {
   Editing,
   StateStoring,
 } from 'devextreme-react/data-grid'
+import dxDataGrid, { dxDataGridOptions } from 'devextreme/ui/data_grid'
 import { useResizeDetector } from 'react-resize-detector'
 import { useRef } from 'react'
-import dxDataGrid, { dxDataGridOptions } from 'devextreme/ui/data_grid'
 import _ from 'lodash'
 
 import dxService from '../dxService'
@@ -25,8 +25,6 @@ import { IOptions } from '../../components.interface'
 import { Enums } from '../../../constants/enums'
 
 import resizeDetector from '../resizeDetector.module.css'
-
-const defaultKeyExpr: string = 'key'
 
 const DataGridWrapper = (props: IOptions<IDataGridOptions>): JSX.Element => {
   const { width, height, ref } = useResizeDetector<HTMLDivElement>()
@@ -48,14 +46,40 @@ const DataGridWrapper = (props: IOptions<IDataGridOptions>): JSX.Element => {
     )
   }
 
-  const getOptionsExceptParams = (): dxDataGridOptions => {
-    const options = _.omit(props.options, [
-      'editing',
-      'toolbar',
-      'stateStoring',
-    ])
+  const JSXElements: JSX.Element[] = [
+    <Toolbar key={'toolbar'}>
+      {getCustomItems()}
+      <Item name={'addRowButton'} showText={'always'} />
+    </Toolbar>,
+    <Editing
+      key={'editing'}
+      mode={'form'}
+      useIcons={true}
+      allowUpdating={true}
+      allowAdding={true}
+      allowDeleting={true}
+      confirmDelete={false}
+      newRowPosition={'last'}
+      form={props.options.editing?.form}
+      texts={{
+        addRow: Enums.InterfaceTexts.addRowButton,
+        editRow: Enums.InterfaceTexts.editRowButton,
+        deleteRow: Enums.InterfaceTexts.deleteRowButton,
+      }}
+    />,
+    <StateStoring
+      key={'stateStoring'}
+      enabled={true}
+      storageKey={props.options.name}
+    />,
+  ]
 
-    return options
+  const jsxElementsKeys: string[] = _.map(JSXElements, (jsx: JSX.Element) => {
+    return _.toString(jsx.key)
+  })
+
+  const getOptionsExceptParams = (): dxDataGridOptions => {
+    return _.omit(props.options, jsxElementsKeys)
   }
 
   return (
@@ -65,7 +89,6 @@ const DataGridWrapper = (props: IOptions<IDataGridOptions>): JSX.Element => {
         width={width}
         height={height}
         showBorders={true}
-        keyExpr={props.options.keyExpr ?? defaultKeyExpr}
         allowColumnResizing={true}
         allowColumnReordering={true}
         onInitialized={onInitialized}
@@ -82,26 +105,7 @@ const DataGridWrapper = (props: IOptions<IDataGridOptions>): JSX.Element => {
           dxService.callFromProps(props, 'onOptionChanged', e)
         }
       >
-        <Toolbar>
-          {getCustomItems()}
-          <Item name={'addRowButton'} showText={'always'} />
-        </Toolbar>
-        <Editing
-          mode={'form'}
-          useIcons={true}
-          allowUpdating={true}
-          allowAdding={true}
-          allowDeleting={true}
-          confirmDelete={false}
-          newRowPosition={'last'}
-          form={props.options.editing?.form}
-          texts={{
-            addRow: Enums.InterfaceTexts.addRowButton,
-            editRow: Enums.InterfaceTexts.editRowButton,
-            deleteRow: Enums.InterfaceTexts.deleteRowButton,
-          }}
-        />
-        <StateStoring enabled={true} storageKey={props.options.name} />
+        {_.map(JSXElements)}
       </DataGrid>
     </div>
   )

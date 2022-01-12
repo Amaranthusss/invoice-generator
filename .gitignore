@@ -1,1 +1,6 @@
+/backend/dist
+/backend/node_modules
 /backend/db.sqlite
+
+/frontend/build
+/frontend/node_modules
