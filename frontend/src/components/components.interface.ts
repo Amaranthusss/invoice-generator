@@ -1,4 +1,4 @@
-export interface IOptions <T> {
-	isLoading?: boolean
-	options: T
+export interface IOptions<T> {
+  isLoading?: boolean
+  options: T
 }

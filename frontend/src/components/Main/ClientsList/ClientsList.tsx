@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { AxiosResponse } from 'axios'
 import { Dispatch } from 'redux'
 import { nanoid } from '@reduxjs/toolkit'
 import dxDataGrid from 'devextreme/ui/data_grid'
@@ -24,7 +25,7 @@ import { ICreateClientDto } from '../../../../../backend/src/clients/dtos/create
 import { IDeleteClientDto } from '../../../../../backend/src/clients/dtos/delete.interface'
 import { IUpdateClientDto } from '../../../../../backend/src/clients/dtos/update.interface'
 
-import { getColumns } from './ClientsList.options'
+import { clientListTableName, getColumns } from './ClientsList.options'
 
 const ClientsList = (): JSX.Element => {
   const dispatch: Dispatch = useAppDispatch()
@@ -70,8 +71,10 @@ const ClientsList = (): JSX.Element => {
   const dataSource = useRef<DataSource>(
     new DataSource({
       load: async () => {
-        const response = getClients()
-        const store = (await response).data
+        const response: Promise<
+          AxiosResponse<IClientsListClientFirmData[], any>
+        > = getClients()
+        const store: IClientsListClientFirmData[] = (await response).data
 
         if (isMounted.current) {
           clientsListData.current = store
@@ -85,17 +88,19 @@ const ClientsList = (): JSX.Element => {
 
         return createClient(createdClient) as PromiseLike<any>
       },
+
       remove: (key: number) => {
         const options: IDeleteClientDto = { key: _.toString(key) }
 
         return deleteClient(options) as PromiseLike<any>
       },
+
       update: (key: number, clientData: IClientsListClientFirmData) => {
         const updatingClient: IUpdateClientDto = {
           ...clientData,
           key: _.toString(key),
         }
-        console.log('update', key, updatingClient)
+
         return updateClient(updatingClient) as PromiseLike<any>
       },
       key: 'key',
@@ -103,7 +108,7 @@ const ClientsList = (): JSX.Element => {
   )
 
   const gridOptions = useRef<IDataGridOptions>({
-    name: 'data-grid-clients',
+    name: clientListTableName,
     dataSource: dataSource.current,
     columns: getColumns(),
     selection: { mode: 'single' },

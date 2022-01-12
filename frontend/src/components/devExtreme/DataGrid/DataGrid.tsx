@@ -4,8 +4,11 @@ import DataGrid, {
   Editing,
   StateStoring,
 } from 'devextreme-react/data-grid'
+import {
+  useResizeDetector,
+  UseResizeDetectorReturn,
+} from 'react-resize-detector'
 import dxDataGrid, { dxDataGridOptions } from 'devextreme/ui/data_grid'
-import { useResizeDetector } from 'react-resize-detector'
 import { useRef } from 'react'
 import _ from 'lodash'
 
@@ -27,7 +30,8 @@ import { Enums } from '../../../constants/enums'
 import resizeDetector from '../resizeDetector.module.css'
 
 const DataGridWrapper = (props: IOptions<IDataGridOptions>): JSX.Element => {
-  const { width, height, ref } = useResizeDetector<HTMLDivElement>()
+  const { width, height, ref }: UseResizeDetectorReturn<HTMLDivElement> =
+    useResizeDetector<HTMLDivElement>()
   const gridComponent = useRef<dxDataGrid>()
 
   const onInitialized = async (
@@ -58,13 +62,13 @@ const DataGridWrapper = (props: IOptions<IDataGridOptions>): JSX.Element => {
       allowUpdating={true}
       allowAdding={true}
       allowDeleting={true}
-      confirmDelete={false}
       newRowPosition={'last'}
       form={props.options.editing?.form}
       texts={{
         addRow: Enums.InterfaceTexts.addRowButton,
         editRow: Enums.InterfaceTexts.editRowButton,
         deleteRow: Enums.InterfaceTexts.deleteRowButton,
+        confirmDeleteMessage: Enums.InterfaceTexts.confirmDeleteMessage,
       }}
     />,
     <StateStoring

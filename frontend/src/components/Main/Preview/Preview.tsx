@@ -4,16 +4,13 @@ import pdfFonts from 'pdfmake/build/vfs_fonts'
 import pdfMake, { TCreatedPdf } from 'pdfmake/build/pdfmake'
 import _ from 'lodash'
 
-import {
-  getClientFirm,
-  getServices,
-  IServices,
-} from '../../../Redux-store/global.reducer'
+import { getClientFirm, getServices } from '../../../Redux-store/global.reducer'
 import { useAppSelector } from '../../../hooks/useAppSelector'
 import { updatePdfBody } from '../../../utils/updatePdfBody'
 import { equalityFn } from '../../../utils/equalityFn'
 
 import { IClientsListClientFirmData } from '../ClientsList/ClientsList.interface'
+import { IServices } from '../../../Redux-store/global.reducer.interface'
 
 import styles from './Preview.module.css'
 

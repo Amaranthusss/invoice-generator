@@ -12,6 +12,7 @@
   flex: 4;
   display: inline-flex;
   justify-content: right;
+	gap: 5px;
 }
 
 .buttonsPanel .button {

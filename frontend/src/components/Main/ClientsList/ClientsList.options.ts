@@ -38,3 +38,5 @@ export const getColumns = (): IDataGridColumn[] => [
     alignment: 'left',
   },
 ]
+
+export const clientListTableName: string = 'data-grid-clients'

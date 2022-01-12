@@ -9,20 +9,15 @@ import {
   getBruttoFromNetto,
   getVatFromNetto,
 } from '../utils/currencyCalculations'
+
+import { IAppSize, IServices, IStates } from './global.reducer.interface'
+
 import { Enums } from '../constants/enums'
 
-export interface IServices {
-  [__KEY__: string]: IServicesListServiceData
-}
-
-interface IStates {
-  clientFirm: IClientsListClientFirmData | null
-  services: IServices
-}
-
-const states = {
+const states: IStates = {
   clientFirm: null,
   services: {},
+  appSize: { width: undefined, height: undefined },
 }
 
 const globalSlice = createSlice({
@@ -77,6 +72,9 @@ const globalSlice = createSlice({
           break
       }
     },
+    setAppSize: (state: IStates, action: PayloadAction<IAppSize>): void => {
+      state.appSize = action.payload
+    },
   },
 })
 
@@ -90,6 +88,10 @@ export const getServices = (state: RootState): IServices => {
   return state.globalSlice.services
 }
 
-export const { setClientFirm, updateService } = globalSlice.actions
+export const getAppSize = (state: RootState): IAppSize => {
+  return state.globalSlice.appSize
+}
+
+export const { setClientFirm, updateService, setAppSize } = globalSlice.actions
 
 export default globalSlice.reducer

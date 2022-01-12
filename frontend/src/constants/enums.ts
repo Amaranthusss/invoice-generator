@@ -26,9 +26,13 @@ export namespace Enums {
     addRowButton = 'Dodaj',
     editRowButton = 'Edytuj',
     deleteRowButton = 'Usuń',
-    sendEmailButton = 'Wyślij e-mail',
+    sendEmailPopupButton = 'Wyślij e-mail',
     invoiceDateOfIssue = 'Data wystawienia',
-		methodOfPaymentTransfer = 'Przelew'
+    methodOfPaymentTransfer = 'Przelew',
+    generateInvoiceButton = 'Wygeneruj fakturę',
+    generateInvoicePopupTitle = 'Generowanie faktury',
+    saveInvoiceButton = 'Zapisz fakturę',
+    confirmDeleteMessage = 'Czy na pewno chcesz usunąć wybrany wiersz?',
   }
 
   export const DefaultCurrency: string = 'PLN'
