@@ -8,7 +8,7 @@ import { ClientsModule } from './clients/clients.module'
     ClientsModule,
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: 'db.sqlite',
+      database: './database/db.sqlite',
       synchronize: true, //ToDo: False for production
       entities: ['**/*.entity.js'],
     }),
