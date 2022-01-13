@@ -112,6 +112,17 @@ const ClientsList = (): JSX.Element => {
     dataSource: dataSource.current,
     columns: getColumns(),
     selection: { mode: 'single' },
+    editing: {
+      form: {
+        items: [
+          { dataField: 'name', isRequired: true, editorType: 'dxTextBox' },
+          { dataField: 'address', isRequired: true, editorType: 'dxTextBox' },
+          { dataField: 'city', isRequired: true, editorType: 'dxTextBox' },
+          { dataField: 'nip', isRequired: true, editorType: 'dxTextBox' },
+          { dataField: 'email', isRequired: true, editorType: 'dxTextBox' },
+        ],
+      },
+    },
     columnAutoWidth: true,
     focusedRowEnabled: true,
     onInitialized,
