@@ -95,6 +95,7 @@ const DataGridWrapper = (props: IOptions<IDataGridOptions>): JSX.Element => {
         showBorders={true}
         allowColumnResizing={true}
         allowColumnReordering={true}
+        scrolling={{ showScrollbar: 'always' }}
         onInitialized={onInitialized}
         onSelectionChanged={(e: IDataGridEventOnSelectionChanged) =>
           dxService.callFromProps(props, 'onSelectionChanged', e)
