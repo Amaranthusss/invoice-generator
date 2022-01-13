@@ -37,6 +37,11 @@ export const getColumns = (): IDataGridColumn[] => [
     caption: Enums.ClientsListWords.nip,
     alignment: 'left',
   },
+  {
+    dataField: 'email',
+    dataType: 'string',
+    caption: Enums.ClientsListWords.email,
+  },
 ]
 
 export const clientListTableName: string = 'data-grid-clients'

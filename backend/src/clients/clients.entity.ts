@@ -14,4 +14,6 @@ export class Client {
   city: string
   @Column()
   nip: number
+  @Column()
+  email: string
 }

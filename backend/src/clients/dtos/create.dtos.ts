@@ -11,4 +11,6 @@ export class CreateClientDto {
   city: string
   @IsNumber()
   nip: number
+  @IsString()
+  email: string
 }

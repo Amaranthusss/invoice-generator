@@ -8,6 +8,7 @@ export const dataSource: IClientsListClientFirmData[] = [
     address: 'ul. Gen. Z.W. Jankego 249',
     city: '40-684 Katowice',
     nip: 9542471195,
+    email: 'faktury@montex.pl',
   },
   {
     id: 1,
@@ -16,5 +17,6 @@ export const dataSource: IClientsListClientFirmData[] = [
     address: 'ul. Lotników Alianckich 15',
     city: '68-100 Żagań',
     nip: 8992820376,
+    email: 'faktury@libero.pl',
   },
 ]

@@ -11,6 +11,7 @@ export namespace Enums {
     address = 'Adres siedziby',
     city = 'Kod pocztowy, miasto',
     nip = 'NIP',
+    email = 'E-Mail',
   }
 
   export enum ServicesListWords {

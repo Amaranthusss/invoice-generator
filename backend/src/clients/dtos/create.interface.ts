@@ -4,4 +4,5 @@ export interface ICreateClientDto {
   address: string
   city: string
   nip: number
+	email: string
 }

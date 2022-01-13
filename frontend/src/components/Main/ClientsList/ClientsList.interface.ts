@@ -5,4 +5,5 @@ export interface IClientsListClientFirmData {
   address: string
   city: string
   nip: number
+	email: string
 }
