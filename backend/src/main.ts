@@ -13,6 +13,7 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname, '../../frontend/build'))
   app.setBaseViewsDir(join(__dirname, '../../frontend/build'))
   app.setViewEngine('hbs')
+	app.enableCors()
 
   await app.listen(5000)
 }
