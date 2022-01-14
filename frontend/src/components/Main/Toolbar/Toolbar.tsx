@@ -24,40 +24,40 @@ const Toolbar = (): JSX.Element => {
     type: 'date',
   }
 
-  const archiveButtonOptions: IButtonOptions = {
+  const archiveButtonOptions = useRef<IButtonOptions>({
     hint: Enums.InterfaceTexts.archiveButton,
     text: Enums.InterfaceTexts.archiveButton,
     stylingMode: 'contained',
     type: 'default',
     icon: 'chart',
     onClick: () => archivePopupComponent.current?.show(),
-  }
+  })
 
-  const sendEmailPopupButtonOptions: IButtonOptions = {
+  const sendEmailPopupButtonOptions = useRef<IButtonOptions>({
     hint: Enums.InterfaceTexts.sendEmailPopupButton,
     text: Enums.InterfaceTexts.sendEmailPopupButton,
     stylingMode: 'contained',
     type: 'default',
     icon: 'email',
-  }
+  })
 
-  const saveInvoicePopupButtonOptions: IButtonOptions = {
+  const saveInvoicePopupButtonOptions = useRef<IButtonOptions>({
     hint: Enums.InterfaceTexts.saveInvoiceButton,
     text: Enums.InterfaceTexts.saveInvoiceButton,
     stylingMode: 'contained',
     type: 'default',
     icon: 'save',
-  }
+  })
 
-  const cancelPopupButtonOptions: IButtonOptions = {
+  const cancelPopupButtonOptions = useRef<IButtonOptions>({
     hint: Enums.InterfaceTexts.cancelButton,
     text: Enums.InterfaceTexts.cancelButton,
     stylingMode: 'contained',
     type: 'default',
     onClick: () => archivePopupComponent.current?.hide(),
-  }
+  })
 
-  const archivePopupOptions: IPopupOptions = {
+  const archivePopupOptions = useRef<IPopupOptions>({
     renderChildren: Archive,
     title: Enums.InterfaceTexts.archiveButton,
     closeOnOutsideClick: true,
@@ -74,24 +74,24 @@ const Toolbar = (): JSX.Element => {
     ],
     onInitialized: (e: InitializedEventInfo<PopupInstance>) =>
       (archivePopupComponent.current = e.component),
-  }
+  })
 
   return (
     <>
-      <Popup options={archivePopupOptions} />
+      <Popup options={archivePopupOptions.current} />
       <div className={styles.container}>
         <div className={styles.buttonsPanel}>
           <div className={styles.dateBox}>
             <DateBox options={dateBoxOptions} />
           </div>
           <div className={styles.button}>
-            <Button options={archiveButtonOptions} />
+            <Button options={archiveButtonOptions.current} />
           </div>
           <div className={styles.button}>
-            <Button options={sendEmailPopupButtonOptions} />
+            <Button options={sendEmailPopupButtonOptions.current} />
           </div>
           <div className={styles.button}>
-            <Button options={saveInvoicePopupButtonOptions} />
+            <Button options={saveInvoicePopupButtonOptions.current} />
           </div>
         </div>
       </div>
