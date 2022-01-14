@@ -1,102 +1,91 @@
-import { Popup, ToolbarItem } from 'devextreme-react/popup'
-import { useRef, useState } from 'react'
-import { ClickEvent } from 'devextreme/ui/button'
-import DateBox from '../../devExtreme/DateBox/DateBox'
-import Button from '../../devExtreme/Button/Button'
+import dxPopup, { PopupInstance } from 'devextreme/ui/popup'
+import { InitializedEventInfo } from 'devextreme/events'
+import { useRef } from 'react'
 import _ from 'lodash'
 
-import { useAppSelector } from '../../../hooks/useAppSelector'
-import { getAppSize } from '../../../Redux-store/global.reducer'
+import Archive from '../../Archive/Archive'
+import DateBox from '../../devExtreme/DateBox/DateBox'
+import Button from '../../devExtreme/Button/Button'
+import Popup from '../../devExtreme/Popup/Popup'
 
 import { IDateBoxOptions } from '../../devExtreme/DateBox/DateBox.interface'
 import { IButtonOptions } from '../../devExtreme/Button/Button.interface'
-import { IAppSize } from '../../../Redux-store/global.reducer.interface'
+import { IPopupOptions } from '../../devExtreme/Popup/Popup.interface'
 
-import { defaultPopupSize } from './Toolbar.config'
 import { Enums } from '../../../constants/enums'
 
 import styles from './Toolbar.module.css'
 
 const Toolbar = (): JSX.Element => {
-  const [popupVisible, setPoppVisible] = useState<boolean>()
-  const popupSize = useRef<IAppSize>(defaultPopupSize)
-
-  const appSizeEqualityFn = (nextAppSize: IAppSize): boolean => {
-    popupSize.current = {
-      width: !_.isUndefined(nextAppSize.width)
-        ? nextAppSize.width * 0.8
-        : defaultPopupSize.width,
-      height: !_.isUndefined(nextAppSize.height)
-        ? nextAppSize.height * 0.8
-        : defaultPopupSize.height,
-    }
-    return true
-  }
-
-  useAppSelector(getAppSize, appSizeEqualityFn)
+  const archivePopupComponent = useRef<dxPopup>()
 
   const dateBoxOptions: IDateBoxOptions = {
-    type: 'date',
     hint: Enums.InterfaceTexts.invoiceDateOfIssue,
+    type: 'date',
   }
 
-  const generateInvoiceButtonOptions: IButtonOptions = {
-    icon: 'product',
-    hint: Enums.InterfaceTexts.generateInvoiceButton,
+  const archiveButtonOptions: IButtonOptions = {
+    hint: Enums.InterfaceTexts.archiveButton,
+    text: Enums.InterfaceTexts.archiveButton,
     stylingMode: 'contained',
     type: 'default',
-    onClick: (e: ClickEvent) => {
-      setPoppVisible(true)
-    },
+    icon: 'chart',
+    onClick: () => archivePopupComponent.current?.show(),
   }
 
   const sendEmailPopupButtonOptions: IButtonOptions = {
-    icon: 'email',
     hint: Enums.InterfaceTexts.sendEmailPopupButton,
+    text: Enums.InterfaceTexts.sendEmailPopupButton,
     stylingMode: 'contained',
     type: 'default',
-    text: Enums.InterfaceTexts.sendEmailPopupButton,
-    onClick: (e: ClickEvent) => {
-      console.log(e)
-    },
+    icon: 'email',
   }
 
   const saveInvoicePopupButtonOptions: IButtonOptions = {
-    icon: 'save',
     hint: Enums.InterfaceTexts.saveInvoiceButton,
+    text: Enums.InterfaceTexts.saveInvoiceButton,
     stylingMode: 'contained',
     type: 'default',
-    text: Enums.InterfaceTexts.saveInvoiceButton,
-    onClick: (e: ClickEvent) => {
-      console.log(e)
-    },
+    icon: 'save',
+  }
+
+  const cancelPopupButtonOptions: IButtonOptions = {
+    hint: Enums.InterfaceTexts.cancelButton,
+    text: Enums.InterfaceTexts.cancelButton,
+    stylingMode: 'contained',
+    type: 'default',
+    onClick: () => archivePopupComponent.current?.hide(),
+  }
+
+  const archivePopupOptions: IPopupOptions = {
+    renderChildren: Archive,
+    title: Enums.InterfaceTexts.archiveButton,
+    closeOnOutsideClick: true,
+    showCloseButton: true,
+    dragEnabled: false,
+    showTitle: true,
+    toolbarItems: [
+      {
+        widget: 'dxButton',
+        toolbar: 'bottom',
+        location: 'after',
+        options: cancelPopupButtonOptions,
+      },
+    ],
+    onInitialized: (e: InitializedEventInfo<PopupInstance>) =>
+      (archivePopupComponent.current = e.component),
   }
 
   return (
     <>
-      <Popup
-        visible={popupVisible}
-        onHiding={() => setPoppVisible(false)}
-        dragEnabled={false}
-        closeOnOutsideClick={true}
-        showCloseButton={false}
-        showTitle={true}
-        title={Enums.InterfaceTexts.generateInvoicePopupTitle}
-        container={'.dx-viewport'}
-        width={popupSize.current.width}
-        height={popupSize.current.height}
-      >
-        <ToolbarItem
-          widget={'dxButton'}
-          toolbar={'bottom'}
-          location={'after'}
-          options={saveInvoicePopupButtonOptions}
-        />
-      </Popup>
+      <Popup options={archivePopupOptions} />
       <div className={styles.container}>
         <div className={styles.buttonsPanel}>
+          <div className={styles.dateBox}>
+            <DateBox options={dateBoxOptions} />
+          </div>
           <div className={styles.button}>
-            <Button options={generateInvoiceButtonOptions} />
+            <Button options={archiveButtonOptions} />
           </div>
           <div className={styles.button}>
             <Button options={sendEmailPopupButtonOptions} />
@@ -104,9 +93,6 @@ const Toolbar = (): JSX.Element => {
           <div className={styles.button}>
             <Button options={saveInvoicePopupButtonOptions} />
           </div>
-        </div>
-        <div className={styles.dateBox}>
-          <DateBox options={dateBoxOptions} />
         </div>
       </div>
     </>
