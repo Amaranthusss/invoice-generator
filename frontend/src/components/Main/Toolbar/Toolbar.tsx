@@ -73,7 +73,7 @@ const Toolbar = (): JSX.Element => {
   }
 
   return (
-    <div className={styles.container}>
+    <>
       <Popup
         visible={popupVisible}
         onHiding={() => setPoppVisible(false)}
@@ -93,21 +93,23 @@ const Toolbar = (): JSX.Element => {
           options={saveInvoicePopupButtonOptions}
         />
       </Popup>
-      <div className={styles.buttonsPanel}>
-        <div className={styles.button}>
-          <Button options={generateInvoiceButtonOptions} />
+      <div className={styles.container}>
+        <div className={styles.buttonsPanel}>
+          <div className={styles.button}>
+            <Button options={generateInvoiceButtonOptions} />
+          </div>
+          <div className={styles.button}>
+            <Button options={sendEmailPopupButtonOptions} />
+          </div>
+          <div className={styles.button}>
+            <Button options={saveInvoicePopupButtonOptions} />
+          </div>
         </div>
-        <div className={styles.button}>
-          <Button options={sendEmailPopupButtonOptions} />
-        </div>
-        <div className={styles.button}>
-          <Button options={saveInvoicePopupButtonOptions} />
+        <div className={styles.dateBox}>
+          <DateBox options={dateBoxOptions} />
         </div>
       </div>
-      <div className={styles.dateBox}>
-        <DateBox options={dateBoxOptions} />
-      </div>
-    </div>
+    </>
   )
 }
 
