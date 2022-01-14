@@ -92,16 +92,16 @@ const Toolbar = (): JSX.Element => {
           location={'after'}
           options={saveInvoicePopupButtonOptions}
         />
-        <ToolbarItem
-          widget={'dxButton'}
-          toolbar={'bottom'}
-          location={'after'}
-          options={sendEmailPopupButtonOptions}
-        />
       </Popup>
       <div className={styles.buttonsPanel}>
         <div className={styles.button}>
           <Button options={generateInvoiceButtonOptions} />
+        </div>
+        <div className={styles.button}>
+          <Button options={sendEmailPopupButtonOptions} />
+        </div>
+        <div className={styles.button}>
+          <Button options={saveInvoicePopupButtonOptions} />
         </div>
       </div>
       <div className={styles.dateBox}>

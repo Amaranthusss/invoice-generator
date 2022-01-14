@@ -1,5 +1,9 @@
 .container {
+  width: calc(100% - 10px);
+  height: 100%;
+  position: relative;
   min-height: 20px;
+  min-width: 0px;
   display: flex;
   flex-direction: row;
   align-content: center;
@@ -9,17 +13,17 @@
 }
 
 .buttonsPanel {
+  min-width: 0px;
+  height: 40px;
   flex: 4;
   display: inline-flex;
   justify-content: right;
-	gap: 5px;
+  gap: 5px;
 }
 
 .buttonsPanel .button {
-  max-width: 50px;
-  max-height: 50px;
-  min-width: 15px;
-  min-height: 15px;
+  min-width: 32px;
+	max-width: 160px;
   flex: 1;
 }
 

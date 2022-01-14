@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import { Dispatch } from '@reduxjs/toolkit'
 import config from 'devextreme/core/config'
 
-import InvoiceConfigurator from './Toolbar/Toolbar'
+import Toolbar from './Toolbar/Toolbar'
 import ServicesList from './ServicesList/ServicesList'
 import ClientsList from './ClientsList/ClientsList'
 import PdfPreview from './Preview/Preview'
@@ -30,26 +30,25 @@ const Main = (): JSX.Element => {
   }, [width, height])
 
   return (
-    <div className={styles.container} ref={ref}>
-      <div className={styles.column}>
-        <div className={styles.toolbar}>
-          <InvoiceConfigurator />
+    <>
+      <Toolbar />
+      <div className={styles.container} ref={ref}>
+        <div className={styles.column}>
+          <div className={styles.tables}>
+            <div className={styles.table}>
+              <ServicesList />
+            </div>
+            <div className={styles.table}>
+              <ClientsList />
+            </div>
+          </div>
         </div>
 
-        <div className={styles.tables}>
-          <div className={styles.table}>
-            <ServicesList />
-          </div>
-          <div className={styles.table}>
-            <ClientsList />
-          </div>
+        <div className={styles.column}>
+          <PdfPreview />
         </div>
       </div>
-
-      <div className={styles.column}>
-        <PdfPreview />
-      </div>
-    </div>
+    </>
   )
 }
 

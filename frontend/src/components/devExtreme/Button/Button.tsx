@@ -1,16 +1,24 @@
 import { useResizeDetector } from 'react-resize-detector'
 import { Button } from 'devextreme-react'
 import { ClickEvent } from 'devextreme/ui/button'
+import _ from 'lodash'
 
 import dxService from '../dxService'
 
 import { IButtonOptions } from './Button.interface'
 import { IOptions } from '../../components.interface'
 
+import { buttonSizeLimits } from './Button.config'
+
 import resizeDetector from '../resizeDetector.module.css'
 
 const ButtonWrapper = (props: IOptions<IButtonOptions>): JSX.Element => {
   const { width, height, ref } = useResizeDetector<HTMLDivElement>()
+
+  const getTextForHigherWidth = (): string | undefined =>
+    _.inRange(width as number, buttonSizeLimits.min, buttonSizeLimits.max)
+      ? props.options.text
+      : undefined
 
   return (
     <div className={resizeDetector.box} ref={ref}>
@@ -18,6 +26,7 @@ const ButtonWrapper = (props: IOptions<IButtonOptions>): JSX.Element => {
         {...props.options}
         width={width}
         height={height}
+        text={getTextForHigherWidth()}
         onClick={(e: ClickEvent) =>
           dxService.callFromProps(props, 'onClick', e)
         }
