@@ -13,7 +13,7 @@ import { IOptions } from '../../components.interface'
 
 import { defaultPopupSize } from './Popup.config'
 
-const PopupWrapper = (props: IOptions<IPopupOptions>): JSX.Element => {
+const PopupPattern = (props: IOptions<IPopupOptions>): JSX.Element => {
   const popupSize = useRef<IAppSize>(defaultPopupSize)
 
   const appSizeEqualityFn = (nextAppSize: IAppSize): boolean => {
@@ -41,4 +41,4 @@ const PopupWrapper = (props: IOptions<IPopupOptions>): JSX.Element => {
   )
 }
 
-export default PopupWrapper
+export default PopupPattern

@@ -11,7 +11,7 @@ import { IOptions } from '../../components.interface'
 
 import resizeDetector from '../resizeDetector.module.css'
 
-const DateBoxWrapper = (props: IOptions<IDateBoxOptions>): JSX.Element => {
+const DateBoxPattern = (props: IOptions<IDateBoxOptions>): JSX.Element => {
   const { width, height, ref } = useResizeDetector<HTMLDivElement>()
 
   return (
@@ -29,4 +29,4 @@ const DateBoxWrapper = (props: IOptions<IDateBoxOptions>): JSX.Element => {
   )
 }
 
-export default DateBoxWrapper
+export default DateBoxPattern

@@ -29,7 +29,7 @@ import { Enums } from '../../../constants/enums'
 
 import resizeDetector from '../resizeDetector.module.css'
 
-const DataGridWrapper = (props: IOptions<IDataGridOptions>): JSX.Element => {
+const DataGridPattern = (props: IOptions<IDataGridOptions>): JSX.Element => {
   const { width, height, ref }: UseResizeDetectorReturn<HTMLDivElement> =
     useResizeDetector<HTMLDivElement>()
   const gridComponent = useRef<dxDataGrid>()
@@ -116,4 +116,4 @@ const DataGridWrapper = (props: IOptions<IDataGridOptions>): JSX.Element => {
   )
 }
 
-export default DataGridWrapper
+export default DataGridPattern

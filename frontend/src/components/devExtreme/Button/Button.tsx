@@ -12,7 +12,7 @@ import { buttonSizeLimits } from './Button.config'
 
 import resizeDetector from '../resizeDetector.module.css'
 
-const ButtonWrapper = (props: IOptions<IButtonOptions>): JSX.Element => {
+const ButtonPattern = (props: IOptions<IButtonOptions>): JSX.Element => {
   const { width, height, ref } = useResizeDetector<HTMLDivElement>()
 
   const getTextForHigherWidth = (): string | undefined =>
@@ -35,4 +35,4 @@ const ButtonWrapper = (props: IOptions<IButtonOptions>): JSX.Element => {
   )
 }
 
-export default ButtonWrapper
+export default ButtonPattern
