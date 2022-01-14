@@ -12,12 +12,12 @@ import { IDateBoxOptions } from '../../devExtreme/DateBox/DateBox.interface'
 import { IButtonOptions } from '../../devExtreme/Button/Button.interface'
 import { IAppSize } from '../../../Redux-store/global.reducer.interface'
 
-import { defaultPopupSize } from './InvoiceConfigurator.config'
+import { defaultPopupSize } from './Toolbar.config'
 import { Enums } from '../../../constants/enums'
 
-import styles from './InvoiceConfigurator.module.css'
+import styles from './Toolbar.module.css'
 
-const InvoiceConfigurator = (): JSX.Element => {
+const Toolbar = (): JSX.Element => {
   const [popupVisible, setPoppVisible] = useState<boolean>()
   const popupSize = useRef<IAppSize>(defaultPopupSize)
 
@@ -111,4 +111,4 @@ const InvoiceConfigurator = (): JSX.Element => {
   )
 }
 
-export default InvoiceConfigurator
+export default Toolbar
