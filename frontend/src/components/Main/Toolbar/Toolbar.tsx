@@ -19,10 +19,10 @@ import styles from './Toolbar.module.css'
 const Toolbar = (): JSX.Element => {
   const archivePopupComponent = useRef<dxPopup>()
 
-  const dateBoxOptions: IDateBoxOptions = {
+  const dateBoxOptions = useRef<IDateBoxOptions>({
     hint: Enums.InterfaceTexts.invoiceDateOfIssue,
     type: 'date',
-  }
+  })
 
   const archiveButtonOptions = useRef<IButtonOptions>({
     hint: Enums.InterfaceTexts.archiveButton,
@@ -82,7 +82,7 @@ const Toolbar = (): JSX.Element => {
       <div className={styles.container}>
         <div className={styles.buttonsPanel}>
           <div className={styles.dateBox}>
-            <DateBox options={dateBoxOptions} />
+            <DateBox options={dateBoxOptions.current} />
           </div>
           <div className={styles.button}>
             <Button options={archiveButtonOptions.current} />
