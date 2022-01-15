@@ -1,36 +1,63 @@
-import { NavigateFunction, Route, Routes, useNavigate } from 'react-router-dom'
-import { useRef } from 'react'
+import {
+  Location,
+  NavigateFunction,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom'
+import { useEffect, useRef } from 'react'
 
 import ArchiveToolbar from './ArchiveToolbar/ArchiveToolbar'
 import MainToolbar from './MainToolbar/MainToolbar'
 import Button from '../_devExtreme/Button/Button'
 
+import service from './Toolbar.service'
+
 import { IButtonOptions } from '../_devExtreme/Button/Button.interface'
 
-import { Enums } from '../../constants/enums'
 import { appRoutes } from '../../constants/routes'
+import { Enums } from '../../constants/enums'
 
 import styles from './Toolbar.module.css'
+import dxButton from 'devextreme/ui/button'
+import { InitializedEventInfo } from 'devextreme/events'
 
 const Toolbar = (): JSX.Element => {
-  const history: NavigateFunction = useNavigate()
+  const navigate: NavigateFunction = useNavigate()
+  const location: Location = useLocation()
+  const mainPageButtonComponent = useRef<dxButton>()
+  const archivePageButtonComponent = useRef<dxButton>()
+
+  useEffect(() => {
+    mainPageButtonComponent.current?.option({
+      stylingMode: service.getStylingModeBasedAtRoute(appRoutes.main),
+    })
+    archivePageButtonComponent.current?.option({
+      stylingMode: service.getStylingModeBasedAtRoute(appRoutes.archive),
+    })
+  }, [location.pathname])
 
   const mainPageButtonOptions = useRef<IButtonOptions>({
     hint: Enums.InterfaceTexts.mainPageButton,
     text: Enums.InterfaceTexts.mainPageButton,
-    stylingMode: 'contained',
     type: 'default',
     icon: 'tableproperties',
-    onClick: () => history(appRoutes.main),
+    onClick: () => navigate(appRoutes.main),
+    onInitialized: (e: InitializedEventInfo<dxButton>) => {
+      mainPageButtonComponent.current = e.component
+    },
   })
 
   const archivePageButtonOptions = useRef<IButtonOptions>({
     hint: Enums.InterfaceTexts.archivePageButton,
     text: Enums.InterfaceTexts.archivePageButton,
-    stylingMode: 'contained',
     type: 'default',
     icon: 'chart',
-    onClick: () => history(appRoutes.archive),
+    onClick: () => navigate(appRoutes.archive),
+    onInitialized: (e: InitializedEventInfo<dxButton>) => {
+      archivePageButtonComponent.current = e.component
+    },
   })
 
   return (
