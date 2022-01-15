@@ -1,10 +1,10 @@
 import { useRef } from 'react'
 
-import Calendar from '../devExtreme/Calendar/Calendar'
-import Chart from '../devExtreme/Chart/Chart'
+import Calendar from '../_devExtreme/Calendar/Calendar'
+import Chart from '../_devExtreme/Chart/Chart'
 
-import { ICalendarOptions } from '../devExtreme/Calendar/Calendar.interface'
-import { IChartOptions } from '../devExtreme/Chart/Chart.interface'
+import { ICalendarOptions } from '../_devExtreme/Calendar/Calendar.interface'
+import { IChartOptions } from '../_devExtreme/Chart/Chart.interface'
 
 import styles from './Archive.module.css'
 

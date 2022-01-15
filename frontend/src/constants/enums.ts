@@ -34,7 +34,8 @@ export namespace Enums {
     generateInvoiceButton = 'Wygeneruj fakturę',
     saveInvoiceButton = 'Zapisz fakturę',
     confirmDeleteMessage = 'Czy na pewno chcesz usunąć wybrany wiersz?',
-    archiveButton = 'Archiwum',
+    archivePageButton = 'Archiwum',
+    mainPageButton = 'Strona główna',
   }
 
   export const DefaultCurrency: string = 'PLN'

@@ -3,8 +3,8 @@
   flex-direction: row;
   width: 100vw;
   height: 100vh;
-	min-height: 0px;
-	min-width: 0px;
+  min-height: 0px;
+  min-width: 0px;
 }
 
 .column {
@@ -20,8 +20,8 @@
 }
 
 .table {
-	padding-inline: 5px;
-	padding-block: 5px;
+  padding-inline: 5px;
+  padding-block: 5px;
   height: 50%;
   min-width: 0px;
   min-height: 0px;

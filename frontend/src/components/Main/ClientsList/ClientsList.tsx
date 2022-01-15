@@ -6,7 +6,7 @@ import dxDataGrid from 'devextreme/ui/data_grid'
 import DataSource from 'devextreme/data/data_source'
 import _ from 'lodash'
 
-import DataGrid from '../../devExtreme/DataGrid/DataGrid'
+import DataGrid from '../../_devExtreme/DataGrid/DataGrid'
 
 import { useAppDispatch } from '../../../hooks/useAppDispatch'
 import { setClientFirm } from '../../../Redux-store/global.reducer'
@@ -19,7 +19,7 @@ import {
   IDataGridEventOnSelectionChanged,
   IDataGridEventOnInitialized,
   IDataGridOptions,
-} from '../../devExtreme/DataGrid/DataGrid.interface'
+} from '../../_devExtreme/DataGrid/DataGrid.interface'
 import { IClientsListClientFirmData } from './ClientsList.interface'
 import { ICreateClientDto } from '../../../../../backend/src/clients/dtos/create.interface'
 import { IDeleteClientDto } from '../../../../../backend/src/clients/dtos/delete.interface'
@@ -34,11 +34,9 @@ const ClientsList = (): JSX.Element => {
 
   const isMounted = useRef<boolean>(false)
   const isReadyResolve = useRef<(value: boolean) => void>()
-  const isReadyReject = useRef<(reason: string) => void>()
   const isReady = useRef<Promise<boolean>>(
-    new Promise((resolve, reject) => {
+    new Promise((resolve) => {
       isReadyResolve.current = resolve
-      isReadyReject.current = reject
     })
   )
 
@@ -46,9 +44,6 @@ const ClientsList = (): JSX.Element => {
     isMounted.current = true
 
     return () => {
-      if (_.isFunction(isReadyReject.current)) {
-        isReadyReject.current('unmounted')
-      }
       isMounted.current = false
     }
   }, [])

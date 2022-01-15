@@ -1,4 +1,4 @@
-import { IDataGridColumn } from '../../devExtreme/DataGrid/DataGrid.interface'
+import { IDataGridColumn } from '../../_devExtreme/DataGrid/DataGrid.interface'
 
 import { Enums } from '../../../constants/enums'
 
