@@ -1,9 +1,4 @@
-import {
-  Location,
-  NavigateFunction,
-  useLocation,
-  useNavigate,
-} from 'react-router-dom'
+import { NavigateFunction, useNavigate } from 'react-router-dom'
 import { useRef } from 'react'
 
 import ArchiveToolbar from './ArchiveToolbar/ArchiveToolbar'
@@ -18,7 +13,6 @@ import styles from './Toolbar.module.css'
 
 const Toolbar = (): JSX.Element => {
   const history: NavigateFunction = useNavigate()
-  const location: Location = useLocation()
 
   const mainPageButtonOptions = useRef<IButtonOptions>({
     hint: Enums.InterfaceTexts.mainPageButton,
@@ -48,9 +42,7 @@ const Toolbar = (): JSX.Element => {
           <Button options={archivePageButtonOptions.current} />
         </div>
       </div>
-      <div className={styles.buttonsPanel} style={{ justifyContent: 'right' }}>
-        {location.pathname === appRoutes.archive ? ArchiveToolbar : <span />}
-      </div>
+      <ArchiveToolbar />
     </div>
   )
 }
