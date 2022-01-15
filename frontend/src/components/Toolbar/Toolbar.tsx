@@ -1,7 +1,8 @@
-import { NavigateFunction, useNavigate } from 'react-router-dom'
+import { NavigateFunction, Route, Routes, useNavigate } from 'react-router-dom'
 import { useRef } from 'react'
 
 import ArchiveToolbar from './ArchiveToolbar/ArchiveToolbar'
+import MainToolbar from './MainToolbar/MainToolbar'
 import Button from '../_devExtreme/Button/Button'
 
 import { IButtonOptions } from '../_devExtreme/Button/Button.interface'
@@ -42,7 +43,10 @@ const Toolbar = (): JSX.Element => {
           <Button options={archivePageButtonOptions.current} />
         </div>
       </div>
-      <ArchiveToolbar />
+      <Routes>
+        <Route path={appRoutes.main} element={<MainToolbar />} />
+        <Route path={appRoutes.archive} element={<ArchiveToolbar />} />
+      </Routes>
     </div>
   )
 }

@@ -10,3 +10,6 @@ export const appRoutes = {
   main: '/',
   archive: '/archive',
 }
+
+export type IAppRoutesKeys = keyof typeof appRoutes
+export type IAppRoutesValues = typeof appRoutes[IAppRoutesKeys]
