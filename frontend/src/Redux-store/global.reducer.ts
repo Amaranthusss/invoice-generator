@@ -3,8 +3,8 @@ import { DataChange } from 'devextreme/ui/data_grid'
 import { RootState } from './store'
 import _ from 'lodash'
 
-import { IClientsListClientFirmData } from '../components/Main/ClientsList/ClientsList.interface'
-import { IServicesListServiceData } from '../components/Main/ServicesList/ServicesList.interface'
+import { IClientsListClientFirmData } from '../components/MainModule/ClientsList/ClientsList.interface'
+import { IServicesListServiceData } from '../components/MainModule/ServicesList/ServicesList.interface'
 import {
   getBruttoFromNetto,
   getVatFromNetto,

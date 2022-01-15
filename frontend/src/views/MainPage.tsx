@@ -1,4 +1,4 @@
-import Main from '../components/Main/Main'
+import Main from '../components/MainModule/Main'
 
 const MainPage = (): JSX.Element => {
   return <Main />

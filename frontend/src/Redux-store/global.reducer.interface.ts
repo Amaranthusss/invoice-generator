@@ -1,5 +1,5 @@
-import { IClientsListClientFirmData } from '../components/Main/ClientsList/ClientsList.interface'
-import { IServicesListServiceData } from '../components/Main/ServicesList/ServicesList.interface'
+import { IClientsListClientFirmData } from '../components/MainModule/ClientsList/ClientsList.interface'
+import { IServicesListServiceData } from '../components/MainModule/ServicesList/ServicesList.interface'
 
 export interface IServices {
   [__KEY__: string]: IServicesListServiceData

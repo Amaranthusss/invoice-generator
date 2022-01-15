@@ -4,12 +4,12 @@ import _ from 'lodash'
 
 import currencyAsWords from './currencyAsWords'
 
-import { IClientsListClientFirmData } from '../components/Main/ClientsList/ClientsList.interface'
+import { IClientsListClientFirmData } from '../components/MainModule/ClientsList/ClientsList.interface'
 import { IServices } from '../Redux-store/global.reducer.interface'
 
 import { Enums } from '../constants/enums'
 import { firmData as ownFirmData, IFirmDataParameter } from '../data/firmData'
-import { IServicesListServiceData } from '../components/Main/ServicesList/ServicesList.interface'
+import { IServicesListServiceData } from '../components/MainModule/ServicesList/ServicesList.interface'
 
 const invoiceNumber: string = '1/10/2021'
 const dateOfIssue: Date = new Date()

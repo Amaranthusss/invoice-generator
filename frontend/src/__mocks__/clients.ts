@@ -1,4 +1,4 @@
-import { IClientsListClientFirmData } from '../components/Main/ClientsList/ClientsList.interface'
+import { IClientsListClientFirmData } from '../components/MainModule/ClientsList/ClientsList.interface'
 
 export const dataSource: IClientsListClientFirmData[] = [
   {

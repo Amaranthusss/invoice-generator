@@ -1,4 +1,4 @@
-import Archive from '../components/Archive/Archive'
+import Archive from '../components/ArchiveModule/Archive'
 
 const ArchivePage = (): JSX.Element => {
   return <Archive />
