@@ -3,7 +3,7 @@ import axios from '../axios'
 
 import { IClientsListClientFirmData } from '../../components/MainModule/ClientsList/ClientsList.interface'
 
-import { apiRoutes } from '../../constants/apiRoutes'
+import { apiRoutes } from '../../constants/routes'
 
 const getClient = async (
   key: string

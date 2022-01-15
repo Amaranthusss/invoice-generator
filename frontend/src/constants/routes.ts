@@ -5,3 +5,8 @@ export const apiRoutes = {
   deleteClient: '/clients/',
   createClient: '/clients',
 }
+
+export const appRoutes = {
+  main: '/',
+  archive: '/archive',
+}

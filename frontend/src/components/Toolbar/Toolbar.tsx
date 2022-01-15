@@ -1,24 +1,24 @@
-import { NavigateFunction, useNavigate } from 'react-router-dom'
+import {
+  Location,
+  NavigateFunction,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom'
 import { useRef } from 'react'
-import _ from 'lodash'
 
-import DateBox from '../_devExtreme/DateBox/DateBox'
+import ArchiveToolbar from './ArchiveToolbar/ArchiveToolbar'
 import Button from '../_devExtreme/Button/Button'
 
-import { IDateBoxOptions } from '../_devExtreme/DateBox/DateBox.interface'
 import { IButtonOptions } from '../_devExtreme/Button/Button.interface'
 
 import { Enums } from '../../constants/enums'
+import { appRoutes } from '../../constants/routes'
 
 import styles from './Toolbar.module.css'
 
 const Toolbar = (): JSX.Element => {
   const history: NavigateFunction = useNavigate()
-
-  const dateBoxOptions = useRef<IDateBoxOptions>({
-    hint: Enums.InterfaceTexts.invoiceDateOfIssue,
-    type: 'date',
-  })
+  const location: Location = useLocation()
 
   const mainPageButtonOptions = useRef<IButtonOptions>({
     hint: Enums.InterfaceTexts.mainPageButton,
@@ -26,7 +26,7 @@ const Toolbar = (): JSX.Element => {
     stylingMode: 'contained',
     type: 'default',
     icon: 'tableproperties',
-    onClick: () => history('/'),
+    onClick: () => history(appRoutes.main),
   })
 
   const archivePageButtonOptions = useRef<IButtonOptions>({
@@ -35,23 +35,7 @@ const Toolbar = (): JSX.Element => {
     stylingMode: 'contained',
     type: 'default',
     icon: 'chart',
-    onClick: () => history('archive'),
-  })
-
-  const sendEmailPopupButtonOptions = useRef<IButtonOptions>({
-    hint: Enums.InterfaceTexts.sendEmailPopupButton,
-    text: Enums.InterfaceTexts.sendEmailPopupButton,
-    stylingMode: 'contained',
-    type: 'default',
-    icon: 'email',
-  })
-
-  const saveInvoicePopupButtonOptions = useRef<IButtonOptions>({
-    hint: Enums.InterfaceTexts.saveInvoiceButton,
-    text: Enums.InterfaceTexts.saveInvoiceButton,
-    stylingMode: 'contained',
-    type: 'default',
-    icon: 'save',
+    onClick: () => history(appRoutes.archive),
   })
 
   return (
@@ -65,15 +49,7 @@ const Toolbar = (): JSX.Element => {
         </div>
       </div>
       <div className={styles.buttonsPanel} style={{ justifyContent: 'right' }}>
-        <div className={styles.dateBox}>
-          <DateBox options={dateBoxOptions.current} />
-        </div>
-        <div className={styles.button}>
-          <Button options={sendEmailPopupButtonOptions.current} />
-        </div>
-        <div className={styles.button}>
-          <Button options={saveInvoicePopupButtonOptions.current} />
-        </div>
+        {location.pathname === appRoutes.archive ? ArchiveToolbar : <span />}
       </div>
     </div>
   )

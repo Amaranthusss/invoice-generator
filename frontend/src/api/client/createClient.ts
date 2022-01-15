@@ -4,7 +4,7 @@ import axios from '../axios'
 import { IClientsListClientFirmData } from '../../components/MainModule/ClientsList/ClientsList.interface'
 import { ICreateClientDto } from '../../../../backend/src/clients/dtos/create.interface'
 
-import { apiRoutes } from '../../constants/apiRoutes'
+import { apiRoutes } from '../../constants/routes'
 
 const createClient = async (
   options: ICreateClientDto

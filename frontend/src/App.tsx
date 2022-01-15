@@ -15,10 +15,11 @@ import Toolbar from './components/Toolbar/Toolbar'
 import { useAppDispatch } from './hooks/useAppDispatch'
 import { setAppSize } from './Redux-store/global.reducer'
 
+import { appRoutes } from './constants/routes'
+import { Enums } from './constants/enums'
+
 import 'devextreme/dist/css/dx.light.css'
 import './index.css'
-
-import { Enums } from './constants/enums'
 
 locale('pl')
 config({ defaultCurrency: Enums.DefaultCurrency })
@@ -36,8 +37,8 @@ const App = (): JSX.Element => {
     <div ref={ref}>
       <Toolbar />
       <Routes>
-        <Route path={'/'} element={<MainPage />} />
-        <Route path={'archive'} element={<ArchivePage />} />
+        <Route path={appRoutes.main} element={<MainPage />} />
+        <Route path={appRoutes.archive} element={<ArchivePage />} />
       </Routes>
     </div>
   )
