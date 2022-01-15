@@ -1,7 +1,7 @@
 import { useResizeDetector } from 'react-resize-detector'
 import { DateBox } from 'devextreme-react'
 
-import dxService from '../dxService'
+import dxService from '../devExtreme.service'
 
 import {
   IDateBoxEventOnValueChanged,

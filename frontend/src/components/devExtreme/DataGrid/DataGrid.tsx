@@ -12,7 +12,7 @@ import dxDataGrid, { dxDataGridOptions } from 'devextreme/ui/data_grid'
 import { useRef } from 'react'
 import _ from 'lodash'
 
-import dxService from '../dxService'
+import dxService from '../devExtreme.service'
 
 import {
   IDataGridEventOnInitialized,

@@ -3,7 +3,7 @@ import { Button } from 'devextreme-react'
 import { ClickEvent } from 'devextreme/ui/button'
 import _ from 'lodash'
 
-import dxService from '../dxService'
+import dxService from '../devExtreme.service'
 
 import { IButtonOptions } from './Button.interface'
 import { IOptions } from '../../components.interface'
