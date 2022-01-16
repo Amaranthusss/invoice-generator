@@ -15,10 +15,13 @@ import resizeDetector from '../resizeDetector.module.css'
 const ButtonPattern = (props: IOptions<IButtonOptions>): JSX.Element => {
   const { width, height, ref } = useResizeDetector<HTMLDivElement>()
 
-  const getTextForHigherWidth = (): string | undefined =>
-    _.inRange(width as number, buttonSizeLimits.min, buttonSizeLimits.max)
-      ? props.options.text
-      : undefined
+  const getTextForHigherWidth = (): string | undefined => {
+    if (width != null && width >= buttonSizeLimits.min) {
+      return props.options.text
+    }
+
+    return
+  }
 
   return (
     <div className={resizeDetector.box} ref={ref}>

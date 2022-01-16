@@ -36,6 +36,8 @@ export namespace Enums {
     confirmDeleteMessage = 'Czy na pewno chcesz usunąć wybrany wiersz?',
     archivePageButton = 'Archiwum',
     mainPageButton = 'Strona główna',
+		errorPageText = 'Coś poszło nie tak! 😢',
+		errorPageNagivateButton = 'Powrót do Strony Głównej'
   }
 
   export const DefaultCurrency: string = 'PLN'

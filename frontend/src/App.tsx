@@ -9,6 +9,7 @@ import { locale } from 'devextreme/localization'
 import config from 'devextreme/core/config'
 
 import ArchivePage from './views/ArchivePage'
+import ErrorPage from './views/ErrorPage'
 import MainPage from './views/MainPage'
 import Toolbar from './components/Toolbar/Toolbar'
 
@@ -39,6 +40,7 @@ const App = (): JSX.Element => {
       <Routes>
         <Route path={appRoutes.main} element={<MainPage />} />
         <Route path={appRoutes.archive} element={<ArchivePage />} />
+        <Route path={'*'} element={<ErrorPage />} />
       </Routes>
     </div>
   )
