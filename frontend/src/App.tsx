@@ -37,11 +37,13 @@ const App = (): JSX.Element => {
   return (
     <div ref={ref}>
       <Toolbar />
-      <Routes>
-        <Route path={appRoutes.main} element={<MainPage />} />
-        <Route path={appRoutes.archive} element={<ArchivePage />} />
-        <Route path={'*'} element={<ErrorPage />} />
-      </Routes>
+      <div style={{ height: 'calc(100vh - 55px)', width: '100vw' }}>
+        <Routes>
+          <Route path={appRoutes.main} element={<MainPage />} />
+          <Route path={appRoutes.archive} element={<ArchivePage />} />
+          <Route path={'*'} element={<ErrorPage />} />
+        </Routes>
+      </div>
     </div>
   )
 }
