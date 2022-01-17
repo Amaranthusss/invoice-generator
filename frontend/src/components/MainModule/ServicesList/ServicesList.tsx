@@ -59,9 +59,11 @@ const Services = (): JSX.Element => {
     name: 'data-grid-services',
     dataSource: dataSource,
     columns: getColumns(),
-    columnAutoWidth: true,
     selection: {
       mode: 'none',
+    },
+    toolbar: {
+      items: [{ name: 'addRowButton', showText: 'always' }],
     },
     editing: {
       form: {

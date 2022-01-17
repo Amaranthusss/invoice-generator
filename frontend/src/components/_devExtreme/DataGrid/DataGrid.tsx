@@ -34,20 +34,11 @@ const DataGridPattern = (props: IOptions<IDataGridOptions>): JSX.Element => {
     dxService.callFromProps(props, 'onInitialized', e)
   }
 
-  const getCustomItems = (): JSX.Element[] => {
-    return _.map(
-      props.options.toolbar?.customElements,
-      (itemOptions: IDataGridToolbarItem, index: number): JSX.Element => {
-        return <Item key={index} {...itemOptions} />
-      }
-    )
-  }
-
   const JSXElements: JSX.Element[] = [
-    <Toolbar key={'toolbar'}>
-      {getCustomItems()}
-      <Item name={'addRowButton'} showText={'always'} />
-    </Toolbar>,
+    // <Toolbar key={'toolbar'}>
+    //   {getCustomItems()}
+    //   <Item name={'addRowButton'} showText={'always'} />
+    // </Toolbar>,
     <Editing
       key={'editing'}
       mode={'form'}

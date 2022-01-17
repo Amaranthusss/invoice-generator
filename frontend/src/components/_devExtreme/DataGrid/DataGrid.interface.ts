@@ -7,7 +7,6 @@ import CSS from 'csstype'
 
 export interface IDataGridOptions extends dxDataGridOptions {
   name: string
-  toolbar?: Toolbar & customToolbarItems
 }
 
 type customToolbarItems = {

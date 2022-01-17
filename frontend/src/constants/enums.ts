@@ -28,6 +28,7 @@ export namespace Enums {
     editRowButton = 'Edytuj',
     deleteRowButton = 'Usuń',
     cancelButton = 'Cofnij',
+    search = 'Szukaj...',
     confirmDeleteMessage = 'Czy na pewno chcesz usunąć wybrany wiersz?',
 
     methodOfPaymentTransfer = 'Przelew',

@@ -23,6 +23,7 @@ import { IDeleteClientDto } from '../../../../../backend/src/clients/dtos/delete
 import { IUpdateClientDto } from '../../../../../backend/src/clients/dtos/update.interface'
 
 import { clientListTableName, getColumns } from './ClientsList.options'
+import { Enums } from '../../../constants/enums'
 
 const ClientsList = (): JSX.Element => {
   const dispatch: Dispatch = useAppDispatch()
@@ -108,6 +109,19 @@ const ClientsList = (): JSX.Element => {
     dataSource: dataSource.current,
     columns: getColumns(),
     selection: { mode: 'single' },
+    filterRow: { visible: true },
+    headerFilter: { visible: true, allowSearch: true },
+    searchPanel: {
+      visible: true,
+      searchVisibleColumnsOnly: true,
+      placeholder: Enums.InterfaceTexts.search,
+    },
+    toolbar: {
+      items: [
+        { name: 'searchPanel' },
+        { name: 'addRowButton', showText: 'always' },
+      ],
+    },
     editing: {
       form: {
         items: [
@@ -119,7 +133,7 @@ const ClientsList = (): JSX.Element => {
         ],
       },
     },
-    columnAutoWidth: true,
+    columnAutoWidth: false,
     focusedRowEnabled: true,
     onInitialized,
     onSelectionChanged,
