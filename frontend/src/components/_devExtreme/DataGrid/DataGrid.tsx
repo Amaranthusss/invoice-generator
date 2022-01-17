@@ -9,13 +9,13 @@ import {
   UseResizeDetectorReturn,
 } from 'react-resize-detector'
 import dxDataGrid, { dxDataGridOptions } from 'devextreme/ui/data_grid'
+import { InitializedEventInfo } from 'devextreme/events'
 import { useRef } from 'react'
 import _ from 'lodash'
 
 import dxService from '../devExtreme.service'
 
 import {
-  IDataGridEventOnInitialized,
   IDataGridEventOnOptionChanged,
   IDataGridEventOnRowRemoved,
   IDataGridEventOnSaved,
@@ -34,9 +34,9 @@ const DataGridPattern = (props: IOptions<IDataGridOptions>): JSX.Element => {
     useResizeDetector<HTMLDivElement>()
   const gridComponent = useRef<dxDataGrid>()
 
-  const onInitialized = async (
-    e: IDataGridEventOnInitialized
-  ): Promise<void> => {
+  const onInitialized = (
+    e: InitializedEventInfo<dxDataGrid<any, any>>
+  ): void => {
     gridComponent.current = e.component
     dxService.callFromProps(props, 'onInitialized', e)
   }

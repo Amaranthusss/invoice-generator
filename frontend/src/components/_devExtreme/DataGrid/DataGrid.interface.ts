@@ -78,11 +78,6 @@ export interface IDataGridToolbarButton {
   options?: any
 }
 
-export type IDataGridEventOnInitialized = {
-  component?: dxDataGrid<any, any> | undefined
-  element?: HTMLElement | undefined
-}
-
 export type IDataGridEventOnSaved = EventInfo<dxDataGrid<any, any>> &
   DataChangeInfo<any, any>
 

@@ -1,3 +1,4 @@
+import { InitializedEventInfo } from 'devextreme/events'
 import { useEffect, useRef } from 'react'
 import { AxiosResponse } from 'axios'
 import { Dispatch } from 'redux'
@@ -17,7 +18,6 @@ import getClients from '../../../api/client/getClients'
 
 import {
   IDataGridEventOnSelectionChanged,
-  IDataGridEventOnInitialized,
   IDataGridOptions,
 } from '../../_devExtreme/DataGrid/DataGrid.interface'
 import { IClientsListClientFirmData } from './ClientsList.interface'
@@ -48,7 +48,9 @@ const ClientsList = (): JSX.Element => {
     }
   }, [])
 
-  const onInitialized = (e: IDataGridEventOnInitialized): void => {
+  const onInitialized = (
+    e: InitializedEventInfo<dxDataGrid<any, any>>
+  ): void => {
     if (_.isFunction(isReadyResolve.current)) {
       isReadyResolve.current(true)
     }

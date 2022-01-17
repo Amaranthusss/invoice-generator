@@ -1,4 +1,7 @@
-import { useResizeDetector } from 'react-resize-detector'
+import {
+  useResizeDetector,
+  UseResizeDetectorReturn,
+} from 'react-resize-detector'
 import { Button } from 'devextreme-react'
 import { ClickEvent } from 'devextreme/ui/button'
 import _ from 'lodash'
@@ -13,7 +16,8 @@ import { buttonSizeLimits } from './Button.config'
 import resizeDetector from '../resizeDetector.module.css'
 
 const ButtonPattern = (props: IOptions<IButtonOptions>): JSX.Element => {
-  const { width, height, ref } = useResizeDetector<HTMLDivElement>()
+  const { width, height, ref }: UseResizeDetectorReturn<HTMLDivElement> =
+    useResizeDetector<HTMLDivElement>()
 
   const getTextForHigherWidth = (): string | undefined => {
     if (width != null && width >= buttonSizeLimits.min) {
