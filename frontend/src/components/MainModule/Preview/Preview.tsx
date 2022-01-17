@@ -1,7 +1,7 @@
 import { TDocumentDefinitions } from 'pdfmake/interfaces'
+import pdfMake, { TCreatedPdf } from 'pdfmake/build/pdfmake'
 import { useRef } from 'react'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
-import pdfMake, { TCreatedPdf } from 'pdfmake/build/pdfmake'
 import _ from 'lodash'
 
 import {
@@ -14,10 +14,10 @@ import { updatePdfBody } from '../../../utils/updatePdfBody'
 import { equalityFn } from '../../../utils/equalityFn'
 
 import { IClientsListClientFirmData } from '../ClientsList/ClientsList.interface'
+import { IConfigurator } from '../Configurator/Configurator.interface'
 import { IServices } from '../../../Redux-store/global.reducer.interface'
 
 import styles from './Preview.module.css'
-import { IConfigurator } from '../Configurator/Configurator.interface'
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 

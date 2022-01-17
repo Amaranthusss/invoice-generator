@@ -1,29 +1,31 @@
+import { InitializedEventInfo, NativeEventInfo } from 'devextreme/events'
+import { ValueChangedInfo } from 'devextreme/ui/editor/editor'
+import { Dispatch } from '@reduxjs/toolkit'
 import { useRef } from 'react'
+import dxSelectBox from 'devextreme/ui/select_box'
+import dxNumberBox from 'devextreme/ui/number_box'
+import dxDateBox from 'devextreme/ui/date_box'
+import dxTextBox from 'devextreme/ui/text_box'
+import _ from 'lodash'
 
 import NumberBox from '../../_devExtreme/NumberBox/NumberBox'
 import SelectBox from '../../_devExtreme/SelectBox/SelectBox'
 import DateBox from '../../_devExtreme/DateBox/DateBox'
 import TextBox from '../../_devExtreme/TextBox/TextBox'
 
+import { setConfigurator } from '../../../Redux-store/global.reducer'
+import { useAppDispatch } from '../../../hooks/useAppDispatch'
+
 import { INumberBoxOptions } from '../../_devExtreme/NumberBox/NumberBox.interface'
 import { ISelectBoxOptions } from '../../_devExtreme/SelectBox/SelectBox.interface'
 import { IDateBoxOptions } from '../../_devExtreme/DateBox/DateBox.interface'
 import { ITextBoxOptions } from '../../_devExtreme/TextBox/TextBox.interface'
+import { IConfigurator } from './Configurator.interface'
 
+import { configuratorFullSize } from './Configurator.interface'
 import { Enums } from '../../../constants/enums'
 
 import styles from './Configurator.module.css'
-import { Dispatch } from '@reduxjs/toolkit'
-import { useAppDispatch } from '../../../hooks/useAppDispatch'
-import { configuratorFullSize, IConfigurator } from './Configurator.interface'
-import { InitializedEventInfo, NativeEventInfo } from 'devextreme/events'
-import { ValueChangedInfo } from 'devextreme/ui/editor/editor'
-import dxDateBox from 'devextreme/ui/date_box'
-import dxNumberBox from 'devextreme/ui/number_box'
-import _ from 'lodash'
-import { setConfigurator } from '../../../Redux-store/global.reducer'
-import dxSelectBox from 'devextreme/ui/select_box'
-import dxTextBox from 'devextreme/ui/text_box'
 
 const Configurator = (): JSX.Element => {
   const dispatch: Dispatch = useAppDispatch()
