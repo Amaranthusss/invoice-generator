@@ -11,6 +11,7 @@ import {
 } from '../utils/currencyCalculations'
 
 import { IAppSize, IServices, IStates } from './global.reducer.interface'
+import { IConfigurator } from '../components/MainModule/Configurator/Configurator.interface'
 
 import { Enums } from '../constants/enums'
 
@@ -18,6 +19,13 @@ const states: IStates = {
   clientFirm: null,
   services: {},
   appSize: { width: undefined, height: undefined },
+  configurator: {
+    dateOfIssue: '',
+    invoiceName: '',
+    jobDuration: 0,
+    methodOfPayment: Enums.InterfaceTexts.methodOfPaymentTransfer,
+    paymentTime: 0,
+  },
 }
 
 const globalSlice = createSlice({
@@ -75,6 +83,12 @@ const globalSlice = createSlice({
     setAppSize: (state: IStates, action: PayloadAction<IAppSize>): void => {
       state.appSize = action.payload
     },
+    setConfigurator: (
+      state: IStates,
+      action: PayloadAction<IConfigurator>
+    ): void => {
+      state.configurator = action.payload
+    },
   },
 })
 
@@ -92,6 +106,11 @@ export const getAppSize = (state: RootState): IAppSize => {
   return state.globalSlice.appSize
 }
 
-export const { setClientFirm, updateService, setAppSize } = globalSlice.actions
+export const getConfigurator = (state: RootState): IConfigurator => {
+  return state.globalSlice.configurator
+}
+
+export const { setClientFirm, updateService, setAppSize, setConfigurator } =
+  globalSlice.actions
 
 export default globalSlice.reducer
