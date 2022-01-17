@@ -24,6 +24,10 @@ export const updatePdfBody = (
   let summaryPriceBrutto: number = 0
   let lastServiceNumber: number = 0
 
+  const dateOfIssue: Date = new Date(configurator.dateOfIssue)
+  const paymentDate: Date = dateOfIssue
+  paymentDate.setDate(dateOfIssue.getDate() + configurator.paymentTime)
+
   const tableRecords = _.map(services, (service: IServicesListServiceData) => {
     summaryPriceBrutto += service.brutto
     lastServiceNumber += 1
@@ -76,7 +80,7 @@ export const updatePdfBody = (
     )}`,
     `Sposób płatności: ${configurator.methodOfPayment}`,
     `Termin płatności: ${formatDate(
-      new Date(configurator.dateOfIssue),
+      paymentDate,
       Enums.DateFormats.ShortDate
     )} (${configurator.paymentTime} dni)`,
   ]
