@@ -15,5 +15,5 @@ export interface IStates {
   clientFirm: IClientsListClientFirmData | null
   services: IServices
   appSize: IAppSize
-  configurator: IConfigurator
+  configurator: IConfigurator | null
 }

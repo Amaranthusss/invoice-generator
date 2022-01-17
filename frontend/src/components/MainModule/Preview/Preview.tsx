@@ -49,7 +49,9 @@ const PdfPreview = (): JSX.Element => {
     return equalityFn(services.current, nextServices, updateServices)
   }
 
-  const configuratorEqualityFn = (nextConfigurator: IConfigurator): boolean => {
+  const configuratorEqualityFn = (
+    nextConfigurator: IConfigurator | null
+  ): boolean => {
     const updateConfigurator = (updatedValue: IConfigurator) => {
       configurator.current = updatedValue
       onDocDataChanged()

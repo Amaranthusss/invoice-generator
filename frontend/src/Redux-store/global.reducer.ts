@@ -19,13 +19,7 @@ const states: IStates = {
   clientFirm: null,
   services: {},
   appSize: { width: undefined, height: undefined },
-  configurator: {
-    dateOfIssue: '',
-    invoiceName: '',
-    jobDuration: 0,
-    methodOfPayment: Enums.InterfaceTexts.methodOfPaymentTransfer,
-    paymentTime: 0,
-  },
+  configurator: null,
 }
 
 const globalSlice = createSlice({
@@ -106,7 +100,7 @@ export const getAppSize = (state: RootState): IAppSize => {
   return state.globalSlice.appSize
 }
 
-export const getConfigurator = (state: RootState): IConfigurator => {
+export const getConfigurator = (state: RootState): IConfigurator | null => {
   return state.globalSlice.configurator
 }
 
