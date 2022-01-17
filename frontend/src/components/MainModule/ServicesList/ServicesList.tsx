@@ -1,4 +1,10 @@
-import { DataChange } from 'devextreme/ui/data_grid'
+import dxDataGrid, {
+  DataChange,
+  RowInsertedInfo,
+  RowRemovedInfo,
+  RowUpdatedEvent,
+} from 'devextreme/ui/data_grid'
+import { EventInfo } from 'devextreme/events'
 import { Dispatch } from 'redux'
 import { useRef } from 'react'
 
@@ -8,26 +14,38 @@ import { dataSource, getColumns } from './ServicesList.options'
 import { useAppDispatch } from '../../../hooks/useAppDispatch'
 import { updateService } from '../../../Redux-store/global.reducer'
 
-import {
-  IDataGridEventOnRowRemoved,
-  IDataGridEventOnSaved,
-  IDataGridOptions,
-} from '../../_devExtreme/DataGrid/DataGrid.interface'
+import { IDataGridOptions } from '../../_devExtreme/DataGrid/DataGrid.interface'
 
 const Services = (): JSX.Element => {
   const dispatch: Dispatch = useAppDispatch()
 
-  const onSaved = (e: IDataGridEventOnSaved) => {
+  const onRowUpdated = (
+    e: EventInfo<dxDataGrid<any, any>> & RowUpdatedEvent<any, any>
+  ) => {
     const customSavedEvent: DataChange = {
       type: 'update',
-      data: e.changes[0]?.data,
-      key: e.changes[0]?.key,
+      data: e.data,
+      key: e.key,
     }
 
     dispatch(updateService(customSavedEvent))
   }
 
-  const onRowRemoved = (e: IDataGridEventOnRowRemoved) => {
+  const onRowInserted = (
+    e: EventInfo<dxDataGrid<any, any>> & RowInsertedInfo<any, any>
+  ) => {
+    const customSavedEvent: DataChange = {
+      type: 'update',
+      data: e.data,
+      key: e.key,
+    }
+
+    dispatch(updateService(customSavedEvent))
+  }
+
+  const onRowRemoved = (
+    e: EventInfo<dxDataGrid<any, any>> & RowRemovedInfo<any, any>
+  ) => {
     const customRowRemovedEvent: DataChange = {
       type: 'remove',
       data: e.data,
@@ -38,7 +56,7 @@ const Services = (): JSX.Element => {
   }
 
   const gridOptions = useRef<IDataGridOptions>({
-		name: 'data-grid-services',
+    name: 'data-grid-services',
     dataSource: dataSource,
     columns: getColumns(),
     columnAutoWidth: true,
@@ -54,7 +72,8 @@ const Services = (): JSX.Element => {
       },
     },
     onRowRemoved,
-    onSaved,
+    onRowInserted,
+    onRowUpdated,
   })
 
   return <DataGrid options={gridOptions.current} />

@@ -4,5 +4,5 @@ export interface IServicesListServiceData {
   netto: number
   vatAsPercents: number
   vat: number
-	key: string
+  key: string | { __KEY__: string }
 }

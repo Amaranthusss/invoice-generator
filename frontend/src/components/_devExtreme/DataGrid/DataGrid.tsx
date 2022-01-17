@@ -15,14 +15,7 @@ import _ from 'lodash'
 
 import dxService from '../devExtreme.service'
 
-import {
-  IDataGridEventOnOptionChanged,
-  IDataGridEventOnRowRemoved,
-  IDataGridEventOnSaved,
-  IDataGridEventOnSelectionChanged,
-  IDataGridOptions,
-  IDataGridToolbarItem,
-} from './DataGrid.interface'
+import { IDataGridOptions, IDataGridToolbarItem } from './DataGrid.interface'
 import { IOptions } from '../../components.interface'
 
 import { Enums } from '../../../constants/enums'
@@ -97,18 +90,6 @@ const DataGridPattern = (props: IOptions<IDataGridOptions>): JSX.Element => {
         allowColumnReordering={true}
         scrolling={{ showScrollbar: 'always' }}
         onInitialized={onInitialized}
-        onSelectionChanged={(e: IDataGridEventOnSelectionChanged) =>
-          dxService.callFromProps(props, 'onSelectionChanged', e)
-        }
-        onSaved={(e: IDataGridEventOnSaved) =>
-          dxService.callFromProps(props, 'onSaved', e)
-        }
-        onRowRemoved={(e: IDataGridEventOnRowRemoved) =>
-          dxService.callFromProps(props, 'onRowRemoved', e)
-        }
-        onOptionChanged={(e: IDataGridEventOnOptionChanged) =>
-          dxService.callFromProps(props, 'onOptionChanged', e)
-        }
       >
         {_.map(JSXElements)}
       </DataGrid>

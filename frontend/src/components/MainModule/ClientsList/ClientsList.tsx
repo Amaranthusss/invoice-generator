@@ -1,9 +1,9 @@
-import { InitializedEventInfo } from 'devextreme/events'
+import { EventInfo, InitializedEventInfo } from 'devextreme/events'
 import { useEffect, useRef } from 'react'
 import { AxiosResponse } from 'axios'
 import { Dispatch } from 'redux'
 import { nanoid } from '@reduxjs/toolkit'
-import dxDataGrid from 'devextreme/ui/data_grid'
+import dxDataGrid, { SelectionChangedInfo } from 'devextreme/ui/data_grid'
 import DataSource from 'devextreme/data/data_source'
 import _ from 'lodash'
 
@@ -16,10 +16,7 @@ import updateClient from '../../../api/client/updateClient'
 import deleteClient from '../../../api/client/deleteClient'
 import getClients from '../../../api/client/getClients'
 
-import {
-  IDataGridEventOnSelectionChanged,
-  IDataGridOptions,
-} from '../../_devExtreme/DataGrid/DataGrid.interface'
+import { IDataGridOptions } from '../../_devExtreme/DataGrid/DataGrid.interface'
 import { IClientsListClientFirmData } from './ClientsList.interface'
 import { ICreateClientDto } from '../../../../../backend/src/clients/dtos/create.interface'
 import { IDeleteClientDto } from '../../../../../backend/src/clients/dtos/delete.interface'
@@ -57,7 +54,9 @@ const ClientsList = (): JSX.Element => {
     gridComponent.current = e.component
   }
 
-  const onSelectionChanged = (e: IDataGridEventOnSelectionChanged): void => {
+  const onSelectionChanged = (
+    e: EventInfo<dxDataGrid<any, any>> & SelectionChangedInfo<any, any>
+  ): void => {
     if (!_.isEmpty(e?.selectedRowKeys)) {
       dispatch(
         setClientFirm(_.last(e.selectedRowsData) as IClientsListClientFirmData)

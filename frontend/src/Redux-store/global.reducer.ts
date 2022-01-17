@@ -34,11 +34,17 @@ const globalSlice = createSlice({
     },
     updateService: (
       state: IStates,
-      action: PayloadAction<DataChange<IServicesListServiceData, string>>
+      action: PayloadAction<
+        DataChange<IServicesListServiceData, string | { __KEY__: string }>
+      >
     ): void => {
+      const key: string = _.isObject(action.payload.key)
+        ? action.payload.key.__KEY__
+        : action.payload.key
+
       switch (action.payload.type) {
         case 'update':
-          const modifiedServices: IServices = { ...state.services }
+          const modifiedServices: IServices = _.cloneDeep(state.services)
           const brutto: number = getBruttoFromNetto(
             action.payload.data?.netto as number
           )
@@ -53,20 +59,17 @@ const globalSlice = createSlice({
             name: action.payload.data?.name as string,
             netto: netto,
             brutto: brutto,
-            key: action.payload.key,
+            key: key,
             vat: vat,
             vatAsPercents: Enums.VatAsPercents,
           }
-          console.log(newData)
-          modifiedServices[action.payload.key as string] = newData
+          modifiedServices[key] = newData
           state.services = modifiedServices
 
           break
 
         case 'remove':
-          const clearedServices: IServices = { ...state.services }
-
-          state.services = _.omit(clearedServices, [action.payload.key])
+          state.services = _.omit(_.cloneDeep(state.services), [key])
 
           break
 
