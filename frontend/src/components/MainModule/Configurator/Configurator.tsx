@@ -16,13 +16,14 @@ import styles from './Configurator.module.css'
 import { Dispatch } from '@reduxjs/toolkit'
 import { useAppDispatch } from '../../../hooks/useAppDispatch'
 import { configuratorFullSize, IConfigurator } from './Configurator.interface'
-import { NativeEventInfo } from 'devextreme/events'
+import { InitializedEventInfo, NativeEventInfo } from 'devextreme/events'
 import { ValueChangedInfo } from 'devextreme/ui/editor/editor'
 import dxDateBox from 'devextreme/ui/date_box'
 import dxNumberBox from 'devextreme/ui/number_box'
 import _ from 'lodash'
 import { setConfigurator } from '../../../Redux-store/global.reducer'
 import dxSelectBox from 'devextreme/ui/select_box'
+import dxTextBox from 'devextreme/ui/text_box'
 
 const Configurator = (): JSX.Element => {
   const dispatch: Dispatch = useAppDispatch()
@@ -52,7 +53,16 @@ const Configurator = (): JSX.Element => {
     hint: Enums.InterfaceTexts.invoiceName,
     label: Enums.InterfaceTexts.invoiceName,
     labelMode: 'floating',
-    onValueChanged: (e: NativeEventInfo<any, Event> & ValueChangedInfo) => {
+    defaultValue: '1/10/2022',
+    onInitialized: (e: InitializedEventInfo<dxTextBox>) => {
+      onConfiguratorUpdated(
+        'invoiceName',
+        e.component?.option().value as string
+      )
+    },
+    onValueChanged: (
+      e: NativeEventInfo<dxTextBox, Event> & ValueChangedInfo
+    ) => {
       onConfiguratorUpdated('invoiceName', e.value)
     },
   })
@@ -66,6 +76,12 @@ const Configurator = (): JSX.Element => {
       e: NativeEventInfo<dxDateBox, Event> & ValueChangedInfo
     ) => {
       onConfiguratorUpdated('dateOfIssue', (e.value as Date).toUTCString())
+    },
+    onInitialized: (e: InitializedEventInfo<dxDateBox>) => {
+      onConfiguratorUpdated(
+        'dateOfIssue',
+        (e.component?.option().value as Date).toUTCString()
+      )
     },
   })
 
@@ -83,6 +99,12 @@ const Configurator = (): JSX.Element => {
     ) => {
       onConfiguratorUpdated('methodOfPayment', e.value)
     },
+    onInitialized: (e: InitializedEventInfo<dxSelectBox>) => {
+      onConfiguratorUpdated(
+        'methodOfPayment',
+        e.component?.option().value as string
+      )
+    },
   })
 
   const jobDurationNumberBoxOptions = useRef<INumberBoxOptions>({
@@ -98,6 +120,12 @@ const Configurator = (): JSX.Element => {
     ) => {
       onConfiguratorUpdated('jobDuration', e.value)
     },
+    onInitialized: (e: InitializedEventInfo<dxNumberBox>) => {
+      onConfiguratorUpdated(
+        'jobDuration',
+        e.component?.option().value as number
+      )
+    },
   })
 
   const paymentTimeNumberBoxOptions = useRef<INumberBoxOptions>({
@@ -112,6 +140,12 @@ const Configurator = (): JSX.Element => {
       e: NativeEventInfo<dxNumberBox, Event> & ValueChangedInfo
     ) => {
       onConfiguratorUpdated('paymentTime', e.value)
+    },
+    onInitialized: (e: InitializedEventInfo<dxNumberBox>) => {
+      onConfiguratorUpdated(
+        'paymentTime',
+        e.component?.option().value as number
+      )
     },
   })
 
