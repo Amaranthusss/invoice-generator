@@ -1,4 +1,5 @@
 import ServicesList from './ServicesList/ServicesList'
+import Configurator from './Configurator/Configurator'
 import ClientsList from './ClientsList/ClientsList'
 import PdfPreview from './Preview/Preview'
 
@@ -9,6 +10,9 @@ const Main = (): JSX.Element => {
     <div className={styles.container}>
       <div className={styles.column}>
         <div className={styles.tables}>
+          <div className={styles.toolbar}>
+            <Configurator />
+          </div>
           <div className={styles.table}>
             <ServicesList />
           </div>

@@ -6,7 +6,9 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom'
+import { InitializedEventInfo } from 'devextreme/events'
 import { useEffect, useRef } from 'react'
+import dxButton from 'devextreme/ui/button'
 
 import ArchiveToolbar from './ArchiveToolbar/ArchiveToolbar'
 import MainToolbar from './MainToolbar/MainToolbar'
@@ -20,8 +22,6 @@ import { appRoutes } from '../../constants/routes'
 import { Enums } from '../../constants/enums'
 
 import styles from './Toolbar.module.css'
-import dxButton from 'devextreme/ui/button'
-import { InitializedEventInfo } from 'devextreme/events'
 
 const Toolbar = (): JSX.Element => {
   const navigate: NavigateFunction = useNavigate()

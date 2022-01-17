@@ -15,14 +15,23 @@
 .tables {
   height: 100%;
   width: 100%;
+  padding-bottom: 5px;
   min-width: 0px;
   min-height: 30px;
 }
 
+.toolbar {
+  padding-inline: 5px;
+  padding-top: 5px;
+  height: 35px;
+  min-width: 0px;
+  min-height: 0px;
+}
+
 .table {
   padding-inline: 5px;
-  padding-block: 5px;
-  height: calc(50% - 10px);
+  padding-top: 5px;
+  height: calc(50% - 27.5px);
   min-width: 0px;
   min-height: 0px;
 }
