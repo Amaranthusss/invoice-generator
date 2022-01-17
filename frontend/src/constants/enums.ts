@@ -28,16 +28,25 @@ export namespace Enums {
     editRowButton = 'Edytuj',
     deleteRowButton = 'Usuń',
     cancelButton = 'Cofnij',
-    sendEmailPopupButton = 'Wyślij e-mail',
-    invoiceDateOfIssue = 'Data wystawienia',
-    methodOfPaymentTransfer = 'Przelew',
-    generateInvoiceButton = 'Wygeneruj fakturę',
-    saveInvoiceButton = 'Zapisz fakturę',
     confirmDeleteMessage = 'Czy na pewno chcesz usunąć wybrany wiersz?',
+
+    methodOfPaymentTransfer = 'Przelew',
+    methodOfPaymentCash = 'Gotówka',
+
+    invoiceDateOfIssue = 'Data wystawienia',
+    paymentTime = 'Czas zapłaty (dni)',
+    methodOfPayment = 'Sposób płatności',
+    jobDuration = 'Czas pracy (dni)',
+    invoiceName = 'Faktura VAT nr',
+
+    sendEmailPopupButton = 'Wyślij e-mail',
+    saveInvoiceButton = 'Zapisz fakturę',
+
     archivePageButton = 'Archiwum',
     mainPageButton = 'Strona główna',
-		errorPageText = 'Coś poszło nie tak! 😢',
-		errorPageNagivateButton = 'Powrót do Strony Głównej'
+
+    errorPageText = 'Coś poszło nie tak! 😢',
+    errorPageNagivateButton = 'Powrót do Strony Głównej',
   }
 
   export const DefaultCurrency: string = 'PLN'
