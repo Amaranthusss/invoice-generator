@@ -4,7 +4,11 @@ import pdfFonts from 'pdfmake/build/vfs_fonts'
 import pdfMake, { TCreatedPdf } from 'pdfmake/build/pdfmake'
 import _ from 'lodash'
 
-import { getClientFirm, getServices } from '../../../Redux-store/global.reducer'
+import {
+  getClientFirm,
+  getConfigurator,
+  getServices,
+} from '../../../Redux-store/global.reducer'
 import { useAppSelector } from '../../../hooks/useAppSelector'
 import { updatePdfBody } from '../../../utils/updatePdfBody'
 import { equalityFn } from '../../../utils/equalityFn'
@@ -13,6 +17,7 @@ import { IClientsListClientFirmData } from '../ClientsList/ClientsList.interface
 import { IServices } from '../../../Redux-store/global.reducer.interface'
 
 import styles from './Preview.module.css'
+import { IConfigurator } from '../Configurator/Configurator.interface'
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 
@@ -20,6 +25,7 @@ const PdfPreview = (): JSX.Element => {
   const previewRef = useRef<HTMLIFrameElement>(null)
   const clientFirm = useRef<IClientsListClientFirmData | null>(null)
   const services = useRef<IServices | null>(null)
+  const configurator = useRef<IConfigurator | null>(null)
 
   const clientFirmEqualityFn = (
     nextClientFirm: IClientsListClientFirmData | null
@@ -43,14 +49,29 @@ const PdfPreview = (): JSX.Element => {
     return equalityFn(services.current, nextServices, updateServices)
   }
 
+  const configuratorEqualityFn = (nextConfigurator: IConfigurator): boolean => {
+    const updateConfigurator = (updatedValue: IConfigurator) => {
+      configurator.current = updatedValue
+      onDocDataChanged()
+    }
+
+    return equalityFn(
+      configurator.current,
+      nextConfigurator,
+      updateConfigurator
+    )
+  }
+
   useAppSelector(getClientFirm, clientFirmEqualityFn)
   useAppSelector(getServices, servicesEqualityFn)
+  useAppSelector(getConfigurator, configuratorEqualityFn)
 
   const onDocDataChanged = (): void => {
     if (previewRef != null && previewRef.current != null) {
       const documentDefinitions: TDocumentDefinitions = updatePdfBody(
         services.current,
-        clientFirm.current
+        clientFirm.current,
+        configurator.current
       )
       const doc: TCreatedPdf = pdfMake.createPdf(documentDefinitions)
 

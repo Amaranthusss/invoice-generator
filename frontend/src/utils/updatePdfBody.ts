@@ -10,19 +10,17 @@ import { IServices } from '../Redux-store/global.reducer.interface'
 import { Enums } from '../constants/enums'
 import { firmData as ownFirmData, IFirmDataParameter } from '../data/firmData'
 import { IServicesListServiceData } from '../components/MainModule/ServicesList/ServicesList.interface'
-
-const invoiceNumber: string = '1/10/2021'
-const dateOfIssue: Date = new Date()
-const methodOfPayment: string = Enums.InterfaceTexts.methodOfPaymentTransfer
-const paymentTime: number = 14
-const dateOfPayment: Date = new Date()
-
-dateOfPayment.setDate(dateOfIssue.getDate() + paymentTime)
+import { IConfigurator } from '../components/MainModule/Configurator/Configurator.interface'
 
 export const updatePdfBody = (
   services: IServices | null,
-  clientFirm: IClientsListClientFirmData | null
+  clientFirm: IClientsListClientFirmData | null,
+  configurator: IConfigurator | null
 ): TDocumentDefinitions => {
+  if (configurator == null) {
+    return {} as TDocumentDefinitions
+  }
+
   let summaryPriceBrutto: number = 0
   let lastServiceNumber: number = 0
 
@@ -72,12 +70,15 @@ export const updatePdfBody = (
   const sellerFirmData: string[] = getSellerFirmData()
 
   const invoiceInfoDisplay: string[] = [
-    `Data wystawiena: ${formatDate(dateOfIssue, Enums.DateFormats.ShortDate)}`,
-    `Sposób płatności: ${methodOfPayment}`,
-    `Termin płatności: ${formatDate(
-      dateOfPayment,
+    `Data wystawiena: ${formatDate(
+      new Date(configurator.dateOfIssue),
       Enums.DateFormats.ShortDate
-    )} (${paymentTime} dni)`,
+    )}`,
+    `Sposób płatności: ${configurator.methodOfPayment}`,
+    `Termin płatności: ${formatDate(
+      new Date(configurator.dateOfIssue),
+      Enums.DateFormats.ShortDate
+    )} (${configurator.paymentTime} dni)`,
   ]
 
   const summaryDisplay: ContentText[] = [
@@ -104,7 +105,7 @@ export const updatePdfBody = (
 
   return {
     info: {
-      title: `TAGRA Faktura VAT nr ${invoiceNumber}`,
+      title: `TAGRA Faktura VAT nr ${configurator.invoiceName}`,
     },
     pageSize: 'A4',
     pageOrientation: 'portrait',
@@ -170,7 +171,7 @@ export const updatePdfBody = (
       },
       {
         margin: [0, 50, 0, 0],
-        text: `Faktura VAT nr ${invoiceNumber}`,
+        text: `Faktura VAT nr ${configurator.invoiceName}`,
         fontSize: 16,
         bold: true,
         alignment: 'center',
