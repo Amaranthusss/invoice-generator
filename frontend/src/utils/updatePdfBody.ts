@@ -90,7 +90,7 @@ export const updatePdfBody = (
       text: `Razem do zapłaty: ${formatNumber(
         summaryPriceBrutto,
         Enums.CurrencyFormat
-      )} zł\n`,
+      )}\n`,
       bold: true,
       fontSize: 12,
     },
@@ -102,7 +102,7 @@ export const updatePdfBody = (
       text: `Pozostało do zapłaty: ${formatNumber(
         summaryPriceBrutto,
         Enums.CurrencyFormat
-      )} zł\n`,
+      )}\n`,
       italics: true,
     },
   ]
