@@ -186,6 +186,7 @@ export const updatePdfBody = (
         alignment: 'center',
         table: {
           headerRows: 1,
+          widths: ['auto', '*', 'auto', 'auto', 'auto', 'auto'],
           body: [
             [
               'LP',
