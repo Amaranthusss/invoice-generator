@@ -46,7 +46,6 @@ const Configurator = (): JSX.Element => {
       _.size(configurator.current) === configuratorFullSize
 
     if (areAllElementsDefined && isConfiguratorFull) {
-      console.log(configurator.current)
       dispatch(setConfigurator(configurator.current))
     }
   }
