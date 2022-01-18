@@ -1,6 +1,6 @@
-import { Repository, UpdateResult } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Injectable } from '@nestjs/common'
+import { Repository } from 'typeorm'
 import * as _ from 'lodash'
 
 import { CreateClientDto } from './dtos/create.dtos'

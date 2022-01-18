@@ -16,6 +16,10 @@ import { firmData as ownFirmData, IFirmDataParameter } from '../data/firmData'
 import { IServicesListServiceData } from '../components/MainModule/ServicesList/ServicesList.interface'
 import { IConfigurator } from '../components/MainModule/Configurator/Configurator.interface'
 
+import * as pdfMake from 'pdfmake/build/pdfmake'
+import * as pdfFonts from 'pdfmake/build/vfs_fonts'
+;(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs
+
 export const updatePdfBody = (
   services: IServices | null,
   clientFirm: IClientsListClientFirmData | null,

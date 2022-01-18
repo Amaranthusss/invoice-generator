@@ -4,6 +4,8 @@ export const apiRoutes = {
   updateClient: '/clients/',
   deleteClient: '/clients/',
   createClient: '/clients',
+
+  createFile: '/invoices',
 }
 
 export const appRoutes = {

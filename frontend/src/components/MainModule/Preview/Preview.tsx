@@ -12,6 +12,7 @@ import {
 import { useAppSelector } from '../../../hooks/useAppSelector'
 import { updatePdfBody } from '../../../utils/updatePdfBody'
 import { equalityFn } from '../../../utils/equalityFn'
+import saveInvoiceFile from '../../../api/invoices/createFile'
 
 import { IClientsListClientFirmData } from '../ClientsList/ClientsList.interface'
 import { IConfigurator } from '../Configurator/Configurator.interface'
@@ -76,6 +77,13 @@ const PdfPreview = (): JSX.Element => {
         configurator.current
       )
       const doc: TCreatedPdf = pdfMake.createPdf(documentDefinitions)
+
+      saveInvoiceFile({
+        year: '2022',
+        month: '01',
+        fileName: '10-01-2022',
+        fileDoc: JSON.stringify(documentDefinitions),
+      })
 
       doc.getDataUrl((dataUrl: string) => {
         if (!_.isNull(dataUrl) && !_.isNull(previewRef.current)) {
