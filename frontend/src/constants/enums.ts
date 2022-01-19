@@ -31,6 +31,9 @@ export namespace Enums {
     search = 'Szukaj...',
     confirmDeleteMessage = 'Czy na pewno chcesz usunąć wybrany wiersz?',
 
+    savedInvoiceFileSuccess = 'Utworzono plik PDF z fakturą, gratulacje! 😊',
+    savedInvoiceFileError = 'Przy zapisie faktury do pliku PDF napotkano problem! 😢',
+
     methodOfPaymentTransfer = 'Przelew',
     methodOfPaymentCash = 'Gotówka',
 

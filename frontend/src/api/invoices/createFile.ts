@@ -10,7 +10,10 @@ import _ from 'lodash'
 const createFile = async (
   options: ICreateFileDto
 ): Promise<AxiosResponse<IClientsListClientFirmData[]>> => {
-  if (_.some(options, (param: string) => _.isEmpty(param) || param === '{}')) {
+  if (
+    _.isEmpty(options) ||
+    _.some(options, (param: string) => _.isEmpty(param) || param === '{}')
+  ) {
     return undefined as any
   }
 

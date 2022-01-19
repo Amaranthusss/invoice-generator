@@ -3,14 +3,15 @@ import { DataChange } from 'devextreme/ui/data_grid'
 import { RootState } from './store'
 import _ from 'lodash'
 
-import { IClientsListClientFirmData } from '../components/MainModule/ClientsList/ClientsList.interface'
-import { IServicesListServiceData } from '../components/MainModule/ServicesList/ServicesList.interface'
 import {
   getBruttoFromNetto,
   getVatFromNetto,
 } from '../utils/currencyCalculations'
 
 import { IAppSize, IServices, IStates } from './global.reducer.interface'
+import { IClientsListClientFirmData } from '../components/MainModule/ClientsList/ClientsList.interface'
+import { IServicesListServiceData } from '../components/MainModule/ServicesList/ServicesList.interface'
+import { ICreateFileDto } from '../../../backend/src/invoices/dtos/createFile.interface'
 import { IConfigurator } from '../components/MainModule/Configurator/Configurator.interface'
 
 import { Enums } from '../constants/enums'
@@ -20,6 +21,7 @@ const states: IStates = {
   services: {},
   appSize: { width: undefined, height: undefined },
   configurator: null,
+  invoiceDoc: {} as any,
 }
 
 const globalSlice = createSlice({
@@ -86,6 +88,12 @@ const globalSlice = createSlice({
     ): void => {
       state.configurator = action.payload
     },
+    setInvoiceDoc: (
+      state: IStates,
+      action: PayloadAction<ICreateFileDto>
+    ): void => {
+      state.invoiceDoc = action.payload
+    },
   },
 })
 
@@ -107,7 +115,16 @@ export const getConfigurator = (state: RootState): IConfigurator | null => {
   return state.globalSlice.configurator
 }
 
-export const { setClientFirm, updateService, setAppSize, setConfigurator } =
-  globalSlice.actions
+export const getInvoiceDoc = (state: RootState): ICreateFileDto => {
+  return state.globalSlice.invoiceDoc
+}
+
+export const {
+  setClientFirm,
+  updateService,
+  setAppSize,
+  setConfigurator,
+  setInvoiceDoc,
+} = globalSlice.actions
 
 export default globalSlice.reducer

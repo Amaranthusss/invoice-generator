@@ -8,5 +8,5 @@ export class CreateFileDto {
   @IsString()
   fileName: string
   @IsBase64()
-  fileDoc: string
+  base64: string
 }
