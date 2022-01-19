@@ -78,11 +78,13 @@ const PdfPreview = (): JSX.Element => {
       )
       const doc: TCreatedPdf = pdfMake.createPdf(documentDefinitions)
 
-      saveInvoiceFile({
-        year: '2022',
-        month: '01',
-        fileName: '10-01-2022',
-        fileDoc: JSON.stringify(documentDefinitions),
+      doc.getBase64((base64: string) => {
+        saveInvoiceFile({
+          year: '2022',
+          month: '01',
+          fileName: '10-01-2022',
+          fileDoc: base64,
+        })
       })
 
       doc.getDataUrl((dataUrl: string) => {

@@ -1,4 +1,4 @@
-import { IsString } from 'class-validator'
+import { IsString, IsBase64 } from 'class-validator'
 
 export class CreateFileDto {
   @IsString()
@@ -7,6 +7,6 @@ export class CreateFileDto {
   month: string
   @IsString()
   fileName: string
-  @IsString()
+  @IsBase64()
   fileDoc: string
 }
