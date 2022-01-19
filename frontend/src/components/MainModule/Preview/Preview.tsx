@@ -78,16 +78,16 @@ const PdfPreview = (): JSX.Element => {
       )
       const doc: TCreatedPdf = pdfMake.createPdf(documentDefinitions)
 
-      doc.getBase64((base64: string) => {
+      doc.getBase64((base64: string): void => {
         saveInvoiceFile({
           year: '2022',
           month: '01',
           fileName: '10-01-2022',
-          fileDoc: base64,
+          base64: base64,
         })
       })
 
-      doc.getDataUrl((dataUrl: string) => {
+      doc.getDataUrl((dataUrl: string): void => {
         if (!_.isNull(dataUrl) && !_.isNull(previewRef.current)) {
           previewRef.current.src = dataUrl
         }
