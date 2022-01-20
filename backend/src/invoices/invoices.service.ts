@@ -73,19 +73,20 @@ export class InvoicesService {
 
           for (const [index, fileName] of _.entries(fileNames)) {
             const path: string = `${invoicesFolderPath}/${year}/${month}/${fileName}`
+            const vatAsPercents: number = 23
             const pdfTexts: string[] = await getTextFromPDF(path)
             const brutto: number = findBrutto(pdfTexts)
             const title: string = findTitle(pdfTexts)
-            const vatAsPercents: number = 23
             const netto: number = convertBruttoToNetto(brutto, vatAsPercents)
             const vat: number = _.round(netto - brutto, 2)
 
             invoicesList[year][month][index] = {
-              name: title,
-              vat,
               vatAsPercents,
+              name: title,
+              fileName,
               brutto,
               netto,
+              vat,
             }
           }
         }

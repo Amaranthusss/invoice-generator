@@ -4,6 +4,7 @@ export interface IServicesListServiceData {
   netto: number
   vatAsPercents: number
   vat: number
+	fileName: string
 }
 export interface IInvoicesListMonth {
   [monthFolderName: string]: any[]
