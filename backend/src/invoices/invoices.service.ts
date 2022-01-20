@@ -51,7 +51,7 @@ const convertBruttoToNetto = (
 @Injectable()
 export class InvoicesService {
   async findAll(): Promise<IInvoicesList> {
-		console.log('findAll')
+    console.log('findAll')
     const invoicesList: IInvoicesList = {}
     const years: string[] = await fsPromises.readdir(invoicesFolderPath)
     const monthsInYearsPromises: Promise<string[]>[] = _.map(
@@ -87,7 +87,6 @@ export class InvoicesService {
                 vatAsPercents,
                 brutto,
                 netto,
-                key: '',
               }
 
               console.log(invoicesList, 'halo')

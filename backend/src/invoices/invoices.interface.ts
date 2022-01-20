@@ -1,5 +1,10 @@
-import { IServicesListServiceData } from '../../../frontend/src/components/MainModule/ServicesList/ServicesList.interface'
-
+export interface IServicesListServiceData {
+  name: string
+  brutto: number
+  netto: number
+  vatAsPercents: number
+  vat: number
+}
 export interface IInvoicesListMonth {
   [monthFolderName: string]: IServicesListServiceData[]
 }
