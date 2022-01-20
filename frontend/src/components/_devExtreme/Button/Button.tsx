@@ -4,7 +4,6 @@ import {
 } from 'react-resize-detector'
 import { Button } from 'devextreme-react'
 import { ClickEvent } from 'devextreme/ui/button'
-import _ from 'lodash'
 
 import dxService from '../devExtreme.service'
 

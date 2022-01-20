@@ -32,7 +32,7 @@ const App = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(setAppSize({ width, height }))
-  }, [width, height])
+  }, [width, height, dispatch])
 
   return (
     <div ref={ref}>
