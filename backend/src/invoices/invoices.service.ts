@@ -1,22 +1,15 @@
 import { Injectable } from '@nestjs/common'
-import * as fs from 'fs'
+import * as fsPromises from 'fs/promises'
 
 import { CreateFileDto } from './dtos/createFile.dtos'
 
 @Injectable()
 export class InvoicesService {
-  async createFile(fileOptions: CreateFileDto): Promise<void> {
+  async createFile(fileOptions: CreateFileDto): Promise<any> {
     const filePath: string = `../invoices/${fileOptions.year}/${fileOptions.month}/${fileOptions.fileName}.pdf`
 
-    const writeFileCallback = (error: NodeJS.ErrnoException): void => {
-      if (error != null) console.error(error)
-    }
-
-    fs.writeFile(
-      filePath,
-      fileOptions.base64,
-      { encoding: 'base64' },
-      writeFileCallback,
-    )
+    return fsPromises.writeFile(filePath, fileOptions.base64, {
+      encoding: 'base64',
+    })
   }
 }

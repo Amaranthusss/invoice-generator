@@ -9,7 +9,7 @@ export class InvoicesController {
   constructor(private readonly invoicesService: InvoicesService) {}
 
   @Post()
-  async create(@Body() fileOptions: CreateFileDto): Promise<void> {
+  async create(@Body() fileOptions: CreateFileDto): Promise<any> {
     return this.invoicesService.createFile(fileOptions)
   }
 }
