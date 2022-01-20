@@ -83,7 +83,6 @@ const PdfPreview = (): JSX.Element => {
       const doc: TCreatedPdf = pdfMake.createPdf(documentDefinitions)
 
       doc.getBase64((base64: string): void => {
-        console.log(base64)
         const year: string = _.toString(new Date().getFullYear())
         const month: string =
           _.size(_.toString(new Date().getMonth() + 1)) === 1

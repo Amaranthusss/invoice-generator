@@ -19,7 +19,7 @@ import { setAppSize } from './Redux-store/global.reducer'
 import { appRoutes } from './constants/routes'
 import { Enums } from './constants/enums'
 
-import 'devextreme/dist/css/dx.light.css'
+import 'devextreme/dist/css/dx.material.blue.light.compact.css'
 import './index.css'
 
 locale('pl')

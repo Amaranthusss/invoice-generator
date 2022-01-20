@@ -34,6 +34,7 @@ const ButtonPattern = (props: IOptions<IButtonOptions>): JSX.Element => {
         width={width}
         height={height}
         text={getTextForHigherWidth()}
+				focusStateEnabled={false}
         onClick={(e: ClickEvent) =>
           dxService.callFromProps(props, 'onClick', e)
         }

@@ -45,7 +45,7 @@ const MainToolbar = (): JSX.Element => {
     onClick: (): void => {
       createInvoicePdfFile(invoiceDoc.current ?? ({} as any))
         .then(() => {
-          notify(Enums.InterfaceTexts.savedInvoiceFileSuccess, 'success', 5000)
+          notify(Enums.InterfaceTexts.savedInvoiceFileSuccess, 'info', 5000)
         })
         .catch((error) => {
           notify(Enums.InterfaceTexts.savedInvoiceFileError, 'error', 5000)
