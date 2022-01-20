@@ -45,13 +45,12 @@ const convertBruttoToNetto = (
   brutto: number,
   vatAsPercents: number,
 ): number => {
-  return _.round((brutto / 100 + vatAsPercents) * 100, 2)
+  return brutto === 0 ? 0 : _.round((brutto / 100 + vatAsPercents) * 100, 2)
 }
 
 @Injectable()
 export class InvoicesService {
   async findAll(): Promise<IInvoicesList> {
-    console.log('findAll')
     const invoicesList: IInvoicesList = {}
     const years: string[] = await fsPromises.readdir(invoicesFolderPath)
     const monthsInYearsPromises: Promise<string[]>[] = _.map(
@@ -68,30 +67,27 @@ export class InvoicesService {
         const fileNames: string[] = await fsPromises.readdir(
           `${invoicesFolderPath}/${year}/${month}`,
         )
-        console.log('halo?', fileNames)
 
         if (!_.isEmpty(fileNames)) {
-          _.forEach(fileNames, (name: string, index: number) => {
-            getTextFromPDF(
-              `${invoicesFolderPath}/${year}/${month}/${invoicesList[year][month][index]}`,
-            ).then((pdfTexts: string[]) => {
-              const brutto: number = findBrutto(pdfTexts)
-              const title: string = findTitle(pdfTexts)
-              const vatAsPercents: number = 23
-              const netto: number = convertBruttoToNetto(brutto, vatAsPercents)
-              const vat: number = _.round(brutto - netto, 2)
-              console.log('halo?')
-              invoicesList[year][month][index] = {
-                name: title,
-                vat,
-                vatAsPercents,
-                brutto,
-                netto,
-              }
+          invoicesList[year][month] = []
 
-              console.log(invoicesList, 'halo')
-            })
-          })
+          for (const [index, fileName] of _.entries(fileNames)) {
+            const path: string = `${invoicesFolderPath}/${year}/${month}/${fileName}`
+            const pdfTexts: string[] = await getTextFromPDF(path)
+            const brutto: number = findBrutto(pdfTexts)
+            const title: string = findTitle(pdfTexts)
+            const vatAsPercents: number = 23
+            const netto: number = convertBruttoToNetto(brutto, vatAsPercents)
+            const vat: number = _.round(netto - brutto, 2)
+
+            invoicesList[year][month][index] = {
+              name: title,
+              vat,
+              vatAsPercents,
+              brutto,
+              netto,
+            }
+          }
         }
       }
     }

@@ -6,7 +6,7 @@ export interface IServicesListServiceData {
   vat: number
 }
 export interface IInvoicesListMonth {
-  [monthFolderName: string]: IServicesListServiceData[]
+  [monthFolderName: string]: any[]
 }
 
 export interface IInvoicesList {
