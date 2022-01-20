@@ -6,6 +6,7 @@ export const apiRoutes = {
   createClient: '/clients',
 
   createFile: '/invoices',
+  getInvoices: '/invoices',
 }
 
 export const appRoutes = {

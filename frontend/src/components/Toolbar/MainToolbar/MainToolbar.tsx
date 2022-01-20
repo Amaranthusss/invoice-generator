@@ -7,6 +7,7 @@ import { useAppSelector } from '../../../hooks/useAppSelector'
 import { getInvoiceDoc } from '../../../Redux-store/global.reducer'
 import { equalityFn } from '../../../utils/equalityFn'
 import createInvoicePdfFile from '../../../api/invoices/createFile'
+import getInvoices from '../../../api/invoices/getInvoices'
 
 import { ICreateFileDto } from '../../../../../backend/src/invoices/dtos/createFile.interface'
 import { IButtonOptions } from '../../_devExtreme/Button/Button.interface'
@@ -34,6 +35,11 @@ const MainToolbar = (): JSX.Element => {
     stylingMode: 'contained',
     type: 'default',
     icon: 'email',
+    onClick: () => {
+      getInvoices().then((response) => {
+        console.log('api res', response)
+      })
+    },
   })
 
   const saveInvoicePopupButtonOptions = useRef<IButtonOptions>({
