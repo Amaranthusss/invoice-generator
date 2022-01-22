@@ -7,6 +7,8 @@ export const apiRoutes = {
 
   createFile: '/invoices',
   getInvoices: '/invoices',
+
+  sendInvoiceEmail: '/emails',
 }
 
 export const appRoutes = {

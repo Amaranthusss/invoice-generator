@@ -6,12 +6,14 @@ import { AppController } from './app.controller'
 
 import { InvoicesModule } from './invoices/invoices.module'
 import { ClientsModule } from './clients/clients.module'
+import { EmailsModule } from './emails/emails.module'
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     ClientsModule,
     InvoicesModule,
+    EmailsModule,
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: `./database/${process.env.APP_DATABASE}`,
