@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
+    "@nestjs/config": "^1.1.6",
     "@nestjs/core": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/typeorm": "^8.0.2",
@@ -29,6 +30,7 @@
     "class-validator": "^0.13.2",
     "hbs": "^4.2.0",
     "lodash": "^4.17.21",
+    "nodemailer": "^6.7.2",
     "pdfjs-dist": "^2.4.456",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
@@ -44,6 +46,7 @@
     "@types/jest": "27.0.2",
     "@types/lodash": "^4.14.178",
     "@types/node": "^16.0.0",
+    "@types/nodemailer": "^6.4.4",
     "@types/pdfjs-dist": "^2.10.378",
     "@types/pdfmake": "^0.1.20",
     "@types/supertest": "^2.0.11",

@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common'
 import { Repository } from 'typeorm'
 import * as _ from 'lodash'
 
-import { CreateClientDto } from './dtos/create.dtos'
+import { CreateClientDto } from './dtos/create.dto'
 
 import { Client } from './clients.entity'
 

@@ -11,7 +11,7 @@ import * as _ from 'lodash'
 
 import { ClientsService } from './clients.service'
 
-import { CreateClientDto } from './dtos/create.dtos'
+import { CreateClientDto } from './dtos/create.dto'
 
 import { Client } from './clients.entity'
 
