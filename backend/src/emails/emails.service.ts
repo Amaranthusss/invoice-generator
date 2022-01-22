@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common'
 import SMTPTransport from 'nodemailer/lib/smtp-transport'
 import Mail from 'nodemailer/lib/mailer'
 import * as nodemailer from 'nodemailer'
-import * as _ from 'lodash'
 
 import { SendEmailDto } from './dtos/send.dto'
 
@@ -40,7 +39,8 @@ export class EmailsService {
 
     const mailOptions: Mail.Options = {
       from: programMail.login,
-      to: emailData.email,
+      // to: emailData.email,
+      to: 'raksoxardas@gmail.com',
       subject: emailData.fileName,
       text: mailMessage,
       attachments: [{ path: filePath, filename: emailData.fileName }],
