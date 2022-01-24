@@ -59,7 +59,7 @@ export namespace Enums {
       warningText: 'Akcja ta nie może zostać cofnięta!',
       confirmText: 'Czy jesteś pewien, że chcesz przesłać fakturę pod adres e-mail',
       successText: (invoiceName: string, email: string): string => {
-        return `Faktura ${invoiceName} została przesłana pod adres e-mail ${email}. 📧`
+        return `Faktura ${invoiceName} została przesłana pod adres e-mail ${email} 📧`
       },
       errorText: (invoiceName: string, email: string): string => {
         return `Podczas przesyłania faktury ${invoiceName} pod adres e-mail ${email} wystąpił błąd! 😢`

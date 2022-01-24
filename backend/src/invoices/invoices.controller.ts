@@ -1,10 +1,9 @@
 import { Body, Controller, Get, Post } from '@nestjs/common'
-import Mail from 'nodemailer/lib/mailer'
 
 import { InvoicesService } from './invoices.service'
 
 import { CreateFileDto } from './dtos/createFile.dto'
-import { SendEmailDto } from '../emails/dtos/send.dto'
+import { IGetTableData } from './dtos/getTableData.interface'
 
 @Controller('invoices')
 export class InvoicesController {
@@ -18,5 +17,10 @@ export class InvoicesController {
   @Post()
   async create(@Body() fileOptions: CreateFileDto): Promise<any> {
     return this.invoicesService.createFile(fileOptions)
+  }
+
+  @Get('table')
+  async getTableData(): Promise<IGetTableData[]> {
+    return this.invoicesService.getTableData()
   }
 }

@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 
 import Calendar from '../_devExtreme/Calendar/Calendar'
+import Invoices from './Invoices/Invoices'
 import Chart from '../_devExtreme/Chart/Chart'
 
 import { ICalendarOptions } from '../_devExtreme/Calendar/Calendar.interface'
@@ -15,7 +16,8 @@ const Archive = (): JSX.Element => {
   return (
     <div className={styles.container}>
       <div className={styles.column}>
-        <Calendar options={invoicesCalendarOptions.current} />
+        {/* <Calendar options={invoicesCalendarOptions.current} /> */}
+        <Invoices />
       </div>
       <div className={styles.column}>
         <Chart options={profitsChartOptions.current} />

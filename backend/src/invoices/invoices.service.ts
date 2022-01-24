@@ -5,8 +5,13 @@ import * as _ from 'lodash'
 import { getTextFromPDF } from 'src/utils/getTextFromPDF'
 
 import { CreateFileDto } from './dtos/createFile.dto'
+import { IGetTableData } from './dtos/getTableData.interface'
 
-import { IInvoicesList } from './invoices.interface'
+import {
+  IInvoicesList,
+  IInvoicesListMonth,
+  IServicesListServiceData,
+} from './invoices.interface'
 
 const findBrutto = (pdfTexts: string[]): number => {
   return _.toNumber(
@@ -94,6 +99,34 @@ export class InvoicesService {
     }
 
     return invoicesList
+  }
+
+  async getTableData(): Promise<IGetTableData[]> {
+    const invoicesList: IInvoicesList = await this.findAll()
+    const tableData: IGetTableData[] = []
+
+    _.forEach(invoicesList, (year: IInvoicesListMonth, yearName: string) => {
+      _.forEach(
+        year,
+        (monthFolderName: IServicesListServiceData[], monthName: string) => {
+          _.forEach(monthFolderName, (invoice: IServicesListServiceData) => {
+            tableData.push({
+              name: invoice.name,
+              netto: invoice.netto,
+              vat: invoice.vat,
+              brutto: invoice.brutto,
+              fileName: invoice.fileName,
+              vatAsPercents: invoice.vatAsPercents,
+              month: monthName,
+              year: yearName,
+            })
+          })
+        },
+      )
+    })
+    console.log(tableData)
+
+    return tableData
   }
 
   async createFile(fileOptions: CreateFileDto): Promise<any> {
