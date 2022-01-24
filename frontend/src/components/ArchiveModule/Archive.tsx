@@ -1,26 +1,16 @@
-import { useRef } from 'react'
-
-import Calendar from '../_devExtreme/Calendar/Calendar'
 import Invoices from './Invoices/Invoices'
-import Chart from '../_devExtreme/Chart/Chart'
-
-import { ICalendarOptions } from '../_devExtreme/Calendar/Calendar.interface'
-import { IChartOptions } from '../_devExtreme/Chart/Chart.interface'
+import Profit from './Profit/Profit'
 
 import styles from './Archive.module.css'
 
 const Archive = (): JSX.Element => {
-  const profitsChartOptions = useRef<IChartOptions>({})
-  const invoicesCalendarOptions = useRef<ICalendarOptions>({})
-
   return (
     <div className={styles.container}>
       <div className={styles.column}>
-        {/* <Calendar options={invoicesCalendarOptions.current} /> */}
         <Invoices />
       </div>
       <div className={styles.column}>
-        <Chart options={profitsChartOptions.current} />
+        <Profit />
       </div>
     </div>
   )

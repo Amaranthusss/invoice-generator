@@ -1,16 +1,14 @@
 import DataSource from 'devextreme/data/data_source'
 import { useRef } from 'react'
 
-import DataGrid from '../../_devExtreme/DataGrid/DataGrid'
+import Chart from '../../_devExtreme/Chart/Chart'
 
 import getInvoicesTable from '../../../api/invoices/getInvoicesTable'
 
-import { IDataGridOptions } from '../../_devExtreme/DataGrid/DataGrid.interface'
 import { IGetTableData } from '../../../../../backend/src/invoices/dtos/getTableData.interface'
+import { IChartOptions } from '../../_devExtreme/Chart/Chart.interface'
 
-import { getColumns, invoicesListTableName } from './Invoices.options'
-
-const Invoices = (): JSX.Element => {
+const Profit = (): JSX.Element => {
   const dataSource = useRef<DataSource>(
     new DataSource({
       load: async () => {
@@ -22,14 +20,13 @@ const Invoices = (): JSX.Element => {
     })
   )
 
-  const dataGridOptions = useRef<IDataGridOptions>({
-    name: invoicesListTableName,
-    columns: getColumns(),
+  const chartOptions = useRef<IChartOptions>({
     dataSource: dataSource.current,
-    groupPanel: { visible: true },
+    commonSeriesSettings: { argumentField: 'name' },
+    series: { type: 'spline', valueField: 'netto' },
   })
 
-  return <DataGrid options={dataGridOptions.current} />
+  return <Chart options={chartOptions.current} />
 }
 
-export default Invoices
+export default Profit
