@@ -8,8 +8,6 @@ import { CreateFileDto } from './dtos/createFile.dto'
 
 import { IInvoicesList } from './invoices.interface'
 
-const invoicesFolderPath: string = process.env.APP_INVOICES_FOLDER_PATH
-
 const findBrutto = (pdfTexts: string[]): number => {
   return _.toNumber(
     _.replace(
@@ -50,13 +48,15 @@ const convertBruttoToNetto = (
 
 @Injectable()
 export class InvoicesService {
+  invoicesFolderPath: string = process.env.APP_INVOICES_FOLDER_PATH
+
   async findAll(): Promise<IInvoicesList> {
     const invoicesList: IInvoicesList = {}
-    const years: string[] = await fsPromises.readdir(invoicesFolderPath)
+    const years: string[] = await fsPromises.readdir(this.invoicesFolderPath)
     const monthsInYearsPromises: Promise<string[]>[] = _.map(
       years,
       (year: string): Promise<string[]> => {
-        return fsPromises.readdir(`${invoicesFolderPath}/${year}`)
+        return fsPromises.readdir(`${this.invoicesFolderPath}/${year}`)
       },
     )
     const monthsInYears: string[][] = await Promise.all(monthsInYearsPromises)
@@ -65,14 +65,14 @@ export class InvoicesService {
       invoicesList[year] = {}
       for (const month of monthsInYears[index]) {
         const fileNames: string[] = await fsPromises.readdir(
-          `${invoicesFolderPath}/${year}/${month}`,
+          `${this.invoicesFolderPath}/${year}/${month}`,
         )
 
         if (!_.isEmpty(fileNames)) {
           invoicesList[year][month] = []
 
           for (const [index, fileName] of _.entries(fileNames)) {
-            const path: string = `${invoicesFolderPath}/${year}/${month}/${fileName}`
+            const path: string = `${this.invoicesFolderPath}/${year}/${month}/${fileName}`
             const vatAsPercents: number = 23
             const pdfTexts: string[] = await getTextFromPDF(path)
             const brutto: number = findBrutto(pdfTexts)
@@ -98,14 +98,14 @@ export class InvoicesService {
 
   async createFile(fileOptions: CreateFileDto): Promise<any> {
     const allMonths: string[] = await fsPromises.readdir(
-      `${invoicesFolderPath}/${fileOptions.year}`,
+      `${this.invoicesFolderPath}/${fileOptions.year}`,
     )
     const monthFolderName: string = _.find(
       allMonths,
       (monthFolderName: string) =>
         _.includes(monthFolderName, fileOptions.month),
     )
-    const filePath: string = `${invoicesFolderPath}/${fileOptions.year}/${monthFolderName}/${fileOptions.fileName}.pdf`
+    const filePath: string = `${this.invoicesFolderPath}/${fileOptions.year}/${monthFolderName}/${fileOptions.fileName}.pdf`
 
     return fsPromises.writeFile(filePath, fileOptions.base64, {
       encoding: 'base64',

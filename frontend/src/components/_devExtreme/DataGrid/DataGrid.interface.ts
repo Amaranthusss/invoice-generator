@@ -9,10 +9,6 @@ export interface IDataGridOptions extends dxDataGridOptions {
   name: string
 }
 
-type customToolbarItems = {
-  customElements?: IDataGridToolbarItem[]
-}
-
 export interface IDataGridColumn extends dxDataGridColumn {}
 
 export interface IDataGridToolbarItem {

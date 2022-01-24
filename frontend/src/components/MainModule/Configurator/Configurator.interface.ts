@@ -1,11 +1,7 @@
-import { Enums } from '../../../constants/enums'
-
 export interface IConfigurator {
   invoiceName: string
   dateOfIssue: string
-  methodOfPayment:
-    | Enums.InterfaceTexts.methodOfPaymentCash
-    | Enums.InterfaceTexts.methodOfPaymentTransfer
+  methodOfPayment: string
   jobDuration: number
   paymentTime: number
 }

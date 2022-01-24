@@ -2,27 +2,27 @@ import { useRef } from 'react'
 import notify from 'devextreme/ui/notify'
 
 import Button from '../../_devExtreme/Button/Button'
+import SendingEmailPopup from './SendingEmailPopup/SendingEmailPopup'
 
 import { useAppSelector } from '../../../hooks/useAppSelector'
 import { getInvoiceDoc } from '../../../Redux-store/global.reducer'
 import { equalityFn } from '../../../utils/equalityFn'
 import createInvoicePdfFile from '../../../api/invoices/createFile'
-import sendInvoiceEmail from '../../../api/emails/sendInvoiceEmail'
 
+import {
+  ISendingEmailPopupComponent,
+  ISendingEmailPopupOptions,
+} from './SendingEmailPopup/SendingEmailPopup.interface'
 import { ICreateFileDto } from '../../../../../backend/src/invoices/dtos/createFile.interface'
 import { IButtonOptions } from '../../_devExtreme/Button/Button.interface'
 
 import styles from '../Toolbar.module.css'
 
 import { Enums } from '../../../constants/enums'
-import Popup from '../../_devExtreme/Popup/Popup'
-import { IPopupOptions } from '../../_devExtreme/Popup/Popup.interface'
-import dxPopup from 'devextreme/ui/popup'
-import { InitializedEventInfo } from 'devextreme/events'
 
 const MainToolbar = (): JSX.Element => {
+  const sendingEmailPopupComponent = useRef<ISendingEmailPopupComponent>()
   const invoiceDoc = useRef<ICreateFileDto>()
-  const sendingEmailPopupComponent = useRef<dxPopup>()
 
   const invoiceDocEqualityFn = (nextInvoiceDoc: ICreateFileDto): boolean => {
     const updateInvoiceDoc = (updatedValue: ICreateFileDto) => {
@@ -40,7 +40,8 @@ const MainToolbar = (): JSX.Element => {
     stylingMode: 'contained',
     type: 'default',
     icon: 'email',
-    onClick: () => sendingEmailPopupComponent.current?.show(),
+    onClick: () =>
+      sendingEmailPopupComponent.current?.popupComponent?.dxPopup?.show(),
   })
 
   const saveInvoicePopupButtonOptions = useRef<IButtonOptions>({
@@ -61,48 +62,9 @@ const MainToolbar = (): JSX.Element => {
     },
   })
 
-  const onSendEmailInvoice = (): void => {
-    sendingEmailPopupComponent.current?.hide()
-    notify(`Faktura X została przesłana pod adres e-mail Y. 📧`, 'info', 5000)
-  }
-
-  const sendingEmailPopupOptions = useRef<IPopupOptions>({
-    title: 'Potwierdzenie przesłania faktury',
-    dragEnabled: false,
-    closeOnOutsideClick: true,
-    width: 350,
-    height: 250,
-    renderChildren: () => (
-      <span>
-        Czy jesteś pewien, że chcesz wysłać e-mail pod adres
-        <hr />
-        <span style={{ display: 'flex', justifyContent: 'right' }}>
-          Akcja ta nie może zostać cofnięta!
-        </span>
-      </span>
-    ),
-    toolbarItems: [
-      {
-        widget: 'dxButton',
-        location: 'before',
-        toolbar: 'bottom',
-        options: {
-          text: 'Potwierdź',
-          onClick: onSendEmailInvoice,
-        },
-      },
-      {
-        widget: 'dxButton',
-        location: 'after',
-        toolbar: 'bottom',
-        options: {
-          text: 'Anuluj',
-          onClick: () => sendingEmailPopupComponent.current?.hide(),
-        },
-      },
-    ],
-    onInitialized: (e: InitializedEventInfo<dxPopup>) => {
-      sendingEmailPopupComponent.current = e.component
+  const sendingEmailPopupOptions = useRef<ISendingEmailPopupOptions>({
+    componentCallback: (component: ISendingEmailPopupComponent) => {
+      sendingEmailPopupComponent.current = component
     },
   })
 
@@ -113,7 +75,7 @@ const MainToolbar = (): JSX.Element => {
         justifyContent: 'right',
       }}
     >
-      <Popup options={sendingEmailPopupOptions.current} />
+      <SendingEmailPopup options={sendingEmailPopupOptions.current} />
       <div className={styles.button}>
         <Button options={sendEmailPopupButtonOptions.current} />
       </div>

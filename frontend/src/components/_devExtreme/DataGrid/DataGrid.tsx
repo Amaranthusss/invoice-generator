@@ -1,13 +1,8 @@
-import DataGrid, {
-  Toolbar,
-  Item,
-  Editing,
-  StateStoring,
-} from 'devextreme-react/data-grid'
 import {
   useResizeDetector,
   UseResizeDetectorReturn,
 } from 'react-resize-detector'
+import DataGrid, { Editing, StateStoring } from 'devextreme-react/data-grid'
 import dxDataGrid, { dxDataGridOptions } from 'devextreme/ui/data_grid'
 import { InitializedEventInfo } from 'devextreme/events'
 import { useRef } from 'react'
@@ -15,7 +10,7 @@ import _ from 'lodash'
 
 import dxService from '../devExtreme.service'
 
-import { IDataGridOptions, IDataGridToolbarItem } from './DataGrid.interface'
+import { IDataGridOptions } from './DataGrid.interface'
 import { IOptions } from '../../components.interface'
 
 import { Enums } from '../../../constants/enums'
@@ -35,10 +30,6 @@ const DataGridPattern = (props: IOptions<IDataGridOptions>): JSX.Element => {
   }
 
   const JSXElements: JSX.Element[] = [
-    // <Toolbar key={'toolbar'}>
-    //   {getCustomItems()}
-    //   <Item name={'addRowButton'} showText={'always'} />
-    // </Toolbar>,
     <Editing
       key={'editing'}
       mode={'form'}
