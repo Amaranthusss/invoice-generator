@@ -83,11 +83,15 @@ const PdfPreview = (): JSX.Element => {
       const doc: TCreatedPdf = pdfMake.createPdf(documentDefinitions)
 
       doc.getBase64((base64: string): void => {
-        const year: string = _.toString(new Date().getFullYear())
+        const dateOfIssue: Date =
+          configurator.current?.dateOfIssue != null
+            ? new Date(configurator.current?.dateOfIssue)
+            : new Date()
+        const year: string = _.toString(dateOfIssue.getFullYear())
         const month: string =
-          _.size(_.toString(new Date().getMonth() + 1)) === 1
-            ? `0${_.toString(new Date().getMonth() + 1)}`
-            : _.toString(new Date().getMonth() + 1)
+          _.size(_.toString(dateOfIssue.getMonth() + 1)) === 1
+            ? `0${_.toString(dateOfIssue.getMonth() + 1)}`
+            : _.toString(dateOfIssue.getMonth() + 1)
         const fileName: string =
           _.replace(configurator.current?.invoiceName ?? '', /\//g, '-') ??
           `100-${month}-${year}`
