@@ -26,7 +26,17 @@ const Invoices = (): JSX.Element => {
     name: invoicesListTableName,
     columns: getColumns(),
     dataSource: dataSource.current,
+    scrolling: { mode: 'virtual' },
+    editing: {
+      allowAdding: false,
+      allowDeleting: false,
+      allowUpdating: false,
+    },
+    paging: { enabled: false },
+    headerFilter: { visible: true },
+    filterRow: { visible: true },
     groupPanel: { visible: true },
+    searchPanel: { visible: true },
   })
 
   return <DataGrid options={dataGridOptions.current} />

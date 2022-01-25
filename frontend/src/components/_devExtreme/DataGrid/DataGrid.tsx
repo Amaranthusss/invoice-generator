@@ -5,7 +5,7 @@ import {
 import DataGrid, { Editing, StateStoring } from 'devextreme-react/data-grid'
 import dxDataGrid, { dxDataGridOptions } from 'devextreme/ui/data_grid'
 import { InitializedEventInfo } from 'devextreme/events'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import _ from 'lodash'
 
 import dxService from '../devExtreme.service'
@@ -30,28 +30,35 @@ const DataGridPattern = (props: IOptions<IDataGridOptions>): JSX.Element => {
   }
 
   const JSXElements: JSX.Element[] = [
-    <Editing
-      key={'editing'}
-      mode={'form'}
-      useIcons={true}
-      allowUpdating={true}
-      allowAdding={true}
-      allowDeleting={true}
-      newRowPosition={'last'}
-      form={props.options.editing?.form}
-      texts={{
-        addRow: Enums.InterfaceTexts.addRowButton,
-        editRow: Enums.InterfaceTexts.editRowButton,
-        deleteRow: Enums.InterfaceTexts.deleteRowButton,
-        confirmDeleteMessage: Enums.InterfaceTexts.confirmDeleteMessage,
-      }}
-    />,
     <StateStoring
       key={'stateStoring'}
       enabled={true}
       storageKey={props.options.name}
     />,
   ]
+
+  useEffect(() => {
+    if (props.options.editing != null) {
+      JSXElements.push(
+        <Editing
+          key={'editing'}
+          mode={'form'}
+          useIcons={true}
+          allowUpdating={true}
+          allowAdding={true}
+          allowDeleting={true}
+          newRowPosition={'last'}
+          form={props.options.editing?.form}
+          texts={{
+            addRow: Enums.InterfaceTexts.addRowButton,
+            editRow: Enums.InterfaceTexts.editRowButton,
+            deleteRow: Enums.InterfaceTexts.deleteRowButton,
+            confirmDeleteMessage: Enums.InterfaceTexts.confirmDeleteMessage,
+          }}
+        />
+      )
+    }
+  }, [])
 
   const jsxElementsKeys: string[] = _.map(JSXElements, (jsx: JSX.Element) => {
     return _.toString(jsx.key)
