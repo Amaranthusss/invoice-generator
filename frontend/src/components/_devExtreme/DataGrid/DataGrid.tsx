@@ -30,35 +30,32 @@ const DataGridPattern = (props: IOptions<IDataGridOptions>): JSX.Element => {
   }
 
   const JSXElements: JSX.Element[] = [
+    !_.isEmpty(props.options?.editing) ? (
+      <Editing
+        key={'editing'}
+        mode={'form'}
+        useIcons={true}
+        allowUpdating={true}
+        allowAdding={true}
+        allowDeleting={true}
+        newRowPosition={'last'}
+        form={props.options.editing?.form}
+        texts={{
+          addRow: Enums.InterfaceTexts.addRowButton,
+          editRow: Enums.InterfaceTexts.editRowButton,
+          deleteRow: Enums.InterfaceTexts.deleteRowButton,
+          confirmDeleteMessage: Enums.InterfaceTexts.confirmDeleteMessage,
+        }}
+      />
+    ) : (
+      <span key={'editing'} />
+    ),
     <StateStoring
       key={'stateStoring'}
       enabled={true}
       storageKey={props.options.name}
     />,
   ]
-
-  useEffect(() => {
-    if (props.options.editing != null) {
-      JSXElements.push(
-        <Editing
-          key={'editing'}
-          mode={'form'}
-          useIcons={true}
-          allowUpdating={true}
-          allowAdding={true}
-          allowDeleting={true}
-          newRowPosition={'last'}
-          form={props.options.editing?.form}
-          texts={{
-            addRow: Enums.InterfaceTexts.addRowButton,
-            editRow: Enums.InterfaceTexts.editRowButton,
-            deleteRow: Enums.InterfaceTexts.deleteRowButton,
-            confirmDeleteMessage: Enums.InterfaceTexts.confirmDeleteMessage,
-          }}
-        />
-      )
-    }
-  }, [])
 
   const jsxElementsKeys: string[] = _.map(JSXElements, (jsx: JSX.Element) => {
     return _.toString(jsx.key)

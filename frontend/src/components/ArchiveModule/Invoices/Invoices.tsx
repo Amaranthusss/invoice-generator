@@ -27,11 +27,6 @@ const Invoices = (): JSX.Element => {
     columns: getColumns(),
     dataSource: dataSource.current,
     scrolling: { mode: 'virtual' },
-    editing: {
-      allowAdding: false,
-      allowDeleting: false,
-      allowUpdating: false,
-    },
     paging: { enabled: false },
     headerFilter: { visible: true },
     filterRow: { visible: true },
