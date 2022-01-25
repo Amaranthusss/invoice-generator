@@ -2,54 +2,22 @@ import { Injectable } from '@nestjs/common'
 import * as fsPromises from 'fs/promises'
 import * as _ from 'lodash'
 
-import { getTextFromPDF } from 'src/utils/getTextFromPDF'
+import {
+  findBrutto,
+  findTitle,
+  getFileCreationDate,
+  getTextFromPDF,
+} from 'src/utils/mathFiles'
+import { convertBruttoToNetto } from 'src/utils/currencyCalculations'
 
 import { CreateFileDto } from './dtos/createFile.dto'
-import { IGetTableData } from './dtos/getTableData.interface'
 
 import {
   IInvoicesList,
   IInvoicesListMonth,
   IServicesListServiceData,
 } from './invoices.interface'
-
-const findBrutto = (pdfTexts: string[]): number => {
-  return _.toNumber(
-    _.replace(
-      _.replace(
-        _.last(
-          _.filter(pdfTexts, (textPool: string) => _.includes(textPool, 'zł')),
-        ),
-        /zł| /g,
-        '',
-      ),
-      /,/g,
-      '.',
-    ),
-  )
-}
-
-const findTitle = (pdfTexts: string[]): string => {
-  let title = _.last(
-    _.filter(pdfTexts, (textPool: string, index: number) =>
-      _.includes(textPool, 'nr'),
-    ),
-  )
-  const nrIndex: number = _.indexOf(pdfTexts, title)
-  title =
-    _.size(_.replace(title, / /g, '')) === 2
-      ? pdfTexts[nrIndex - 1] + title + pdfTexts[nrIndex + 1]
-      : title
-  title = _.replace(title, /Faktura|VAT|nr | /g, '')
-  return title
-}
-
-const convertBruttoToNetto = (
-  brutto: number,
-  vatAsPercents: number,
-): number => {
-  return brutto === 0 ? 0 : _.round((brutto / 100 + vatAsPercents) * 100, 2)
-}
+import { IGetTableData } from './dtos/getTableData.interface'
 
 @Injectable()
 export class InvoicesService {
@@ -83,10 +51,11 @@ export class InvoicesService {
             const brutto: number = findBrutto(pdfTexts)
             const title: string = findTitle(pdfTexts)
             const netto: number = convertBruttoToNetto(brutto, vatAsPercents)
-            const vat: number = _.round(netto - brutto, 2)
+            const vat: number = _.round(brutto - netto, 2)
 
             invoicesList[year][month][index] = {
-              vatAsPercents,
+              fileCreationDate: getFileCreationDate(path),
+              vatAsPercents: vatAsPercents / 100,
               name: title,
               fileName,
               brutto,
@@ -119,6 +88,7 @@ export class InvoicesService {
               vatAsPercents: invoice.vatAsPercents,
               month: monthName,
               year: yearName,
+              fileCreationDate: invoice.fileCreationDate,
             })
           })
         },

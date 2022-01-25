@@ -30,6 +30,11 @@ export const getColumns = (): IDataGridColumn[] => [
     format: 'currency',
   },
   {
+    dataField: 'fileCreationDate',
+    dataType: 'datetime',
+    format: 'shortDate',
+  },
+  {
     dataField: 'year',
     dataType: 'string',
     groupIndex: 0,

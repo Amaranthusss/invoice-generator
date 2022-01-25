@@ -4,8 +4,10 @@ export interface IServicesListServiceData {
   netto: number
   vatAsPercents: number
   vat: number
-	fileName: string
+  fileName: string
+  fileCreationDate: Date
 }
+
 export interface IInvoicesListMonth {
   [monthFolderName: string]: IServicesListServiceData[]
 }

@@ -7,4 +7,5 @@ export interface IGetTableData {
   fileName: string
   year: string
   month: string
+  fileCreationDate: Date
 }

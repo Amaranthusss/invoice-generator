@@ -1,4 +1,4 @@
-import { IsNumber, IsString } from 'class-validator'
+import { IsDate, IsNumber, IsString } from 'class-validator'
 
 export class IGetTableDataDto {
   @IsString()
@@ -17,4 +17,6 @@ export class IGetTableDataDto {
   year: string
   @IsString()
   month: string
+  @IsDate()
+  fileCreationDate: Date
 }
