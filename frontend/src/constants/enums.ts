@@ -57,13 +57,21 @@ export namespace Enums {
     sendingEmailPopup: {
       title: 'Potwierdzenie przesłania faktury',
       warningText: 'Akcja ta nie może zostać cofnięta!',
-      confirmText: 'Czy jesteś pewien, że chcesz przesłać fakturę pod adres e-mail',
+      confirmText:
+        'Czy jesteś pewien, że chcesz przesłać fakturę pod adres e-mail',
       successText: (invoiceName: string, email: string): string => {
         return `Faktura ${invoiceName} została przesłana pod adres e-mail ${email} 📧`
       },
       errorText: (invoiceName: string, email: string): string => {
         return `Podczas przesyłania faktury ${invoiceName} pod adres e-mail ${email} wystąpił błąd! 😢`
       },
+    },
+
+    profitsChart: {
+      sumSeriesName: 'Suma zysków',
+      avgSeriesName: 'Średnia miesięczna',
+      valueAxisTitle: 'Dochód - NETTO, zł',
+      apiErrorNotify: 'Nie udało się pobrać danych wykresu!',
     },
   }
 

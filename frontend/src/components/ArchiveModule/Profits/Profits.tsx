@@ -1,3 +1,4 @@
+import { formatDate, formatNumber } from 'devextreme/localization'
 import { InitializedEventInfo } from 'devextreme/events'
 import { useRef } from 'react'
 import DataSource from 'devextreme/data/data_source'
@@ -11,7 +12,8 @@ import getInvoicesTable from '../../../api/invoices/getInvoicesTable'
 
 import { IGetTableData } from '../../../../../backend/src/invoices/dtos/getTableData.interface'
 import { IChartOptions } from '../../_devExtreme/Chart/Chart.interface'
-import { formatDate, formatNumber } from 'devextreme/localization'
+
+import { Enums } from '../../../constants/enums'
 
 const Profits = (): JSX.Element => {
   const dxChart = useRef<dxChart>()
@@ -24,7 +26,11 @@ const Profits = (): JSX.Element => {
         dxChart.current?.hideLoadingIndicator()
 
         if (!_.inRange(response.status, 200, 299)) {
-          notify('Nie udało się pobrać danych wykresu!', 'error', 5000)
+          notify(
+            Enums.InterfaceTexts.profitsChart.apiErrorNotify,
+            'error',
+            5000
+          )
         }
 
         const store: IGetTableData[] = response.data
@@ -48,7 +54,7 @@ const Profits = (): JSX.Element => {
   const chartOptions = useRef<IChartOptions>({
     valueAxis: {
       valueType: 'numeric',
-      title: { text: 'Dochód - NETTO, zł' },
+      title: { text: Enums.InterfaceTexts.profitsChart.valueAxisTitle },
     },
     argumentAxis: {
       grid: { visible: true },
@@ -60,13 +66,13 @@ const Profits = (): JSX.Element => {
     },
     series: [
       {
-        name: 'Suma zysków',
+        name: Enums.InterfaceTexts.profitsChart.sumSeriesName,
         type: 'area',
         valueField: 'netto',
         aggregation: { enabled: true, method: 'sum' },
       },
       {
-        name: 'Średnia miesięczna',
+        name: Enums.InterfaceTexts.profitsChart.avgSeriesName,
         type: 'spline',
         valueField: 'netto',
         dashStyle: 'longDash',
