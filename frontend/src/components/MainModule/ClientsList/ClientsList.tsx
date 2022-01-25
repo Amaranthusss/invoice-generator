@@ -68,15 +68,18 @@ const ClientsList = (): JSX.Element => {
   const dataSource = useRef<DataSource>(
     new DataSource({
       load: async () => {
-        const response: Promise<
-          AxiosResponse<IClientsListClientFirmData[], any>
-        > = getClients()
-        const store: IClientsListClientFirmData[] = (await response).data
+        if (_.isEmpty(clientsListData.current)) {
+          const response: Promise<
+            AxiosResponse<IClientsListClientFirmData[], any>
+          > = getClients()
+          const store: IClientsListClientFirmData[] = (await response).data
 
-        if (isMounted.current) {
-          clientsListData.current = store
+          if (isMounted.current) {
+            clientsListData.current = store
+          }
         }
-        return store
+
+        return clientsListData.current as IClientsListClientFirmData[]
       },
 
       insert: (clientData: IClientsListClientFirmData) => {

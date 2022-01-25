@@ -1,5 +1,6 @@
-import DataSource from 'devextreme/data/data_source'
 import { useRef } from 'react'
+import DataSource from 'devextreme/data/data_source'
+import _ from 'lodash'
 
 import DataGrid from '../../_devExtreme/DataGrid/DataGrid'
 
@@ -11,12 +12,16 @@ import { IGetTableData } from '../../../../../backend/src/invoices/dtos/getTable
 import { getColumns, invoicesListTableName } from './Invoices.options'
 
 const Invoices = (): JSX.Element => {
+  const invoicesTableData = useRef<IGetTableData[]>()
+
   const dataSource = useRef<DataSource>(
     new DataSource({
       load: async () => {
-        const store: IGetTableData[] = (await getInvoicesTable()).data
+        if (_.isEmpty(invoicesTableData.current)) {
+          invoicesTableData.current = (await getInvoicesTable()).data
+        }
 
-        return store
+        return invoicesTableData.current as IGetTableData[]
       },
       key: 'name',
     })

@@ -1,5 +1,6 @@
 import { formatDate, formatNumber } from 'devextreme/localization'
 import { InitializedEventInfo } from 'devextreme/events'
+import { AxiosResponse } from 'axios'
 import { useRef } from 'react'
 import DataSource from 'devextreme/data/data_source'
 import dxChart from 'devextreme/viz/chart'
@@ -17,25 +18,27 @@ import { Enums } from '../../../constants/enums'
 
 const Profits = (): JSX.Element => {
   const dxChart = useRef<dxChart>()
+  const profitsData = useRef<IGetTableData[]>()
 
   const dataSource = useRef<DataSource>(
     new DataSource({
       load: async () => {
-        dxChart.current?.showLoadingIndicator()
-        const response = await getInvoicesTable()
-        dxChart.current?.hideLoadingIndicator()
-
-        if (!_.inRange(response.status, 200, 299)) {
-          notify(
-            Enums.InterfaceTexts.profitsChart.apiErrorNotify,
-            'error',
-            5000
-          )
+        if (_.isEmpty(profitsData.current)) {
+          dxChart.current?.showLoadingIndicator()
+          const response: AxiosResponse<IGetTableData[], any> =
+            await getInvoicesTable()
+          profitsData.current = response.data
+          dxChart.current?.hideLoadingIndicator()
+          if (!_.inRange(response.status, 200, 299)) {
+            notify(
+              Enums.InterfaceTexts.profitsChart.apiErrorNotify,
+              'error',
+              5000
+            )
+          }
         }
 
-        const store: IGetTableData[] = response.data
-
-        return store
+        return profitsData.current as IGetTableData[]
       },
       key: 'name',
     })
