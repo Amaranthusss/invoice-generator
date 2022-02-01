@@ -44,7 +44,7 @@ const Profits = (): JSX.Element => {
     })
   )
 
-  const onInitialized = (e: InitializedEventInfo<dxChart>) => {
+  const onInitialized = (e: InitializedEventInfo<dxChart>): void => {
     dxChart.current = e.component
   }
 
