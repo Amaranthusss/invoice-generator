@@ -48,7 +48,7 @@ export const updateProtocolPdfBody = (
   }
 
   const getOrderingData = (): string[] => {
-    const docElements: string[] = clientFirm?.orderingData ?? []
+    const docElements: string[] = _.split(clientFirm?.orderingData, ',')
     const initDocElements: string[] = _.cloneDeep(docElements)
 
     if (_.size(docElements) < 3) {

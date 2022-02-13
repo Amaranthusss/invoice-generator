@@ -5,4 +5,5 @@ export interface IUpdateClientDto {
   city?: string
   nip?: number
 	email?: string
+	orderingData?: string
 }

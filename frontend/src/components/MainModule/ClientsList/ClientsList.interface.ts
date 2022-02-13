@@ -6,5 +6,5 @@ export interface IClientsListClientFirmData {
   city: string
   nip: number
   email: string
-  orderingData?: string[]
+  orderingData?: string
 }

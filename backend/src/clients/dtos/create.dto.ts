@@ -13,4 +13,6 @@ export class CreateClientDto {
   nip: number
   @IsString()
   email: string
+  @IsString()
+  orderingData?: string
 }

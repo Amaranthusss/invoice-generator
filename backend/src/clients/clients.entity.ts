@@ -16,4 +16,6 @@ export class Client {
   nip: number
   @Column()
   email: string
+  @Column()
+  orderingData: string
 }

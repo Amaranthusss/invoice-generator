@@ -133,6 +133,11 @@ const ClientsList = (): JSX.Element => {
           { dataField: 'city', isRequired: true, editorType: 'dxTextBox' },
           { dataField: 'nip', isRequired: true, editorType: 'dxTextBox' },
           { dataField: 'email', isRequired: true, editorType: 'dxTextBox' },
+          {
+            dataField: 'orderingData',
+            isRequired: false,
+            editorType: 'dxTextBox',
+          },
         ],
       },
     },

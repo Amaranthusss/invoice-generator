@@ -5,4 +5,5 @@ export interface ICreateClientDto {
   city: string
   nip: number
 	email: string
+	orderingData?: string
 }
