@@ -123,135 +123,171 @@ export const updateProtocolPdfBody = (
     pageOrientation: 'portrait',
     content: [
       {
-        fontSize: 10,
-        columns: [
+        text: 'PROTOKÓŁ TECHNICZNEGO ODBIORU ROBÓT',
+        style: 'header',
+        alignment: 'center',
+      },
+      {
+        canvas: [
           {
-            width: '50%',
-            text: ownFirmDataDisplay,
-          },
-          {
-            width: '10%',
-            text: '',
-          },
-          {
-            alignment: 'right',
-            width: '40%',
-            text: _.map(invoiceInfoDisplay, (line: string) => line + '\n'),
+            type: 'line',
+            x1: 10,
+            y1: 0,
+            x2: 490,
+            y2: 0,
+            lineWidth: 0.5,
           },
         ],
       },
       {
-        margin: [0, 20, 0, 0],
+        text: ' ',
+      },
+      {
+        text: 'Spisany w dniu 20.01.2022',
         alignment: 'center',
-        fontSize: 10,
-        table: {
-          widths: ['45%', '10%', '45%'],
-          body: [
-            [
+      },
+      {
+        text: ' ',
+      },
+      {
+				alignment: 'justify',
+        lineHeight: 2,
+        ol: [
+          {
+            lineHeight: 1.4,
+            text: [
+              'Zamawiający: PPUH Montex Henryk Bywalec',
+              '\n',
+              'ul. Bazyliowa 10B, 40-750 Katowice',
+              '\n',
               {
-                border: [false, true, false, false],
-                text: 'Sprzedawca:',
-              },
-              {
-                border: [false, false, false, false],
-                text: ' ',
-              },
-              {
-                border: [false, true, false, false],
-                text: 'Nabywca:',
+                lineHeight: 2,
+                text: 'nr zamówienia: 06.01.4022',
               },
             ],
-          ],
-        },
-      },
-      {
-        fontSize: 10,
-        columns: [
-          {
-            width: '50%',
-            text: sellerFirmData,
           },
+
           {
-            width: '5.5%',
-            text: '',
-          },
-          {
-            width: '44.5%',
-            text: buyerFirmDataDisplay,
-          },
-        ],
-      },
-      {
-        margin: [0, 50, 0, 0],
-        text: `Faktura VAT nr ${configurator.invoiceName}`,
-        fontSize: 16,
-        bold: true,
-        alignment: 'center',
-      },
-      {
-        margin: [0, 50, 0, 0],
-        fontSize: 10,
-        columns: [
-          {
-            width: '60%',
-            text: ' ',
-          },
-          {
-            width: '40%',
-            text: _.map(summaryDisplay, (line: ContentText) => line),
-          },
-        ],
-      },
-      {
-        absolutePosition: { x: 40, y: 675 },
-        alignment: 'center',
-        table: {
-          widths: ['40%', '20%', '40%'],
-          body: [
-            [
+            lineHeight: 1.4,
+            text: [
+              'Opis zamówienia i wykonanych robót:',
+              '\n',
               {
-                border: [true, true, true, true],
-                stack: [
-                  { text: 'Wystawił:\n', bold: true },
-                  { text: 'Tadeusz Szkurłat' },
-                  { text: ' ' },
-                  { text: ' ' },
-                  { text: ' ' },
-                  { text: ' ' },
-                  { text: ' ' },
-                ],
-              },
-              {
-                border: [false, false, false, false],
-                text: ' ',
-              },
-              {
-                border: [true, true, true, true],
-                stack: [{ text: 'Odebrał(a):', bold: true }],
+                lineHeight: 2,
+                text: 'Prace związane z przebudową lokalu Media Markt w Opolu',
               },
             ],
+          },
+
+          {
+            text: 'Wykonawca: Usługi Elektryczno-Budowlane „TAGRA” Taduesz Szkurłat',
+          },
+
+          {
+            text: 'Roboty rozpoczęto dnia 06.01.4022 zakończono dnia 20.01.4022',
+          },
+
+          [
+            {
+              lineHeight: 1.4,
+              text: 'Komisja w składzie:',
+            },
+
+            {
+              lineHeight: 1.4,
+              columns: [
+                {
+                  stack: [
+                    'Zamawiający:',
+                    {
+                      type: 'lower-alpha',
+                      ol: ['Piotr Półtorak', ' ', ' '],
+                    },
+                  ],
+                },
+                {
+                  stack: [
+                    'Wykonawca:',
+                    {
+                      type: 'lower-alpha',
+                      ol: ['Tadeusz Szkurłat', ' ', ' '],
+                    },
+                  ],
+                },
+              ],
+            },
+
+            {
+              lineHeight: 1.4,
+              text: ' ',
+            },
+
+            {
+              lineHeight: 1.4,
+              text: 'Komisja w składzie j.w po dokonaniu oględzin wykonanych robót stwierdza, że roboty wykonane zostały zgodnie / nie zgodnie z zamówieniem, bez usterek / z usterkami.',
+            },
+
+            {
+              lineHeight: 1.4,
+              text: ['- Bez usterek'],
+            },
+
+            {
+              lineHeight: 1.4,
+              text: ' ',
+            },
+
+            {
+              text: 'Wykonawca zobowiązuje się usunąć usterki do dnia ..................................',
+            },
           ],
-        },
-      },
-      {
-        absolutePosition: { x: 40, y: 785 },
-        alignment: 'center',
-        fontSize: 8,
-        italics: true,
-        columns: [
-          {
-            text: 'Podpis osoby upoważnionej do wystawienia faktury VAT',
-            width: '40%',
-          },
-          {
-            text: ' ',
-            width: '20%',
-          },
-          {
-            text: 'Podpis osoby upoważnionej do odbioru faktury VAT',
-            width: '40%',
-          },
+
+          [
+            {
+              lineHeight: 1.4,
+              text: 'Uwagi Zamawiającego:',
+            },
+            {
+              lineHeight: 1.4,
+              text: ['- Bez usterek'],
+            },
+          ],
         ],
+      },
+
+      {
+        columns: [
+          [
+            { text: 'PODPISY KOMISJI:', alignment: 'center' },
+
+            { text: ' ' },
+
+            {
+              lineHeight: 1.4,
+              columns: [
+                {
+                  stack: [
+                    'Zamawiający:',
+                    {
+                      type: 'lower-alpha',
+                      ol: ['Piotr Półtorak', ' ', ' '],
+                    },
+                  ],
+                },
+                {
+                  stack: [
+                    'Wykonawca:',
+                    {
+                      type: 'lower-alpha',
+                      ol: ['Tadeusz Szkurłat', ' ', ' '],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        ],
+        absolutePosition: { x: 60, y: 675 },
       },
     ],
   }
