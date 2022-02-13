@@ -28,7 +28,6 @@ import styles from './Preview.module.css'
 import { IButtonOptions } from '../../_devExtreme/Button/Button.interface'
 import {
   IPreviewStates,
-  IPreviewButtonStylingMode,
   IPreviewButtonName,
 } from './Preview.interface'
 import { Enums } from '../../../constants/enums'
@@ -44,50 +43,6 @@ const PdfPreview = (): JSX.Element => {
   const clientFirm = useRef<IClientsListClientFirmData | null>(null)
   const services = useRef<IServices | null>(null)
   const configurator = useRef<IConfigurator | null>(null)
-
-  const clientFirmEqualityFn = useCallback(
-    (nextClientFirm: IClientsListClientFirmData | null): boolean => {
-      const updateClientFirm = (
-        updatedValue: IClientsListClientFirmData | null
-      ) => {
-        clientFirm.current = updatedValue
-        onDocDataChanged()
-      }
-
-      return equalityFn(clientFirm.current, nextClientFirm, updateClientFirm)
-    },
-    []
-  )
-
-  const servicesEqualityFn = useCallback((nextServices: IServices): boolean => {
-    const updateServices = (updatedValue: IServices | null) => {
-      services.current = updatedValue
-      onDocDataChanged()
-    }
-
-    return equalityFn(services.current, nextServices, updateServices)
-  }, [])
-
-  const configuratorEqualityFn = useCallback(
-    (nextConfigurator: IConfigurator | null): boolean => {
-      const updateConfigurator = (updatedValue: IConfigurator) => {
-        configurator.current = updatedValue
-        onDocDataChanged()
-      }
-
-      return equalityFn(
-        configurator.current,
-        nextConfigurator,
-        updateConfigurator
-      )
-    },
-    []
-  )
-
-  useAppSelector(getClientFirm, clientFirmEqualityFn)
-  useAppSelector(getServices, servicesEqualityFn)
-  useAppSelector(getConfigurator, configuratorEqualityFn)
-
   const onDocDataChanged = useCallback((): void => {
     if (previewRef != null && previewRef.current != null) {
       const documentDefinitions: TDocumentDefinitions = updatePdfBody(
@@ -121,7 +76,53 @@ const PdfPreview = (): JSX.Element => {
         }
       })
     }
-  }, [])
+  }, [dispatch])
+
+  const clientFirmEqualityFn = useCallback(
+    (nextClientFirm: IClientsListClientFirmData | null): boolean => {
+      const updateClientFirm = (
+        updatedValue: IClientsListClientFirmData | null
+      ) => {
+        clientFirm.current = updatedValue
+        onDocDataChanged()
+      }
+
+      return equalityFn(clientFirm.current, nextClientFirm, updateClientFirm)
+    },
+    [onDocDataChanged]
+  )
+
+  const servicesEqualityFn = useCallback(
+    (nextServices: IServices): boolean => {
+      const updateServices = (updatedValue: IServices | null) => {
+        services.current = updatedValue
+        onDocDataChanged()
+      }
+
+      return equalityFn(services.current, nextServices, updateServices)
+    },
+    [onDocDataChanged]
+  )
+
+  const configuratorEqualityFn = useCallback(
+    (nextConfigurator: IConfigurator | null): boolean => {
+      const updateConfigurator = (updatedValue: IConfigurator) => {
+        configurator.current = updatedValue
+        onDocDataChanged()
+      }
+
+      return equalityFn(
+        configurator.current,
+        nextConfigurator,
+        updateConfigurator
+      )
+    },
+    [onDocDataChanged]
+  )
+
+  useAppSelector(getClientFirm, clientFirmEqualityFn)
+  useAppSelector(getServices, servicesEqualityFn)
+  useAppSelector(getConfigurator, configuratorEqualityFn)
 
   const invoicePreviewButton = useRef<dxButton>()
   const protocolPreviewButton = useRef<dxButton>()
