@@ -20,7 +20,7 @@ import * as pdfMake from 'pdfmake/build/pdfmake'
 import * as pdfFonts from 'pdfmake/build/vfs_fonts'
 ;(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs
 
-export const updatePdfBody = (
+export const updateProtocolPdfBody = (
   services: IServices | null,
   clientFirm: IClientsListClientFirmData | null,
   configurator: IConfigurator | null
@@ -117,7 +117,7 @@ export const updatePdfBody = (
 
   return {
     info: {
-      title: `TAGRA Faktura VAT nr ${configurator.invoiceName}`,
+      title: `Protokół robót ${configurator.invoiceName}`,
     },
     pageSize: 'A4',
     pageOrientation: 'portrait',
@@ -187,31 +187,6 @@ export const updatePdfBody = (
         fontSize: 16,
         bold: true,
         alignment: 'center',
-      },
-      {
-        margin: [0, 20, 0, 0],
-        fontSize: 10,
-        alignment: 'center',
-        table: {
-          headerRows: 1,
-          widths: ['auto', '*', 'auto', 'auto', 'auto', 'auto'],
-          body: [
-            [
-              'LP',
-              'Nazwa',
-              'VAT',
-              'Wartość NETTO',
-              'Kwota VAT',
-              'Wartość BRUTTO',
-            ],
-            ...tableRecords,
-          ],
-        },
-        layout: {
-          fillColor: function (rowIndex: number) {
-            return rowIndex === 0 ? 'whitesmoke' : null
-          },
-        },
       },
       {
         margin: [0, 50, 0, 0],

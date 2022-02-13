@@ -2,6 +2,7 @@ import { TDocumentDefinitions } from 'pdfmake/interfaces'
 import { useCallback, useRef } from 'react'
 import { TCreatedPdf } from 'pdfmake/build/pdfmake'
 import { Dispatch } from '@reduxjs/toolkit'
+import dxButton from 'devextreme/ui/button'
 import pdfFonts from 'pdfmake/build/vfs_fonts'
 import pdfMake from 'pdfmake/build/pdfmake'
 import _ from 'lodash'
@@ -14,25 +15,23 @@ import {
   getServices,
   setInvoiceDoc,
 } from '../../../Redux-store/global.reducer'
+import { updateProtocolPdfBody } from '../../../utils/updateProtocolPdfBody'
+import { updateInvoicePdfBody } from '../../../utils/updateInvoicePdfBody'
 import { useAppDispatch } from '../../../hooks/useAppDispatch'
 import { useAppSelector } from '../../../hooks/useAppSelector'
-import { updatePdfBody } from '../../../utils/updatePdfBody'
 import { equalityFn } from '../../../utils/equalityFn'
 
+import { IPreviewStates, IPreviewButtonName } from './Preview.interface'
 import { IClientsListClientFirmData } from '../ClientsList/ClientsList.interface'
+import { InitializedEventInfo } from 'devextreme/events'
 import { ICreateFileDto } from '../../../../../backend/src/invoices/dtos/createFile.interface'
+import { IButtonOptions } from '../../_devExtreme/Button/Button.interface'
 import { IConfigurator } from '../Configurator/Configurator.interface'
 import { IServices } from '../../../Redux-store/global.reducer.interface'
 
-import styles from './Preview.module.css'
-import { IButtonOptions } from '../../_devExtreme/Button/Button.interface'
-import {
-  IPreviewStates,
-  IPreviewButtonName,
-} from './Preview.interface'
 import { Enums } from '../../../constants/enums'
-import { InitializedEventInfo } from 'devextreme/events'
-import dxButton from 'devextreme/ui/button'
+
+import styles from './Preview.module.css'
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 const localStorageItemName: string = 'preview-states'
@@ -45,14 +44,17 @@ const PdfPreview = (): JSX.Element => {
   const configurator = useRef<IConfigurator | null>(null)
   const onDocDataChanged = useCallback((): void => {
     if (previewRef != null && previewRef.current != null) {
-      const documentDefinitions: TDocumentDefinitions = updatePdfBody(
-        services.current,
-        clientFirm.current,
-        configurator.current
+      const invoiceDocumentDefinitions: TDocumentDefinitions =
+        updateInvoicePdfBody(
+          services.current,
+          clientFirm.current,
+          configurator.current
+        )
+      const invoiceDoc: TCreatedPdf = pdfMake.createPdf(
+        invoiceDocumentDefinitions
       )
-      const doc: TCreatedPdf = pdfMake.createPdf(documentDefinitions)
 
-      doc.getBase64((base64: string): void => {
+      invoiceDoc.getBase64((base64: string): void => {
         const dateOfIssue: Date =
           configurator.current?.dateOfIssue != null
             ? new Date(configurator.current?.dateOfIssue)
@@ -70,11 +72,30 @@ const PdfPreview = (): JSX.Element => {
         dispatch(setInvoiceDoc(invoiceDoc))
       })
 
-      doc.getDataUrl((dataUrl: string): void => {
+      const protocolDocumentDefinitions: TDocumentDefinitions =
+        updateProtocolPdfBody(
+          services.current,
+          clientFirm.current,
+          configurator.current
+        )
+      const protocolDoc: TCreatedPdf = pdfMake.createPdf(
+        protocolDocumentDefinitions
+      )
+
+      const getDataUrl = (dataUrl: string): void => {
         if (!_.isNull(dataUrl) && !_.isNull(previewRef.current)) {
           previewRef.current.src = dataUrl
         }
-      })
+      }
+
+      switch (selectedPreview.current) {
+        case 'invoice':
+          invoiceDoc.getDataUrl(getDataUrl)
+          break
+        case 'protocol':
+          protocolDoc.getDataUrl(getDataUrl)
+          break
+      }
     }
   }, [dispatch])
 
@@ -126,6 +147,7 @@ const PdfPreview = (): JSX.Element => {
 
   const invoicePreviewButton = useRef<dxButton>()
   const protocolPreviewButton = useRef<dxButton>()
+  const selectedPreview = useRef<IPreviewButtonName>()
 
   const loadPreviewButtonStates = useCallback((): void => {
     let previewStates: IPreviewStates
@@ -137,6 +159,12 @@ const PdfPreview = (): JSX.Element => {
     } else {
       previewStates = { invoice: 'contained', protocol: 'outlined' }
     }
+
+    _.forEach(previewStates, (stylingMode, key: string) => {
+      if (stylingMode === 'contained') {
+        selectedPreview.current = key as IPreviewButtonName
+      }
+    })
 
     setTimeout(() => {
       invoicePreviewButton.current?.option({
@@ -157,6 +185,8 @@ const PdfPreview = (): JSX.Element => {
 
       previewStates[button] = 'contained'
       localStorage.setItem(localStorageItemName, JSON.stringify(previewStates))
+      selectedPreview.current = button
+      onDocDataChanged()
 
       switch (button) {
         case 'invoice':
@@ -169,7 +199,7 @@ const PdfPreview = (): JSX.Element => {
           break
       }
     },
-    []
+    [onDocDataChanged]
   )
 
   const invoicePreviewButtonOptions = useRef<IButtonOptions>({
