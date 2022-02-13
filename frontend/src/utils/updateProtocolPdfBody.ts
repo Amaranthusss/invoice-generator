@@ -1,20 +1,12 @@
-import {
-  ContentText,
-  TableCell,
-  TDocumentDefinitions,
-} from 'pdfmake/interfaces'
-import { formatDate, formatNumber } from 'devextreme/localization'
+import { TDocumentDefinitions } from 'pdfmake/interfaces'
+import { formatDate } from 'devextreme/localization'
+import moment from 'moment'
 import _ from 'lodash'
 
-import currencyAsWords from './currencyAsWords'
-
 import { IClientsListClientFirmData } from '../components/MainModule/ClientsList/ClientsList.interface'
-import { IServices } from '../Redux-store/global.reducer.interface'
-
-import { Enums } from '../constants/enums'
-import { firmData as ownFirmData, IFirmDataParameter } from '../data/firmData'
 import { IServicesListServiceData } from '../components/MainModule/ServicesList/ServicesList.interface'
 import { IConfigurator } from '../components/MainModule/Configurator/Configurator.interface'
+import { IServices } from '../Redux-store/global.reducer.interface'
 
 import * as pdfMake from 'pdfmake/build/pdfmake'
 import * as pdfFonts from 'pdfmake/build/vfs_fonts'
@@ -29,91 +21,44 @@ export const updateProtocolPdfBody = (
     return {} as TDocumentDefinitions
   }
 
-  let summaryPriceBrutto: number = 0
-  let lastServiceNumber: number = 0
-
   const dateOfIssue: Date = new Date(configurator.dateOfIssue)
-  const paymentDate: Date = dateOfIssue
-  paymentDate.setDate(dateOfIssue.getDate() + configurator.paymentTime)
+  const startDate: Date = moment(dateOfIssue)
+    .subtract(configurator.jobDuration ?? 0, 'd')
+    .toDate()
 
-  const tableRecords = _.map(services, (service: IServicesListServiceData) => {
-    summaryPriceBrutto += service.brutto
-    lastServiceNumber += 1
+  const getServicesNames = () => {
+    if (services != null) {
+      const docElements = _.map(
+        services,
+        (service: IServicesListServiceData) => {
+          return {
+            lineHeight: 1.4,
+            text: `${service.name}\n`,
+          }
+        }
+      )
+      docElements[_.size(docElements) - 1] = {
+        ...(_.last(docElements) as any),
+        lineHeight: 2,
+      }
 
-    const records: TableCell[] = [
-      lastServiceNumber,
-      { text: service.name, alignment: 'left' },
-      formatNumber(service.vatAsPercents / 100, 'percent'),
-      formatNumber(service.netto, Enums.CurrencyFormat),
-      formatNumber(service.vat, Enums.CurrencyFormat),
-      formatNumber(service.brutto, Enums.CurrencyFormat),
-    ]
-
-    return records
-  })
-
-  const ownFirmDataDisplay: string[] = _.map(
-    ownFirmData,
-    (parameter: IFirmDataParameter): string => {
-      const caption = parameter.caption != null ? `${parameter.caption} ` : ''
-      return caption + parameter.value + '\n'
+      return docElements
     }
-  )
-
-  const buyerFirmDataDisplay: string[] = [
-    (clientFirm?.name ?? '') + '\n',
-    (clientFirm?.address ?? '') + '\n',
-    (clientFirm?.city ?? '') + '\n',
-    `NIP: ${clientFirm?.nip ?? ''}`,
-  ]
-
-  const getSellerFirmData = (): string[] => {
-    const sellerFirmData: string[] = []
-    sellerFirmData.push((ownFirmData.name.value as string) + '\n')
-    sellerFirmData.push((ownFirmData.subname.value as string) + '\n')
-    sellerFirmData.push((ownFirmData.address.value as string) + '\n')
-    sellerFirmData.push((ownFirmData.city.value as string) + '\n')
-    sellerFirmData.push(
-      (ownFirmData.nip.caption as string) + ` ${ownFirmData.nip.value}`
-    )
-
-    return sellerFirmData
+    return []
   }
-  const sellerFirmData: string[] = getSellerFirmData()
 
-  const invoiceInfoDisplay: string[] = [
-    `Data wystawiena: ${formatDate(
-      new Date(configurator.dateOfIssue),
-      Enums.DateFormats.ShortDate
-    )}`,
-    `Sposób płatności: ${configurator.methodOfPayment}`,
-    `Termin płatności: ${formatDate(
-      paymentDate,
-      Enums.DateFormats.ShortDate
-    )} (${configurator.paymentTime} dni)`,
-  ]
+  const getOrderingData = (): string[] => {
+    const docElements: string[] = clientFirm?.orderingData ?? []
+    const initDocElements: string[] = _.cloneDeep(docElements)
 
-  const summaryDisplay: ContentText[] = [
-    {
-      text: `Razem do zapłaty: ${formatNumber(
-        summaryPriceBrutto,
-        Enums.CurrencyFormat
-      )}\n`,
-      bold: true,
-      fontSize: 12,
-    },
-    {
-      text: `Słownie: ${currencyAsWords(summaryPriceBrutto)}\n`,
-      italics: true,
-    },
-    {
-      text: `Pozostało do zapłaty: ${formatNumber(
-        summaryPriceBrutto,
-        Enums.CurrencyFormat
-      )}\n`,
-      italics: true,
-    },
-  ]
+    if (_.size(docElements) < 3) {
+      for (let i: number = 0; i < 3 - _.size(initDocElements); i++) {
+        docElements.push(' ')
+      }
+    }
+
+    return docElements
+  }
 
   return {
     info: {
@@ -124,6 +69,7 @@ export const updateProtocolPdfBody = (
     content: [
       {
         text: 'PROTOKÓŁ TECHNICZNEGO ODBIORU ROBÓT',
+        bold: true,
         style: 'header',
         alignment: 'center',
       },
@@ -132,7 +78,7 @@ export const updateProtocolPdfBody = (
           {
             type: 'line',
             x1: 10,
-            y1: 0,
+            y1: 2,
             x2: 490,
             y2: 0,
             lineWidth: 0.5,
@@ -143,26 +89,28 @@ export const updateProtocolPdfBody = (
         text: ' ',
       },
       {
-        text: 'Spisany w dniu 20.01.2022',
+        text: `Spisany w dniu ${formatDate(dateOfIssue, 'shortDate')}`,
         alignment: 'center',
       },
       {
         text: ' ',
       },
       {
-				alignment: 'justify',
+        alignment: 'justify',
         lineHeight: 2,
         ol: [
           {
             lineHeight: 1.4,
             text: [
-              'Zamawiający: PPUH Montex Henryk Bywalec',
+              `Zamawiający: ${clientFirm?.name ?? ''}`,
               '\n',
-              'ul. Bazyliowa 10B, 40-750 Katowice',
+              `${
+                clientFirm?.address != null ? `${clientFirm?.address}, ` : ''
+              } ${clientFirm?.city ?? ''}`,
               '\n',
               {
                 lineHeight: 2,
-                text: 'nr zamówienia: 06.01.4022',
+                text: `nr zamówienia: ${formatDate(startDate, 'shortDate')}`,
               },
             ],
           },
@@ -170,12 +118,8 @@ export const updateProtocolPdfBody = (
           {
             lineHeight: 1.4,
             text: [
-              'Opis zamówienia i wykonanych robót:',
-              '\n',
-              {
-                lineHeight: 2,
-                text: 'Prace związane z przebudową lokalu Media Markt w Opolu',
-              },
+              'Opis zamówienia i wykonanych robót:\n',
+              ...getServicesNames(),
             ],
           },
 
@@ -184,7 +128,10 @@ export const updateProtocolPdfBody = (
           },
 
           {
-            text: 'Roboty rozpoczęto dnia 06.01.4022 zakończono dnia 20.01.4022',
+            text: `Roboty rozpoczęto dnia ${formatDate(
+              startDate,
+              'shortDate'
+            )}, zakończono dnia ${formatDate(dateOfIssue, 'shortDate')}`,
           },
 
           [
@@ -201,7 +148,7 @@ export const updateProtocolPdfBody = (
                     'Zamawiający:',
                     {
                       type: 'lower-alpha',
-                      ol: ['Piotr Półtorak', ' ', ' '],
+                      ol: getOrderingData(),
                     },
                   ],
                 },
@@ -270,7 +217,7 @@ export const updateProtocolPdfBody = (
                     'Zamawiający:',
                     {
                       type: 'lower-alpha',
-                      ol: ['Piotr Półtorak', ' ', ' '],
+                      ol: getOrderingData(),
                     },
                   ],
                 },
