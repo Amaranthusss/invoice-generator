@@ -67,6 +67,11 @@ export namespace Enums {
       },
     },
 
+    previewSelector: {
+      invoiceSelectorButton: 'Podgląd faktury',
+      protocolSelectorButton: 'Podgląd protokołu robót',
+    },
+
     profitsChart: {
       sumSeriesName: 'Suma zysków',
       avgSeriesName: 'Średnia miesięczna',
