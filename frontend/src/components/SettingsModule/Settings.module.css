@@ -1,0 +1,17 @@
+.container {
+  width: calc(100% - 40px);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+	gap: 15px;
+}
+
+.buttonsPanel {
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  flex: 1;
+  max-width: 250px;
+}

@@ -58,7 +58,7 @@ const Toolbar = (): JSX.Element => {
     hint: Enums.InterfaceTexts.settingsPageButton,
     text: Enums.InterfaceTexts.settingsPageButton,
     type: 'default',
-    icon: 'chart',
+    icon: 'preferences',
     onClick: () => navigate(appRoutes.settings),
     onInitialized: (e: InitializedEventInfo<dxButton>) => {
       settingsPageButtonComponent.current = e.component

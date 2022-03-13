@@ -80,6 +80,21 @@ export namespace Enums {
       valueAxisTitle: 'Dochód - NETTO, zł',
       apiErrorNotify: 'Nie udało się pobrać danych wykresu!',
     },
+
+    settingsFirmData: {
+      nameTextBox: 'Nazwa firmy',
+      subnameTextBox: 'Podtytuł nazwy firmy',
+      addressTextBox: 'Adres firmy',
+      cityTextBox: 'Miasto',
+      phoneTextBox: 'Numer telefonu',
+      nipTextBox: 'NIP',
+      bankAccountTextBox: 'Numer konta bankowego',
+      bankNameTextBox: 'Pełna nazwa banku',
+      saveButton: 'Aktualizuj',
+      saveSuccessMessage: 'Poprawnie zaktualizowano dane firmy 😄',
+      saveErrorMessage:
+        'Dane firmy nie zostały zaktualizowane, wystąpił problem! 😨',
+    },
   }
 
   export const DefaultCurrency: string = 'PLN'
