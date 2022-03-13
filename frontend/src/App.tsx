@@ -8,6 +8,7 @@ import { Dispatch } from '@reduxjs/toolkit'
 import { locale } from 'devextreme/localization'
 import config from 'devextreme/core/config'
 
+import SettingsPage from './views/SettingsPage'
 import ArchivePage from './views/ArchivePage'
 import ErrorPage from './views/ErrorPage'
 import MainPage from './views/MainPage'
@@ -41,6 +42,7 @@ const App = (): JSX.Element => {
         <Routes>
           <Route path={appRoutes.main} element={<MainPage />} />
           <Route path={appRoutes.archive} element={<ArchivePage />} />
+          <Route path={appRoutes.settings} element={<SettingsPage />} />
           <Route path={'*'} element={<ErrorPage />} />
         </Routes>
       </div>

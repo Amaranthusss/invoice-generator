@@ -15,4 +15,5 @@ export const apiRoutes = {
 export const appRoutes = {
   main: '/',
   archive: '/archive',
+  settings: '/settings',
 }

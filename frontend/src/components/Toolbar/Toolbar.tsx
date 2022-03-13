@@ -10,6 +10,7 @@ import { InitializedEventInfo } from 'devextreme/events'
 import { useEffect, useRef } from 'react'
 import dxButton from 'devextreme/ui/button'
 
+import SettingsToolbar from './SettingsToolbar/SettingsToolbar'
 import ArchiveToolbar from './ArchiveToolbar/ArchiveToolbar'
 import MainToolbar from './MainToolbar/MainToolbar'
 import Button from '../_devExtreme/Button/Button'
@@ -28,6 +29,7 @@ const Toolbar = (): JSX.Element => {
   const location: Location = useLocation()
   const mainPageButtonComponent = useRef<dxButton>()
   const archivePageButtonComponent = useRef<dxButton>()
+  const settingsPageButtonComponent = useRef<dxButton>()
 
   useEffect(() => {
     mainPageButtonComponent.current?.option({
@@ -35,6 +37,9 @@ const Toolbar = (): JSX.Element => {
     })
     archivePageButtonComponent.current?.option({
       stylingMode: service.getStylingModeBasedAtRoute(appRoutes.archive),
+    })
+    settingsPageButtonComponent.current?.option({
+      stylingMode: service.getStylingModeBasedAtRoute(appRoutes.settings),
     })
   }, [location.pathname])
 
@@ -46,6 +51,17 @@ const Toolbar = (): JSX.Element => {
     onClick: () => navigate(appRoutes.main),
     onInitialized: (e: InitializedEventInfo<dxButton>) => {
       mainPageButtonComponent.current = e.component
+    },
+  })
+
+  const settingsPageButtonOptions = useRef<IButtonOptions>({
+    hint: Enums.InterfaceTexts.settingsPageButton,
+    text: Enums.InterfaceTexts.settingsPageButton,
+    type: 'default',
+    icon: 'chart',
+    onClick: () => navigate(appRoutes.settings),
+    onInitialized: (e: InitializedEventInfo<dxButton>) => {
+      settingsPageButtonComponent.current = e.component
     },
   })
 
@@ -69,10 +85,14 @@ const Toolbar = (): JSX.Element => {
         <div className={styles.button}>
           <Button options={archivePageButtonOptions.current} />
         </div>
+        <div className={styles.button}>
+          <Button options={settingsPageButtonOptions.current} />
+        </div>
       </div>
       <Routes>
         <Route path={appRoutes.main} element={<MainToolbar />} />
         <Route path={appRoutes.archive} element={<ArchiveToolbar />} />
+        <Route path={appRoutes.settings} element={<SettingsToolbar />} />
       </Routes>
     </div>
   )
