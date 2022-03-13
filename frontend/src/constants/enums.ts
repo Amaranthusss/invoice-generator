@@ -51,7 +51,7 @@ export namespace Enums {
 
     archivePageButton: 'Archiwum',
     mainPageButton: 'Strona główna',
-    settingsPageButton: 'Ustawienia konta',
+    settingsPageButton: 'Ustawienia',
 
     errorPageText: 'Coś poszło nie tak! 😢',
     errorPageNagivateButton: 'Powrót do Strony Głównej',

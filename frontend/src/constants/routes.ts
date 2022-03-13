@@ -10,6 +10,9 @@ export const apiRoutes = {
   getInvoicesTable: '/invoices/table',
 
   sendInvoiceEmail: '/emails',
+
+  getFirmData: '/firm-data',
+  updateFirmData: '/firm-data',
 }
 
 export const appRoutes = {

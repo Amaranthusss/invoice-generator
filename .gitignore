@@ -8,3 +8,4 @@
 /frontend/.env
 
 /invoices
+/backend/sql/privateFirmData.txt

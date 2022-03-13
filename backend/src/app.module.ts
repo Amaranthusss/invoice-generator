@@ -7,6 +7,7 @@ import { AppController } from './app.controller'
 import { InvoicesModule } from './invoices/invoices.module'
 import { ClientsModule } from './clients/clients.module'
 import { EmailsModule } from './emails/emails.module'
+import { FirmDataModule } from './firm-data/firm-data.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { EmailsModule } from './emails/emails.module'
     ClientsModule,
     InvoicesModule,
     EmailsModule,
+    FirmDataModule,
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: `./database/${process.env.APP_DATABASE}`,

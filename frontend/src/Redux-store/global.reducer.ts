@@ -8,9 +8,14 @@ import {
   getVatFromNetto,
 } from '../utils/currencyCalculations'
 
-import { IAppSize, IServices, IStates } from './global.reducer.interface'
 import { IClientsListClientFirmData } from '../components/MainModule/ClientsList/ClientsList.interface'
 import { IServicesListServiceData } from '../components/MainModule/ServicesList/ServicesList.interface'
+import {
+  IAppSize,
+  IFirmData,
+  IServices,
+  IStates,
+} from './global.reducer.interface'
 import { ICreateFileDto } from '../../../backend/src/invoices/dtos/createFile.interface'
 import { IConfigurator } from '../components/MainModule/Configurator/Configurator.interface'
 
@@ -18,6 +23,7 @@ import { Enums } from '../constants/enums'
 
 const states: IStates = {
   clientFirm: null,
+  firmData: null,
   services: {},
   appSize: { width: undefined, height: undefined },
   configurator: null,
@@ -94,6 +100,9 @@ const globalSlice = createSlice({
     ): void => {
       state.invoiceDoc = action.payload
     },
+    setFirmData: (state: IStates, action: PayloadAction<IFirmData>): void => {
+      state.firmData = action.payload
+    },
   },
 })
 
@@ -119,12 +128,17 @@ export const getInvoiceDoc = (state: RootState): ICreateFileDto => {
   return state.globalSlice.invoiceDoc
 }
 
+export const getFirmData = (state: RootState): IFirmData | null => {
+  return state.globalSlice.firmData
+}
+
 export const {
   setClientFirm,
   updateService,
   setAppSize,
   setConfigurator,
   setInvoiceDoc,
+  setFirmData,
 } = globalSlice.actions
 
 export default globalSlice.reducer

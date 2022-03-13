@@ -8,13 +8,16 @@ import _ from 'lodash'
 
 import currencyAsWords from './currencyAsWords'
 
+import {
+  IServices,
+  IFirmDataParameter,
+  IFirmData,
+} from '../Redux-store/global.reducer.interface'
 import { IClientsListClientFirmData } from '../components/MainModule/ClientsList/ClientsList.interface'
-import { IServices } from '../Redux-store/global.reducer.interface'
-
-import { Enums } from '../constants/enums'
-import { firmData as ownFirmData, IFirmDataParameter } from '../data/firmData'
 import { IServicesListServiceData } from '../components/MainModule/ServicesList/ServicesList.interface'
 import { IConfigurator } from '../components/MainModule/Configurator/Configurator.interface'
+
+import { Enums } from '../constants/enums'
 
 import * as pdfMake from 'pdfmake/build/pdfmake'
 import * as pdfFonts from 'pdfmake/build/vfs_fonts'
@@ -23,7 +26,8 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts'
 export const updateInvoicePdfBody = (
   services: IServices | null,
   clientFirm: IClientsListClientFirmData | null,
-  configurator: IConfigurator | null
+  configurator: IConfigurator | null,
+  ownFirmData: IFirmData | null
 ): TDocumentDefinitions => {
   if (configurator == null) {
     return {} as TDocumentDefinitions
@@ -69,12 +73,12 @@ export const updateInvoicePdfBody = (
 
   const getSellerFirmData = (): string[] => {
     const sellerFirmData: string[] = []
-    sellerFirmData.push((ownFirmData.name.value as string) + '\n')
-    sellerFirmData.push((ownFirmData.subname.value as string) + '\n')
-    sellerFirmData.push((ownFirmData.address.value as string) + '\n')
-    sellerFirmData.push((ownFirmData.city.value as string) + '\n')
+    sellerFirmData.push((ownFirmData?.name.value as string) + '\n')
+    sellerFirmData.push((ownFirmData?.subname.value as string) + '\n')
+    sellerFirmData.push((ownFirmData?.address.value as string) + '\n')
+    sellerFirmData.push((ownFirmData?.city.value as string) + '\n')
     sellerFirmData.push(
-      (ownFirmData.nip.caption as string) + ` ${ownFirmData.nip.value}`
+      (ownFirmData?.nip.caption as string) + ` ${ownFirmData?.nip.value}`
     )
 
     return sellerFirmData

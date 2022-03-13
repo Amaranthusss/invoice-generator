@@ -12,6 +12,7 @@ import Button from '../../_devExtreme/Button/Button'
 import {
   getClientFirm,
   getConfigurator,
+  getFirmData,
   getServices,
   setInvoiceDoc,
 } from '../../../Redux-store/global.reducer'
@@ -27,7 +28,10 @@ import { InitializedEventInfo } from 'devextreme/events'
 import { ICreateFileDto } from '../../../../../backend/src/invoices/dtos/createFile.interface'
 import { IButtonOptions } from '../../_devExtreme/Button/Button.interface'
 import { IConfigurator } from '../Configurator/Configurator.interface'
-import { IServices } from '../../../Redux-store/global.reducer.interface'
+import {
+  IFirmData,
+  IServices,
+} from '../../../Redux-store/global.reducer.interface'
 
 import { Enums } from '../../../constants/enums'
 
@@ -39,6 +43,7 @@ const localStorageItemName: string = 'preview-states'
 const PdfPreview = (): JSX.Element => {
   const dispatch: Dispatch = useAppDispatch()
   const previewRef = useRef<HTMLIFrameElement>(null)
+  const firmData = useRef<IFirmData | null>(null)
   const clientFirm = useRef<IClientsListClientFirmData | null>(null)
   const services = useRef<IServices | null>(null)
   const configurator = useRef<IConfigurator | null>(null)
@@ -48,7 +53,8 @@ const PdfPreview = (): JSX.Element => {
         updateInvoicePdfBody(
           services.current,
           clientFirm.current,
-          configurator.current
+          configurator.current,
+          firmData.current
         )
       const invoiceDoc: TCreatedPdf = pdfMake.createPdf(
         invoiceDocumentDefinitions
@@ -141,9 +147,19 @@ const PdfPreview = (): JSX.Element => {
     [onDocDataChanged]
   )
 
+  const firmDataEqualityFn = useCallback(
+    (nextFirmData: IFirmData | null): boolean => {
+      firmData.current = nextFirmData
+
+      return false
+    },
+    []
+  )
+
   useAppSelector(getClientFirm, clientFirmEqualityFn)
   useAppSelector(getServices, servicesEqualityFn)
   useAppSelector(getConfigurator, configuratorEqualityFn)
+  useAppSelector(getFirmData, firmDataEqualityFn)
 
   const invoicePreviewButton = useRef<dxButton>()
   const protocolPreviewButton = useRef<dxButton>()

@@ -3,6 +3,7 @@ import {
   UseResizeDetectorReturn,
 } from 'react-resize-detector'
 import { Route, Routes } from 'react-router-dom'
+import { AxiosResponse } from 'axios'
 import { useEffect } from 'react'
 import { Dispatch } from '@reduxjs/toolkit'
 import { locale } from 'devextreme/localization'
@@ -15,7 +16,12 @@ import MainPage from './views/MainPage'
 import Toolbar from './components/Toolbar/Toolbar'
 
 import { useAppDispatch } from './hooks/useAppDispatch'
-import { setAppSize } from './Redux-store/global.reducer'
+import { setAppSize, setFirmData } from './Redux-store/global.reducer'
+import getFirmData from './api/firmData/getFirmData'
+import service from './App.service'
+
+import { IFirmDataDto } from '../../backend/src/firm-data/dtos/save.interface'
+import { IFirmData } from './Redux-store/global.reducer.interface'
 
 import { appRoutes } from './constants/routes'
 import { Enums } from './constants/enums'
@@ -30,6 +36,19 @@ const App = (): JSX.Element => {
   const { width, height, ref }: UseResizeDetectorReturn<HTMLDivElement> =
     useResizeDetector<HTMLDivElement>()
   const dispatch: Dispatch = useAppDispatch()
+
+  useEffect(() => {
+    const getFirmDataAndSaveToRedux = async (): Promise<void> => {
+      const response: AxiosResponse<IFirmDataDto> = await getFirmData()
+      const firmData: IFirmData = service.transformFirmDataDtoToFirmDataObject(
+        response.data
+      )
+
+      dispatch(setFirmData(firmData))
+    }
+
+    getFirmDataAndSaveToRedux()
+  }, [dispatch])
 
   useEffect(() => {
     dispatch(setAppSize({ width, height }))
