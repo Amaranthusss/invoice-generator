@@ -2,6 +2,7 @@ import {
   ContentText,
   TableCell,
   TDocumentDefinitions,
+  ContentTable,
 } from 'pdfmake/interfaces'
 import { formatDate, formatNumber } from 'devextreme/localization'
 import _ from 'lodash'
@@ -33,7 +34,10 @@ export const updateInvoicePdfBody = (
     return {} as TDocumentDefinitions
   }
 
+  let summaryPriceNetto: number = 0
+  let summaryPriceVat: number = 0
   let summaryPriceBrutto: number = 0
+  let highestVatPercent: number = 0
   let lastServiceNumber: number = 0
 
   const dateOfIssue: Date = new Date(configurator.dateOfIssue)
@@ -41,8 +45,14 @@ export const updateInvoicePdfBody = (
   paymentDate.setDate(dateOfIssue.getDate() + configurator.paymentTime)
 
   const tableRecords = _.map(services, (service: IServicesListServiceData) => {
+    summaryPriceNetto += service.netto
+    summaryPriceVat += service.vat
     summaryPriceBrutto += service.brutto
     lastServiceNumber += 1
+
+    if (highestVatPercent < service.vatAsPercents) {
+      highestVatPercent = service.vatAsPercents
+    }
 
     const records: TableCell[] = [
       lastServiceNumber,
@@ -55,6 +65,21 @@ export const updateInvoicePdfBody = (
 
     return records
   })
+
+  const totalValues: TableCell[] = [
+    [
+      'Razem:',
+      formatNumber(summaryPriceNetto, Enums.CurrencyFormat),
+      formatNumber(summaryPriceVat, Enums.CurrencyFormat),
+      formatNumber(summaryPriceBrutto, Enums.CurrencyFormat),
+    ],
+    [
+      `${formatNumber(highestVatPercent / 100, 'percent')}`,
+      formatNumber(summaryPriceNetto, Enums.CurrencyFormat),
+      formatNumber(summaryPriceVat, Enums.CurrencyFormat),
+      formatNumber(summaryPriceBrutto, Enums.CurrencyFormat),
+    ],
+  ]
 
   const ownFirmDataDisplay: string[] = _.map(
     ownFirmData,
@@ -217,6 +242,41 @@ export const updateInvoicePdfBody = (
           },
         },
       },
+      {
+        margin: [0, 20, 0, 0],
+        fontSize: 10,
+        columns: [
+          {
+						width: '45%',
+            margin: [0, 18.5, 5, 0],
+            alignment: 'right',
+						layout: 'noBorders',
+            table: {
+              widths: ['*'],
+              body: [['Zestawienie VAT: '], ['W tym: ']],
+            },
+          },
+          {
+						width: '55%',
+            alignment: 'center',
+            table: {
+              headerRows: 1,
+              widths: ['*', 'auto', 'auto', 'auto'],
+              body: [
+                ['Stawka', 'Wartość NETTO', 'Kwota VAT', 'Wartość BRUTTO'],
+                ...(totalValues as any),
+              ],
+            },
+            layout: {
+              fillColor: (rowIndex: number, x, y) => {
+                console.log(x, y)
+                return rowIndex === 0 ? 'whitesmoke' : null
+              },
+            },
+          },
+        ],
+      },
+
       {
         margin: [0, 50, 0, 0],
         fontSize: 10,
